@@ -1,0 +1,54 @@
+<div>
+  <div><h1>Registro de Mercados</h1></div>
+  <div>
+    <form [formGroup]="form" (submit)="aceptar()">
+      <mat-form-field>
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="name" maxlength="100" />
+        <mat-error *ngIf="form.get('name')?.hasError('required')">
+          El nombre es obligatorio!!
+        </mat-error>
+        <mat-error *ngIf="form.get('name')?.hasError('maxlength')">
+          El nombre no puede exceder 100 caracteres
+        </mat-error>
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <mat-label>Ubicación</mat-label>
+        <input matInput formControlName="location" maxlength="100" />
+        <mat-error *ngIf="form.get('location')?.hasError('required')">
+          La ubicación es obligatoria!!
+        </mat-error>
+        <mat-error *ngIf="form.get('location')?.hasError('maxlength')">
+          El nombre no puede exceder 100 caracteres
+        </mat-error>
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <mat-label>Contacto</mat-label>
+        <input matInput formControlName="contact" type="tel" maxlength="9" />
+        <mat-error *ngIf="form.get('contact')?.hasError('required')">
+          El contacto es obligatorio!!
+        </mat-error>
+        <mat-error *ngIf="form.get('contact')?.hasError('pattern')">
+          El contacto debe tener exactamente 9 dígitos numéricos
+        </mat-error>
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <mat-label>Horarios de atención</mat-label>
+        <input matInput formControlName="attentionDate" maxlength="50" />
+        <mat-error *ngIf="form.get('attentionDate')?.hasError('required')">
+          El horario de atención es obligatorio!!
+        </mat-error>
+        <mat-error *ngIf="form.get('attentionDate')?.hasError('maxlength')">
+          El nombre no puede exceder 50 caracteres
+        </mat-error>
+      </mat-form-field>
+
+      <button type="submit" mat-raised-button color="primary" [disabled]="!form.valid">
+        Registrar
+      </button>
+    </form>
+  </div>
+</div>
