@@ -1,0 +1,104 @@
+
+<div>
+  <div><h1>Registrar Input</h1></div>
+  <div>
+    <form [formGroup]="form" (submit)="aceptar()">
+      
+      <!-- Campo Nombre -->
+      <mat-form-field>
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="name" maxlength="70" />
+        <mat-error *ngIf="form.get('name')?.hasError('required')">
+          El nombre es obligatorio!!
+        </mat-error>
+        <mat-error *ngIf="form.get('name')?.hasError('maxlength')">
+          El nombre no puede exceder 70 caracteres
+        </mat-error>
+      </mat-form-field>
+      <br />
+
+      <!-- Campo Tipo -->
+      <mat-form-field>
+        <mat-label>Tipo</mat-label>
+        <mat-select formControlName="type">
+          <mat-option *ngFor="let tipo of tipos" [value]="tipo.value">
+            {{tipo.viewValue}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('type')?.hasError('required')">
+          El tipo es obligatorio!!
+        </mat-error>
+      </mat-form-field>
+      <br />
+
+      <!-- Campo Cantidad -->
+      <mat-form-field>
+        <mat-label>Cantidad</mat-label>
+        <input matInput type="number" formControlName="amount" min="1" />
+        <mat-error *ngIf="form.get('amount')?.hasError('required')">
+          La cantidad es obligatoria!!
+        </mat-error>
+        <mat-error *ngIf="form.get('amount')?.hasError('min')">
+          La cantidad debe ser mayor a 0
+        </mat-error>
+      </mat-form-field>
+      <br />
+
+      <!-- Campo Unidad -->
+      <mat-form-field>
+        <mat-label>Unidad</mat-label>
+        <mat-select formControlName="unit">
+          <mat-option *ngFor="let unidad of unidades" [value]="unidad.value">
+            {{unidad.viewValue}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('unit')?.hasError('required')">
+          La unidad es obligatoria!!
+        </mat-error>
+      </mat-form-field>
+      <br />
+
+      <!-- Campo Fecha de Registro -->
+      <mat-form-field>
+        <mat-label>Fecha de Registro</mat-label>
+        <input matInput [matDatepicker]="registrationPicker" formControlName="registrationDate">
+        <mat-datepicker-toggle matSuffix [for]="registrationPicker"></mat-datepicker-toggle>
+        <mat-datepicker #registrationPicker></mat-datepicker>
+        <mat-error *ngIf="form.get('registrationDate')?.hasError('required')">
+          La fecha de registro es obligatoria!!
+        </mat-error>
+      </mat-form-field>
+      <br />
+
+      <!-- Campo Fecha de Expiración -->
+      <mat-form-field>
+        <mat-label>Fecha de Expiración</mat-label>
+        <input matInput [matDatepicker]="expirationPicker" formControlName="expirationDate">
+        <mat-datepicker-toggle matSuffix [for]="expirationPicker"></mat-datepicker-toggle>
+        <mat-datepicker #expirationPicker></mat-datepicker>
+        <mat-error *ngIf="form.get('expirationDate')?.hasError('required')">
+          La fecha de expiración es obligatoria!!
+        </mat-error>
+      </mat-form-field>
+      <br />
+
+      <!-- CAMPO USUARIO - NUEVO -->
+      <mat-form-field>
+        <mat-label>Usuario</mat-label>
+        <mat-select formControlName="idUser">
+          <mat-option *ngFor="let user of users" [value]="user.id">
+            {{user.username}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('idUser')?.hasError('required')">
+          El usuario es obligatorio!!
+        </mat-error>
+      </mat-form-field>
+      <br />
+
+      <button type="submit" mat-raised-button color="primary" [disabled]="!form.valid">
+        Registrar Input
+      </button>
+    </form>
+  </div>
+</div>

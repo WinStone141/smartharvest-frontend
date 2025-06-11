@@ -1,0 +1,87 @@
+<div>
+  <div><h1>Registro de Empresas</h1></div>
+  <div>
+    <form [formGroup]="form" (submit)="aceptar()">
+      <mat-form-field>
+        <mat-label>Empresa</mat-label>
+        <input matInput formControlName="name" maxlength="100" />
+        <mat-error *ngIf="form.get('name')?.hasError('required')">
+          El nombre es obligatorio!!
+        </mat-error>
+        <mat-error *ngIf="form.get('name')?.hasError('maxlength')">
+          El nombre no puede exceder 100 caracteres
+        </mat-error>
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <mat-label>Descripción</mat-label>
+        <input matInput formControlName="description" maxlength="500" />
+        <mat-error *ngIf="form.get('description')?.hasError('required')">
+          La descripción es obligatoria!!
+        </mat-error>
+        <mat-error *ngIf="form.get('description')?.hasError('maxlength')">
+          La descripción no puede exceder 500 caracteres
+        </mat-error>
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <mat-label>Misión</mat-label>
+        <input matInput formControlName="mission" maxlength="300" />
+        <mat-error *ngIf="form.get('mission')?.hasError('required')">
+          La misión es obligatoria!!
+        </mat-error>
+        <mat-error *ngIf="form.get('mission')?.hasError('maxlength')">
+          La misión no puede exceder 300 caracteres
+        </mat-error>
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <mat-label>Visión</mat-label>
+        <input matInput formControlName="vision" maxlength="300" />
+        <mat-error *ngIf="form.get('vision')?.hasError('required')">
+          La visión es obligatoria!!
+        </mat-error>
+        <mat-error *ngIf="form.get('vision')?.hasError('maxlength')">
+          La visión no puede exceder 300 caracteres
+        </mat-error>
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <mat-label>Dirección</mat-label>
+        <input matInput formControlName="address" maxlength="200" />
+        <mat-error *ngIf="form.get('address')?.hasError('required')">
+          La dirección es obligatoria!!
+        </mat-error>
+        <mat-error *ngIf="form.get('address')?.hasError('maxlength')">
+          La dirección no puede exceder 200 caracteres
+        </mat-error>
+      </mat-form-field>
+      <br/>
+      <mat-form-field>
+        <mat-label>Correo</mat-label>
+        <input matInput formControlName="email" type="email" />
+        <mat-error *ngIf="form.get('email')?.hasError('required')">
+          El correo es obligatorio!!
+        </mat-error>
+        <mat-error *ngIf="form.get('email')?.hasError('email')">
+          Ingrese un correo válido
+        </mat-error>
+      </mat-form-field>
+      <br/>
+      <mat-form-field>
+        <mat-label>Contacto</mat-label>
+        <input matInput formControlName="contact" type="tel" maxlength="9" />
+        <mat-error *ngIf="form.get('contact')?.hasError('required')">
+          El contacto es obligatorio!!
+        </mat-error>
+        <mat-error *ngIf="form.get('contact')?.hasError('pattern')">
+          El contacto debe tener exactamente 9 dígitos numéricos
+        </mat-error>
+      </mat-form-field>
+
+      <button type="submit" mat-raised-button color="primary" [disabled]="!form.valid">
+        Registrar
+      </button>
+    </form>
+  </div>
+</div>
