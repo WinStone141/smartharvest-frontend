@@ -1,8 +1,9 @@
 import { Role } from "./role";
 
-export class Users {
+export class UsersForRegister {
     id?: number;
     username:string="";
+    password:string="";
     enabled:boolean=true;
     roles:Role[] = [];
 

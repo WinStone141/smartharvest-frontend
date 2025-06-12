@@ -1,4 +1,4 @@
-import { Component, input, Input } from '@angular/core';
+import { Component, input, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputService } from '../../../services/input.service';
 import { Router } from '@angular/router';
@@ -25,7 +25,7 @@ import { MatButtonModule } from '@angular/material/button';
   templateUrl: './insertareditarinput.component.html',
   styleUrl: './insertareditarinput.component.css'
 })
-export class InsertareditarinputComponent {
+export class InsertareditarinputComponent implements OnInit{
   form: FormGroup = new FormGroup({});
   input:Inputs = new Inputs()
 

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { InputService } from '../../../services/input.service';
 import { CommonModule } from '@angular/common';
@@ -10,7 +10,7 @@ import { Inputs } from '../../../models/inputs';
   templateUrl: './listarinput.component.html',
   styleUrl: './listarinput.component.css'
 })
-export class ListarinputComponent {
+export class ListarinputComponent implements OnInit{
   dataSource: MatTableDataSource<Inputs> = new MatTableDataSource();
 
   displayedColumns: string[] = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8'];
