@@ -22,9 +22,19 @@ export class CompanyService {
     return this.http.post(this.url,c)
   }
   getList() {
-    return this.listaCambio.asObservable
+    return this.listaCambio.asObservable();
   }
   setList(listaNueva:Company[]){
     this.listaCambio.next(listaNueva);
+  }
+    listId(id: number) {
+    return this.http.get<Company>(`${this.url}/${id}`);
+  }
+  update(a: Company) {
+    return this.http.put(this.url, a);
+  }
+
+  deleteA(id: number) {
+    return this.http.delete(`${this.url}/${id}`);
   }
 }

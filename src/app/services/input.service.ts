@@ -23,7 +23,7 @@ export class InputService {
       return this.http.post(this.url,i)
     }
     getList() {
-      return this.listaCambio.asObservable
+      return this.listaCambio.asObservable();
     }
     setList(listaNueva:Inputs[]){
       this.listaCambio.next(listaNueva);
@@ -31,5 +31,15 @@ export class InputService {
       getUsers() {
     return this.http.get<Users[]>(`${base_url}/users`);
   }
+      listId(id: number) {
+      return this.http.get<Inputs>(`${this.url}/${id}`);
+    }
+    update(a: Inputs) {
+      return this.http.put(this.url, a);
+    }
+  
+    deleteA(id: number) {
+      return this.http.delete(`${this.url}/${id}`);
+    }
 
 }

@@ -49,6 +49,24 @@
         <td mat-cell *matCellDef="let element">{{ element.users?.id }}</td>
       </ng-container>
 
+      <ng-container matColumnDef="c8">
+        <th mat-header-cell *matHeaderCellDef> Actualizar </th>
+          <td mat-cell *matCellDef="let element">
+            <button matButton [routerLink]="['ediciones',element.idParcel]">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+      </ng-container>
+
+      <ng-container matColumnDef="c9">
+        <th mat-header-cell *matHeaderCellDef> Eliminar </th>
+          <td mat-cell *matCellDef="let element">
+            <button matButton (click)="eliminar(element.idParcel)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+      </ng-container>
+
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>

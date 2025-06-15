@@ -18,6 +18,9 @@ export const routes: Routes = [
         children:[
             {
                 path:'nuevo',component:InsertareditarComponent
+            },
+            {
+                path:'ediciones/:id',component:InsertareditarComponent
             }
         ]
     },
@@ -26,6 +29,9 @@ export const routes: Routes = [
         children:[
             {
                 path:'nuevo',component:InsertareditarlocalmarketComponent
+            },
+            {
+                path:'ediciones/:id',component:InsertareditarlocalmarketComponent
             }
         ]
     },
@@ -34,6 +40,9 @@ export const routes: Routes = [
         children:[
             {
                 path:'nuevo',component:InsertareditarinputComponent
+            },
+            {
+                path:'ediciones/:id',component:InsertareditarinputComponent
             }
         ]
     },
@@ -42,6 +51,9 @@ export const routes: Routes = [
         children:[
             {
                 path:'nuevo',component:InsertareditarroleComponent
+            },
+            {
+                path:'ediciones/:id',component:InsertareditarroleComponent
             }
         ]
     },
@@ -50,6 +62,9 @@ export const routes: Routes = [
         children:[
             {
                 path:'nuevo',component:InsertareditarusersComponent
+            },
+            {
+                path:'ediciones/:id',component:InsertareditarusersComponent
             }
         ]
     },
@@ -58,6 +73,9 @@ export const routes: Routes = [
         children:[
             {
                 path:'nuevo',component:InsertareditarparcelComponent
+            },
+            {
+                path:'ediciones/:id',component:InsertareditarparcelComponent
             }
         ]
     }

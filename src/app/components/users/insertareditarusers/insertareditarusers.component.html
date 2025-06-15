@@ -2,6 +2,14 @@
   <div><h1>Registro de Usuarios</h1></div>
   <div>
     <form [formGroup]="form" (submit)="aceptar()">
+      <mat-form-field *ngIf="edicion">
+        <mat-label>ID</mat-label>
+        <input matInput formControlName="codigo" />
+        <mat-error *ngIf="form.get('codigo')?.hasError('required')">
+          El código es obligatorio!!
+        </mat-error>
+      </mat-form-field>
+      <br />
       <mat-form-field>
         <mat-label>Username</mat-label>
         <input matInput formControlName="username" maxlength="30" />
@@ -13,7 +21,6 @@
         </mat-error>
       </mat-form-field>
       <br />
-      
       <mat-form-field>
         <mat-label>Contraseña</mat-label>
         <input matInput type="password" formControlName="password" />

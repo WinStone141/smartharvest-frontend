@@ -23,7 +23,7 @@ export class ParcelService {
       return this.http.post(this.url,p)
     }
     getList() {
-      return this.listaCambio.asObservable
+      return this.listaCambio.asObservable();
     }
     setList(listaNueva:Parcel[]){
       this.listaCambio.next(listaNueva);
@@ -31,4 +31,14 @@ export class ParcelService {
       getUsers() {
     return this.http.get<Users[]>(`${base_url}/users`);
   }
+  listId(id: number) {
+        return this.http.get<Parcel>(`${this.url}/${id}`);
+      }
+      update(a: Parcel) {
+        return this.http.put(this.url, a);
+      }
+    
+      deleteA(id: number) {
+        return this.http.delete(`${this.url}/${id}`);
+      }
 }

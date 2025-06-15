@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Role } from '../../../models/role';
 import { Users } from '../../../models/users';
 import { RoleService } from '../../../services/role.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -27,6 +27,9 @@ export class InsertareditarroleComponent implements OnInit {
   form: FormGroup = new FormGroup({});
   role:Role = new Role()
 
+  id: number = 0
+  edicion: boolean = false
+
   users:Users[]=[]
 
   roles:{value:string;viewValue:string}[]=[
@@ -38,11 +41,20 @@ export class InsertareditarroleComponent implements OnInit {
   constructor(
     private rS: RoleService,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    this.route.params.subscribe((data: Params) => {
+      this.id = data['id']
+      this.edicion = data['id'] != null
+      //actualizar
+      this.init()
+    }),
+
     this.form = this.formBuilder.group({
+      codigo: [''],
       rol: ['', Validators.required],
       idUser:['',Validators.required],
     });
@@ -63,20 +75,45 @@ export class InsertareditarroleComponent implements OnInit {
 
   aceptar() {
     if (this.form.valid) {
+      this.role.id = this.form.value.codigo;
       this.role.rol = this.form.value.rol;
       this.role.user.id = this.form.value.idUser;
-
-      this.rS.insert(this.role).subscribe({
-        next: () => {
+      if (this.edicion) {
+        //actualizar
+        this.rS.update(this.role).subscribe(() => {
           this.rS.list().subscribe((data) => {
             this.rS.setList(data);
           });
-          this.router.navigate(['roles']);
-        },
-        error: (error) => {
-          console.error('Error al insertar rol:', error);
-        }
-      });
+        });
+      } else {
+        //insertar
+        this.rS.insert(this.role).subscribe(() => {
+          this.rS.list().subscribe((data) => {
+            this.rS.setList(data);
+          });
+        });
+      }
+      this.router.navigate(['roles']);
     }
+  }
+
+  init() {
+    if (this.edicion) {
+      this.rS.listId(this.id).subscribe(data => {
+        this.form = new FormGroup({
+          codigo: new FormControl(data.id),
+          rol: new FormControl(data.rol),
+          idUser: new FormControl(data.user.id),
+        })
+      })
+    }
+  }
+
+  eliminar(id: number) {
+    this.rS.deleteA(id).subscribe(data => {
+      this.rS.list().subscribe(data => {
+        this.rS.setList(data)
+      })
+    })
   }
 }

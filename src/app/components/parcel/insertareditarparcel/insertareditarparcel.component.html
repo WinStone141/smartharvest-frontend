@@ -2,6 +2,14 @@
   <div><h1>Registrar Parcela</h1></div>
   <div>
     <form [formGroup]="form" (submit)="aceptar()">
+      <mat-form-field *ngIf="edicion">
+        <mat-label>ID</mat-label>
+        <input matInput formControlName="codigo" />
+        <mat-error *ngIf="form.get('codigo')?.hasError('required')">
+          El código es obligatorio!!
+        </mat-error>
+      </mat-form-field>
+      <br />
          <mat-form-field appearance="outline">
         <mat-label>Nombre de la Parcela</mat-label>
         <input matInput formControlName="name" maxlength="70" />

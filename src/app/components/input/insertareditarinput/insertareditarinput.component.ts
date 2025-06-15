@@ -1,7 +1,7 @@
 import { Component, input, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputService } from '../../../services/input.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Inputs } from '../../../models/inputs';
 import { Users } from '../../../models/users';
 import { MatInputModule } from '@angular/material/input';
@@ -29,6 +29,9 @@ export class InsertareditarinputComponent implements OnInit{
   form: FormGroup = new FormGroup({});
   input:Inputs = new Inputs()
 
+  id: number = 0
+  edicion: boolean = false
+
   users:Users[]=[]
 
   tipos:{value:string;viewValue:string}[]=[
@@ -50,11 +53,20 @@ export class InsertareditarinputComponent implements OnInit{
   constructor(
     private iS: InputService,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    this.route.params.subscribe((data: Params) => {
+      this.id = data['id']
+      this.edicion = data['id'] != null
+      //actualizar
+      this.init()
+    }),
+
     this.form = this.formBuilder.group({
+      codigo: [''],
       name: ['', [Validators.required, Validators.maxLength(70)]],
       type: ['', Validators.required],
       amount: ['', Validators.required],
@@ -80,6 +92,7 @@ export class InsertareditarinputComponent implements OnInit{
 
   aceptar() {
     if (this.form.valid) {
+      this.input.idInput = this.form.value.codigo;
       this.input.name = this.form.value.name;
       this.input.type = this.form.value.type;
       this.input.amount = this.form.value.amount;
@@ -89,17 +102,47 @@ export class InsertareditarinputComponent implements OnInit{
       this.input.users.id = this.form.value.idUser;
 
 
-      this.iS.insert(this.input).subscribe({
-        next: () => {
+      if (this.edicion) {
+        //actualizar
+        this.iS.update(this.input).subscribe(() => {
           this.iS.list().subscribe((data) => {
             this.iS.setList(data);
           });
-          this.router.navigate(['inputs']);
-        },
-        error: (error) => {
-          console.error('Error al insertar input:', error);
-        }
-      });
+        });
+      } else {
+        //insertar
+        this.iS.insert(this.input).subscribe(() => {
+          this.iS.list().subscribe((data) => {
+            this.iS.setList(data);
+          });
+        });
+      }
+      this.router.navigate(['inputs']);
     }
+  }
+
+  init() {
+    if (this.edicion) {
+      this.iS.listId(this.id).subscribe(data => {
+        this.form = new FormGroup({
+          codigo: new FormControl(data.idInput),
+          name: new FormControl(data.name),
+          type: new FormControl(data.type),
+          amount: new FormControl(data.amount),
+          unit: new FormControl(data.unit),
+          registrationDate: new FormControl(data.registrationDate),
+          expirationDate: new FormControl(data.expirationDate),
+          idUser: new FormControl(data.users.id),
+        })
+      })
+    }
+  }
+
+  eliminar(id: number) {
+    this.iS.deleteA(id).subscribe(data => {
+      this.iS.list().subscribe(data => {
+        this.iS.setList(data)
+      })
+    })
   }
 }
