@@ -22,9 +22,19 @@ export class LocalmarketService {
     return this.http.post(this.url,c)
   }
   getList() {
-    return this.listaCambio.asObservable
+    return this.listaCambio.asObservable();
   }
   setList(listaNueva:LocalMarket[]){
     this.listaCambio.next(listaNueva);
+  }
+      listId(id: number) {
+    return this.http.get<LocalMarket>(`${this.url}/${id}`);
+  }
+  update(a: LocalMarket) {
+    return this.http.put(this.url, a);
+  }
+
+  deleteA(id: number) {
+    return this.http.delete(`${this.url}/${id}`);
   }
 }

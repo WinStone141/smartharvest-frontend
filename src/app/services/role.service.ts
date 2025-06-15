@@ -24,7 +24,7 @@ private url=`${base_url}/roles`
     return this.http.post(this.url,r)
   }
   getList() {
-    return this.listaCambio.asObservable
+    return this.listaCambio.asObservable();
   }
   setList(listaNueva:Role[]){
     this.listaCambio.next(listaNueva);
@@ -32,5 +32,16 @@ private url=`${base_url}/roles`
 
   getUsers() {
       return this.http.get<Users[]>(`${base_url}/users`);
+    }
+  
+  listId(id: number) {
+        return this.http.get<Role>(`${this.url}/${id}`);
+    }
+  update(a: Role) {
+      return this.http.put(this.url, a);
+    }
+      
+  deleteA(id: number) {
+          return this.http.delete(`${this.url}/${id}`);
     }
 }

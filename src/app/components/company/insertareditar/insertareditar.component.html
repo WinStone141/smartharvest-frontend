@@ -2,6 +2,14 @@
   <div><h1>Registro de Empresas</h1></div>
   <div>
     <form [formGroup]="form" (submit)="aceptar()">
+      <mat-form-field *ngIf="edicion">
+        <mat-label>ID</mat-label>
+        <input matInput formControlName="codigo" />
+        <mat-error *ngIf="form.get('codigo')?.hasError('required')">
+          El código es obligatorio!!
+        </mat-error>
+      </mat-form-field>
+      <br />
       <mat-form-field>
         <mat-label>Empresa</mat-label>
         <input matInput formControlName="name" maxlength="100" />
@@ -80,7 +88,7 @@
       </mat-form-field>
 
       <button type="submit" mat-raised-button color="primary" [disabled]="!form.valid">
-        Registrar
+        Registrar Empresa
       </button>
     </form>
   </div>

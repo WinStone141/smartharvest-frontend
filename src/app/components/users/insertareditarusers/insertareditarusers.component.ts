@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core'; // Agregar OnInit
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { UsersForRegister } from '../../../models/usersforregister.';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { UsersForRegister } from '../../../models/usersforregister';
 import { UsersService } from '../../../services/users.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -29,14 +29,27 @@ export class InsertareditarusersComponent implements OnInit {
   user: UsersForRegister = new UsersForRegister();
   estado: boolean = true;
 
+  id: number = 0
+  edicion: boolean = false
+
   constructor(
     private uS: UsersService,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    this.route.params.subscribe((data: Params) => {
+      this.id = data['id']
+      this.edicion = data['id'] != null
+      //actualizar
+      this.init()
+    }),
+
+
     this.form = this.formBuilder.group({
+      codigo: [''],
       username: ['', [
         Validators.required,
         Validators.maxLength(30)
@@ -51,21 +64,49 @@ export class InsertareditarusersComponent implements OnInit {
 
   aceptar(): void {
     if (this.form.valid) {
+      this.user.id = this.form.value.codigo;
       this.user.username = this.form.value.username;
       this.user.password = this.form.value.password;
       this.user.enabled = this.form.value.enabled;
+      this.user.roles = [];
 
-      this.uS.insert(this.user).subscribe({
-        next: () => {
+      if (this.edicion) {
+        //actualizar
+        this.uS.update(this.user).subscribe(() => {
           this.uS.list().subscribe((data) => {
             this.uS.setList(data);
           });
-          this.router.navigate(['users']);
-        },
-        error: (error) => {
-          console.error('Error al insertar usuario:', error);
-        }
-      });
+        });
+      } else {
+        //insertar
+        this.uS.insert(this.user).subscribe(() => {
+          this.uS.list().subscribe((data) => {
+            this.uS.setList(data);
+          });
+        });
+      }
+      this.router.navigate(['users']);
     }
+  }
+
+  init() {
+    if (this.edicion) {
+      this.uS.listId(this.id).subscribe(data => {
+        this.form = new FormGroup({
+          codigo: new FormControl(data.id),
+          username: new FormControl(data.username),
+          password: new FormControl(''),
+          enabled: new FormControl(data.enabled)
+        })
+      })
+    }
+  }
+
+  eliminar(id: number) {
+    this.uS.deleteA(id).subscribe(data => {
+      this.uS.list().subscribe(data => {
+        this.uS.setList(data)
+      })
+    })
   }
 }

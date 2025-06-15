@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Parcel } from '../../../models/parcel';
 import { Users } from '../../../models/users';
 import { ParcelService } from '../../../services/parcel.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -29,6 +29,9 @@ export class InsertareditarparcelComponent implements OnInit {
   form: FormGroup = new FormGroup({});
   parcel:Parcel = new Parcel()
 
+  id: number = 0
+  edicion: boolean = false
+  
   users:Users[]=[]
 
   tipos:{value:string;viewValue:string}[]=[
@@ -42,11 +45,20 @@ export class InsertareditarparcelComponent implements OnInit {
   constructor(
     private iS: ParcelService,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute
   ) {}
 
     ngOnInit(): void {
+      this.route.params.subscribe((data: Params) => {
+      this.id = data['id']
+      this.edicion = data['id'] != null
+      //actualizar
+      this.init()
+    }),
+
     this.form = this.formBuilder.group({
+      codigo: [''],
       name: ['', [
         Validators.required, 
         Validators.maxLength(70),
@@ -84,6 +96,7 @@ export class InsertareditarparcelComponent implements OnInit {
 
   aceptar() {
     if (this.form.valid) {
+      this.parcel.idParcel = this.form.value.codigo;
       this.parcel.name = this.form.value.name;
       this.parcel.location = this.form.value.location;
       this.parcel.sizem2 = this.form.value.sizem2;
@@ -92,17 +105,46 @@ export class InsertareditarparcelComponent implements OnInit {
       this.parcel.users.id = this.form.value.idUser;
 
 
-      this.iS.insert(this.parcel).subscribe({
-        next: () => {
+      if (this.edicion) {
+        //actualizar
+        this.iS.update(this.parcel).subscribe(() => {
           this.iS.list().subscribe((data) => {
             this.iS.setList(data);
           });
-          this.router.navigate(['parcels']);
-        },
-        error: (error) => {
-          console.error('Error al insertar input:', error);
-        }
-      });
+        });
+      } else {
+        //insertar
+        this.iS.insert(this.parcel).subscribe(() => {
+          this.iS.list().subscribe((data) => {
+            this.iS.setList(data);
+          });
+        });
+      }
+      this.router.navigate(['parcels']);
     }
+  }
+
+  init() {
+    if (this.edicion) {
+      this.iS.listId(this.id).subscribe(data => {
+        this.form = new FormGroup({
+          codigo: new FormControl(data.idParcel),
+          name: new FormControl(data.name),
+          location: new FormControl(data.location),
+          sizem2: new FormControl(data.sizem2),
+          groundType: new FormControl(data.groundType),
+          registrationDate: new FormControl(data.registrationDate),
+          idUser: new FormControl(data.users.id),
+        })
+      })
+    }
+  }
+
+  eliminar(id: number) {
+    this.iS.deleteA(id).subscribe(data => {
+      this.iS.list().subscribe(data => {
+        this.iS.setList(data)
+      })
+    })
   }
 }
