@@ -5,17 +5,22 @@ import { CompanyService } from '../../../services/company.service';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-listarcompany',
-  imports: [MatTableModule, RouterLink, MatIconModule, MatButtonModule],
+  imports: [MatTableModule, RouterLink, MatIconModule, MatButtonModule, MatCardModule,
+    MatTooltipModule,
+    CommonModule],
   templateUrl: './listarcompany.component.html',
   styleUrl: './listarcompany.component.css',
 })
 export class ListarcompanyComponent implements OnInit {
   dataSource: MatTableDataSource<Company> = new MatTableDataSource();
 
-  displayedColumns: string[] = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8', 'c9','c10'];
+  displayedColumns: string[] = ['c1', 'c2', 'c3', 'c6', 'c7', 'c8', 'c9','c10','c11'];
 
   constructor(private cS: CompanyService) {}
 

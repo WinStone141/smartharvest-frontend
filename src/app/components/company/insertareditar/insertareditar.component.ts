@@ -13,6 +13,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-insertareditar',
@@ -22,6 +24,8 @@ import { CommonModule } from '@angular/common';
     MatFormFieldModule,
     CommonModule,
     ReactiveFormsModule,
+    MatIconModule,
+    MatCardModule
   ],
   templateUrl: './insertareditar.component.html',
   styleUrl: './insertareditar.component.css',
@@ -106,11 +110,7 @@ export class InsertareditarComponent implements OnInit {
     }
   }
 
-  eliminar(id: number) {
-    this.cS.deleteA(id).subscribe(data => {
-      this.cS.list().subscribe(data => {
-        this.cS.setList(data)
-      })
-    })
-  }
+  cancelar(): void {
+  this.router.navigate(['companies']);
+}
 }

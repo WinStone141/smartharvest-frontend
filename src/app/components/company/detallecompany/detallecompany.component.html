@@ -1,0 +1,98 @@
+<!-- detallecompany.component.html -->
+<div class="container">
+  <div class="header">
+    <h1>Detalle de Empresa</h1>
+    <button mat-button color="primary" (click)="volver()">
+      <mat-icon>arrow_back</mat-icon>
+      Volver
+    </button>
+  </div>
+
+  <mat-card class="company-detail-card">
+    <mat-card-header>
+      <mat-card-title>{{ company.name }}</mat-card-title>
+      <mat-card-subtitle>ID: {{ company.idCompany }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="detail-grid">
+        
+        <div class="detail-item">
+          <div class="detail-label">
+            <mat-icon>business</mat-icon>
+            <span>Nombre:</span>
+          </div>
+          <div class="detail-value">{{ company.name }}</div>
+        </div>
+
+        <div class="detail-item">
+          <div class="detail-label">
+            <mat-icon>description</mat-icon>
+            <span>Descripción:</span>
+          </div>
+          <div class="detail-value">{{ company.description }}</div>
+        </div>
+
+        <div class="detail-item">
+          <div class="detail-label">
+            <mat-icon>flag</mat-icon>
+            <span>Misión:</span>
+          </div>
+          <div class="detail-value">{{ company.mission }}</div>
+        </div>
+
+        <div class="detail-item">
+          <div class="detail-label">
+            <mat-icon>visibility</mat-icon>
+            <span>Visión:</span>
+          </div>
+          <div class="detail-value">{{ company.vision }}</div>
+        </div>
+
+        <div class="detail-item">
+          <div class="detail-label">
+            <mat-icon>location_on</mat-icon>
+            <span>Dirección:</span>
+          </div>
+          <div class="detail-value">{{ company.address }}</div>
+        </div>
+
+        <div class="detail-item">
+          <div class="detail-label">
+            <mat-icon>email</mat-icon>
+            <span>Correo:</span>
+          </div>
+          <div class="detail-value">
+            <a [href]="'mailto:' + company.email" class="email-link">
+              {{ company.email }}
+            </a>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <div class="detail-label">
+            <mat-icon>phone</mat-icon>
+            <span>Contacto:</span>
+          </div>
+          <div class="detail-value">
+            <a [href]="'tel:' + company.contact" class="phone-link">
+              {{ company.contact }}
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="editar()">
+        <mat-icon>edit</mat-icon>
+        Editar
+      </button>
+      <button mat-button (click)="volver()">
+        Cancelar
+      </button>
+    </mat-card-actions>
+
+  </mat-card>
+</div>
