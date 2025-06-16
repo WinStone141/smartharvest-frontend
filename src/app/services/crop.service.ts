@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { enviroment } from '../../environments/environment';
+import { environment } from '../../environments/environment';
 import { Subject } from 'rxjs';
 import { Crop } from '../models/crop';
 import { HttpClient } from '@angular/common/http';
 import { Parcel } from '../models/parcel';
-const base_url=enviroment.base
+const base_url=environment.base
 
 @Injectable({
   providedIn: 'root'
