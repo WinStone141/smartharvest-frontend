@@ -24,8 +24,13 @@
             {
               "glob": "**/*",
               "input": "public"
+            },
+            {
+              "glob": "_redirects",
+              "input": "public",
+              "output": "/"
             }
-            ],
+],
             "styles": [
               "@angular/material/prebuilt-themes/azure-blue.css",
               "src/styles.css"
