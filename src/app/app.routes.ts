@@ -16,6 +16,11 @@ import { DetallecompanyComponent } from './components/company/detallecompany/det
 
 export const routes: Routes = [
     {
+        path: '',
+        redirectTo: '/companies',
+        pathMatch: 'full'
+    },
+    {
         path:'companies',component:CompanyComponent,  
         children:[
             {
@@ -94,5 +99,9 @@ export const routes: Routes = [
                 path:'ediciones/:id',component:InsertareditarcropComponent
             }
         ]
+    },
+    {
+        path: '**',
+        redirectTo: '/companies'
     }
 ];
