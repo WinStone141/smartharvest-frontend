@@ -1,2 +1,13 @@
-<app-company></app-company>
-<app-localmarket></app-localmarket>
+<!-- Navigation menu -->
+<nav>
+  <a routerLink="/companies">Companies</a> |
+  <a routerLink="/localmarkets">Local Markets</a> |
+  <a routerLink="/inputs">Inputs</a> |
+  <a routerLink="/roles">Roles</a> |
+  <a routerLink="/users">Users</a> |
+  <a routerLink="/parcels">Parcels</a> |
+  <a routerLink="/crops">Crops</a>
+</nav>
+
+<!-- Aquí se renderiza el componente según la ruta actual -->
+<router-outlet></router-outlet>
