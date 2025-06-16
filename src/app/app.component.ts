@@ -5,7 +5,7 @@ import { LocalmarketComponent } from './components/localmarket/localmarket.compo
 
 @Component({
   selector: 'app-root',
-  imports: [CompanyComponent, LocalmarketComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
