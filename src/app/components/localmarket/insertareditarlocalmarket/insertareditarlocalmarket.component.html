@@ -1,62 +1,167 @@
-<div>
-  <div><h1>Registro de Mercados</h1></div>
-  <div>
-    <form [formGroup]="form" (submit)="aceptar()">
-      <mat-form-field *ngIf="edicion">
-        <mat-label>ID</mat-label>
-        <input matInput formControlName="codigo" />
-        <mat-error *ngIf="form.get('codigo')?.hasError('required')">
-          El código es obligatorio!!
-        </mat-error>
-      </mat-form-field>
-      <br />
-      <mat-form-field>
-        <mat-label>Nombre</mat-label>
-        <input matInput formControlName="name" maxlength="100" />
-        <mat-error *ngIf="form.get('name')?.hasError('required')">
-          El nombre es obligatorio!!
-        </mat-error>
-        <mat-error *ngIf="form.get('name')?.hasError('maxlength')">
-          El nombre no puede exceder 100 caracteres
-        </mat-error>
-      </mat-form-field>
-      <br />
-      <mat-form-field>
-        <mat-label>Ubicación</mat-label>
-        <input matInput formControlName="location" maxlength="100" />
-        <mat-error *ngIf="form.get('location')?.hasError('required')">
-          La ubicación es obligatoria!!
-        </mat-error>
-        <mat-error *ngIf="form.get('location')?.hasError('maxlength')">
-          El nombre no puede exceder 100 caracteres
-        </mat-error>
-      </mat-form-field>
-      <br />
-      <mat-form-field>
-        <mat-label>Contacto</mat-label>
-        <input matInput formControlName="contact" type="tel" maxlength="9" />
-        <mat-error *ngIf="form.get('contact')?.hasError('required')">
-          El contacto es obligatorio!!
-        </mat-error>
-        <mat-error *ngIf="form.get('contact')?.hasError('pattern')">
-          El contacto debe tener exactamente 9 dígitos numéricos
-        </mat-error>
-      </mat-form-field>
-      <br />
-      <mat-form-field>
-        <mat-label>Horarios de atención</mat-label>
-        <input matInput formControlName="attentionDate" maxlength="50" />
-        <mat-error *ngIf="form.get('attentionDate')?.hasError('required')">
-          El horario de atención es obligatorio!!
-        </mat-error>
-        <mat-error *ngIf="form.get('attentionDate')?.hasError('maxlength')">
-          El nombre no puede exceder 50 caracteres
-        </mat-error>
-      </mat-form-field>
-
-      <button type="submit" mat-raised-button color="primary" [disabled]="!form.valid">
-        Registrar
-      </button>
-    </form>
+<div class="form-container">
+  <!-- Header Section -->
+  <div class="form-header">
+    <div class="header-content">
+      <div class="icon-wrapper">
+        <mat-icon class="header-icon">store</mat-icon>
+      </div>
+      <div class="header-text">
+        <h1>{{ edicion ? 'Editar Mercado' : 'Registro de Mercados' }}</h1>
+        <p class="header-subtitle">{{ edicion ? 'Actualiza la información del mercado local' : 'Complete todos los campos para registrar un nuevo mercado local' }}</p>
+      </div>
+    </div>
   </div>
+
+  <!-- Form Card -->
+  <mat-card class="form-card">
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="aceptar()" class="market-form">
+        
+        <!-- Two Columns Container -->
+        <div class="form-sections-container">
+          
+          <!-- COLUMNA 1: Identificación e Información Básica -->
+          <div class="column-container">
+            <!-- ID Field (Only in edit mode) -->
+            <div class="form-section" *ngIf="edicion">
+              <h3 class="section-title">
+                <mat-icon>fingerprint</mat-icon>
+                Identificación
+              </h3>
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>ID de Mercado</mat-label>
+                  <input matInput formControlName="codigo" readonly />
+                  <mat-icon matSuffix>badge</mat-icon>
+                  <mat-hint>Este campo no es editable</mat-hint>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <!-- Basic Information Section -->
+            <div class="form-section">
+              <h3 class="section-title">
+                <mat-icon>info</mat-icon>
+                Información del Mercado
+              </h3>
+              
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Nombre del Mercado</mat-label>
+                  <input matInput formControlName="name" maxlength="100" placeholder="Ej: Mercado Central de Lima" />
+                  <mat-icon matSuffix>store</mat-icon>
+                  <mat-hint>Máximo 100 caracteres</mat-hint>
+                  <mat-error *ngIf="form.get('name')?.hasError('required')">
+                    El nombre es obligatorio
+                  </mat-error>
+                  <mat-error *ngIf="form.get('name')?.hasError('maxlength')">
+                    El nombre no puede exceder 100 caracteres
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Ubicación</mat-label>
+                  <input matInput 
+                         formControlName="location" 
+                         maxlength="100" 
+                         placeholder="Ej: Av. Abancay 123, Cercado de Lima" />
+                  <mat-icon matSuffix>location_on</mat-icon>
+                  <mat-hint>Máximo 100 caracteres</mat-hint>
+                  <mat-error *ngIf="form.get('location')?.hasError('required')">
+                    La ubicación es obligatoria
+                  </mat-error>
+                  <mat-error *ngIf="form.get('location')?.hasError('maxlength')">
+                    La ubicación no puede exceder 100 caracteres
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <!-- COLUMNA 2: Información de Contacto y Horarios -->
+          <div class="column-container">
+            <div class="form-section">
+              <h3 class="section-title">
+                <mat-icon>contact_phone</mat-icon>
+                Contacto y Horarios
+              </h3>
+              
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Teléfono de Contacto</mat-label>
+                  <input matInput 
+                         formControlName="contact" 
+                         type="tel" 
+                         maxlength="9" 
+                         placeholder="987654321" />
+                  <mat-icon matSuffix>phone</mat-icon>
+                  <mat-hint>9 dígitos</mat-hint>
+                  <mat-error *ngIf="form.get('contact')?.hasError('required')">
+                    El contacto es obligatorio
+                  </mat-error>
+                  <mat-error *ngIf="form.get('contact')?.hasError('pattern')">
+                    El contacto debe tener exactamente 9 dígitos numéricos
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Horarios de Atención</mat-label>
+                  <textarea matInput 
+                            formControlName="attentionDate" 
+                            maxlength="50" 
+                            rows="3"
+                            placeholder="Ej: Lunes a Viernes 6:00 AM - 6:00 PM"></textarea>
+                  <mat-icon matSuffix>schedule</mat-icon>
+                  <mat-hint>Máximo 50 caracteres</mat-hint>
+                  <mat-error *ngIf="form.get('attentionDate')?.hasError('required')">
+                    El horario de atención es obligatorio
+                  </mat-error>
+                  <mat-error *ngIf="form.get('attentionDate')?.hasError('maxlength')">
+                    Los horarios no pueden exceder 50 caracteres
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <!-- Info Box -->
+              <div class="info-box">
+                <mat-icon class="info-icon">info</mat-icon>
+                <div class="info-content">
+                  <h4>Información del Mercado</h4>
+                  <p>Asegúrate de proporcionar información precisa para facilitar el contacto con tu mercado local.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons (Centered below the two columns) -->
+        <div class="form-actions">
+          <div class="button-group">
+            <button type="button" 
+                    mat-stroked-button 
+                    color="warn" 
+                    class="action-button cancel-button"
+                    (click)="cancelar()">
+              <mat-icon>cancel</mat-icon>
+              Cancelar
+            </button>
+            
+            <button type="submit" 
+                    mat-raised-button 
+                    color="primary" 
+                    class="action-button submit-button"
+                    [disabled]="!form.valid">
+              <mat-icon>{{ edicion ? 'save' : 'add_business' }}</mat-icon>
+              {{ edicion ? 'Actualizar Mercado' : 'Registrar Mercado' }}
+            </button>
+          </div>
+        </div>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
 </div>

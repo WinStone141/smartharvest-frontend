@@ -1,81 +1,174 @@
-<div class="container">
-  <div style="text-align: center;margin: 5%;">
-    <h1>Lista de Empresas</h1>
+<div class="table-container">
+  <!-- Header Section -->
+  <div class="table-header">
+    <div class="header-content">
+      <div class="header-info">
+        <h1 class="page-title">
+          <mat-icon class="title-icon"  style="color: white;">business</mat-icon>
+          Lista de Empresas
+        </h1>
+        <p class="page-subtitle">Gestiona y visualiza todas las empresas registradas</p>
+      </div>
+      <div class="header-actions">
+        <button mat-raised-button style="color: #4caf50" class="add-button"  routerLink="nuevo" >
+          <mat-icon>add</mat-icon>
+          Nueva Empresa
+        </button>
+      </div>
+    </div>
   </div>
-  <div>
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-      <!--- Note that these columns can be defined in any order.
-        The actual rendered columns are set as a property on the row definition" -->
 
-      <!-- Position Column -->
-      <ng-container matColumnDef="c1">
-        <th mat-header-cell *matHeaderCellDef>ID</th>
-        <td mat-cell *matCellDef="let element">{{ element.idCompany }}</td>
-      </ng-container>
+  <!-- Table Card -->
+  <mat-card class="table-card">
+    <mat-card-content>
+      <div class="table-wrapper">
+        <table mat-table [dataSource]="dataSource" class="companies-table">
 
-      <!-- Name Column -->
-      <ng-container matColumnDef="c2">
-        <th mat-header-cell *matHeaderCellDef>Nombre</th>
-        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
-      </ng-container>
+          <!-- ID Column -->
+          <ng-container matColumnDef="c1">
+            <th mat-header-cell *matHeaderCellDef class="id-column">
+              <div class="header-content">
+                <mat-icon>fingerprint</mat-icon>
+                <span>ID</span>
+              </div>
+            </th>
+            <td mat-cell *matCellDef="let element" class="id-cell">
+              <span class="id-badge">{{ element.idCompany }}</span>
+            </td>
+          </ng-container>
 
-      <!-- Weight Column -->
-      <ng-container matColumnDef="c3">
-        <th mat-header-cell *matHeaderCellDef>Descripción</th>
-        <td mat-cell *matCellDef="let element">{{ element.description }}</td>
-      </ng-container>
+          <!-- Name Column -->
+          <ng-container matColumnDef="c2">
+            <th mat-header-cell *matHeaderCellDef>
+              <div class="header-content">
+                <mat-icon>business</mat-icon>
+                <span>Nombre</span>
+              </div>
+            </th>
+            <td mat-cell *matCellDef="let element" class="name-cell">
+              <div class="company-name">
+                <span class="primary-text">{{ element.name }}</span>
+              </div>
+            </td>
+          </ng-container>
 
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="c4">
-        <th mat-header-cell *matHeaderCellDef>Misión</th>
-        <td mat-cell *matCellDef="let element">{{ element.mission }}</td>
-      </ng-container>
+          <!-- Description Column -->
+          <ng-container matColumnDef="c3">
+            <th mat-header-cell *matHeaderCellDef>
+              <div class="header-content">
+                <mat-icon>description</mat-icon>
+                <span>Descripción</span>
+              </div>
+            </th>
+            <td mat-cell *matCellDef="let element" class="description-cell">
+              <span class="description-text" [title]="element.description">
+                {{ element.description.length > 60 ? (element.description | slice:0:60) + '...' : element.description }}
+              </span>
+            </td>
+          </ng-container>
 
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="c5">
-        <th mat-header-cell *matHeaderCellDef>Visión</th>
-        <td mat-cell *matCellDef="let element">{{ element.vision }}</td>
-      </ng-container>
+          <!-- Address Column -->
+          <ng-container matColumnDef="c6">
+            <th mat-header-cell *matHeaderCellDef>
+              <div class="header-content">
+                <mat-icon>location_on</mat-icon>
+                <span>Dirección</span>
+              </div>
+            </th>
+            <td mat-cell *matCellDef="let element" class="address-cell">
+              <span class="address-text">{{ element.address }}</span>
+            </td>
+          </ng-container>
 
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="c6">
-        <th mat-header-cell *matHeaderCellDef>Dirección</th>
-        <td mat-cell *matCellDef="let element">{{ element.address }}</td>
-      </ng-container>
+          <!-- Email Column -->
+          <ng-container matColumnDef="c7">
+            <th mat-header-cell *matHeaderCellDef>
+              <div class="header-content">
+                <mat-icon>email</mat-icon>
+                <span>Correo</span>
+              </div>
+            </th>
+            <td mat-cell *matCellDef="let element" class="email-cell">
+              <a [href]="'mailto:' + element.email" class="email-link">
+                {{ element.email }}
+              </a>
+            </td>
+          </ng-container>
 
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="c7">
-        <th mat-header-cell *matHeaderCellDef>Correo</th>
-        <td mat-cell *matCellDef="let element">{{ element.email }}</td>
-      </ng-container>
+          <!-- Contact Column -->
+          <ng-container matColumnDef="c8">
+            <th mat-header-cell *matHeaderCellDef>
+              <div class="header-content">
+                <mat-icon>phone</mat-icon>
+                <span>Contacto</span>
+              </div>
+            </th>
+            <td mat-cell *matCellDef="let element" class="contact-cell">
+              <a [href]="'tel:' + element.contact" class="phone-link">
+                {{ element.contact }}
+              </a>
+            </td>
+          </ng-container>
 
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="c8">
-        <th mat-header-cell *matHeaderCellDef>Contacto</th>
-        <td mat-cell *matCellDef="let element">{{ element.contact }}</td>
-      </ng-container>
+          <!-- Actions Columns -->
+          <ng-container matColumnDef="c9">
+            <th mat-header-cell *matHeaderCellDef class="actions-header">
+              <span>Ver Detalle</span>
+            </th>
+            <td mat-cell *matCellDef="let element" class="action-cell">
+              <button mat-icon-button 
+                      class="action-button detail-button" 
+                      [routerLink]="['detalle',element.idCompany]"
+                      matTooltip="Ver detalles completos">
+                <mat-icon>visibility</mat-icon>
+              </button>
+            </td>
+          </ng-container>
 
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="c9">
-        <th mat-header-cell *matHeaderCellDef> Actualizar </th>
-          <td mat-cell *matCellDef="let element">
-            <button matButton [routerLink]="['ediciones',element.idCompany]">
-              <mat-icon>edit</mat-icon>
-            </button>
-          </td>
-      </ng-container>
+          <ng-container matColumnDef="c10">
+            <th mat-header-cell *matHeaderCellDef class="actions-header">
+              <span>Editar</span>
+            </th>
+            <td mat-cell *matCellDef="let element" class="action-cell">
+              <button mat-icon-button 
+                      class="action-button edit-button" 
+                      [routerLink]="['ediciones',element.idCompany]"
+                      matTooltip="Editar empresa">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </td>
+          </ng-container>
 
-      <ng-container matColumnDef="c10">
-        <th mat-header-cell *matHeaderCellDef> Eliminar </th>
-          <td mat-cell *matCellDef="let element">
-            <button matButton (click)="eliminar(element.idCompany)">
-              <mat-icon>delete</mat-icon>
-            </button>
-          </td>
-      </ng-container>
+          <ng-container matColumnDef="c11">
+            <th mat-header-cell *matHeaderCellDef class="actions-header">
+              <span>Eliminar</span>
+            </th>
+            <td mat-cell *matCellDef="let element" class="action-cell">
+              <button mat-icon-button 
+                      class="action-button delete-button" 
+                      (click)="eliminar(element.idCompany)"
+                      matTooltip="Eliminar empresa">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-    </table>
-  </div>
+          <!-- Header and Row Definitions -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns" class="table-header-row"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="table-row"></tr>
+        </table>
+
+        <!-- Empty State -->
+        <div *ngIf="dataSource.data.length === 0" class="empty-state">
+          <mat-icon class="empty-icon">business_center</mat-icon>
+          <h3>No hay empresas registradas</h3>
+          <p>Comienza agregando tu primera empresa</p>
+          <button mat-raised-button class="add-button" routerLink="nuevo">
+            <mat-icon>add</mat-icon>
+            Agregar Primera Empresa
+          </button>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
 </div>

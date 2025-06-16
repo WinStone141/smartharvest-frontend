@@ -11,6 +11,8 @@ import { UsersComponent } from './components/users/users.component';
 import { InsertareditarusersComponent } from './components/users/insertareditarusers/insertareditarusers.component';
 import { ParcelComponent } from './components/parcel/parcel.component';
 import { InsertareditarparcelComponent } from './components/parcel/insertareditarparcel/insertareditarparcel.component';
+import { InsertareditarcropComponent } from './components/crop/insertareditarcrop/insertareditarcrop.component';
+import { DetallecompanyComponent } from './components/company/detallecompany/detallecompany.component';
 
 export const routes: Routes = [
     {
@@ -21,6 +23,9 @@ export const routes: Routes = [
             },
             {
                 path:'ediciones/:id',component:InsertareditarComponent
+            },
+            {
+                path:'detalle/:id',component:DetallecompanyComponent
             }
         ]
     },
@@ -76,6 +81,17 @@ export const routes: Routes = [
             },
             {
                 path:'ediciones/:id',component:InsertareditarparcelComponent
+            }
+        ]
+    },
+    {
+        path:'crops',component:ParcelComponent,
+        children:[
+            {
+                path:'nuevo',component:InsertareditarcropComponent
+            },
+            {
+                path:'ediciones/:id',component:InsertareditarcropComponent
             }
         ]
     }

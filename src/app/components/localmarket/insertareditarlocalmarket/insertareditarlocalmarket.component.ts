@@ -7,11 +7,13 @@ import {provideNativeDateAdapter} from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-insertareditarlocalmarket',
   providers: [provideNativeDateAdapter()],
-  imports: [MatInputModule, MatFormFieldModule, CommonModule, ReactiveFormsModule],
+  imports: [MatInputModule, MatFormFieldModule, CommonModule, ReactiveFormsModule, MatIconModule, MatCardModule],
   templateUrl: './insertareditarlocalmarket.component.html',
   styleUrl: './insertareditarlocalmarket.component.css'
 })
@@ -86,11 +88,7 @@ export class InsertareditarlocalmarketComponent implements OnInit {
     }
   }
 
-  eliminar(id: number) {
-    this.lS.deleteA(id).subscribe(data => {
-      this.lS.list().subscribe(data => {
-        this.lS.setList(data)
-      })
-    })
+  cancelar(): void {
+  this.router.navigate(['localmarkets']);
   }
 }

@@ -1,0 +1,259 @@
+/* detallecompany.component.css */
+
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  width: 100%;
+  max-width: 800px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.header h1 {
+  margin: 0;
+  color: white;
+  font-size: 2rem;
+  font-weight: 300;
+}
+
+.header button {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.header button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.company-detail-card {
+  width: 100%;
+  max-width: 800px;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  background: white;
+  overflow: hidden;
+}
+
+.company-detail-card mat-card-header {
+  background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c8 100%);
+  padding: 24px;
+  border-bottom: 1px solid #e8f5e8;
+}
+
+.company-detail-card mat-card-title {
+  color: #2e7d32;
+  font-size: 1.75rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.company-detail-card mat-card-subtitle {
+  color: #4caf50;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.detail-grid {
+  display: grid;
+  gap: 24px;
+  margin: 24px 0;
+  padding: 0 24px;
+}
+
+.detail-item {
+  border-bottom: 1px solid #e8f5e8;
+  padding-bottom: 16px;
+  transition: all 0.3s ease;
+}
+
+.detail-item:hover {
+  transform: translateX(4px);
+  border-bottom-color: #c8e6c8;
+}
+
+.detail-item:last-child {
+  border-bottom: none;
+}
+
+.detail-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+  color: #388e3c;
+  margin-bottom: 8px;
+  font-size: 1rem;
+}
+
+.detail-label mat-icon {
+  font-size: 22px;
+  width: 22px;
+  height: 22px;
+  color: #4caf50;
+  background: #e8f5e8;
+  border-radius: 50%;
+  padding: 8px;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.detail-value {
+  margin-left: 50px;
+  color: #333;
+  line-height: 1.6;
+  word-wrap: break-word;
+  font-size: 1rem;
+}
+
+.email-link, .phone-link {
+  color: #4caf50;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.email-link:hover, .phone-link:hover {
+  color: #388e3c;
+  text-decoration: underline;
+  transform: translateX(2px);
+}
+
+/* Card Actions */
+.company-detail-card mat-card-actions {
+  padding: 24px;
+  background: #fafafa;
+  border-top: 1px solid #e8f5e8;
+  display: flex;
+  gap: 16px;
+  justify-content: flex-end;
+}
+
+.company-detail-card mat-card-actions button[mat-raised-button] {
+  background: linear-gradient(45deg, #4caf50, #66bb6a);
+  color: white;
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+  transition: all 0.3s ease;
+  min-width: 120px;
+}
+
+.company-detail-card mat-card-actions button[mat-raised-button]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+  background: linear-gradient(45deg, #388e3c, #4caf50);
+}
+
+.company-detail-card mat-card-actions button[mat-button] {
+  color: #666;
+  border: 1px solid #ddd;
+  transition: all 0.3s ease;
+  min-width: 120px;
+}
+
+.company-detail-card mat-card-actions button[mat-button]:hover {
+  color: #4caf50;
+  border-color: #4caf50;
+  background: rgba(76, 175, 80, 0.05);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+  }
+  
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    align-items: stretch;
+    text-align: center;
+  }
+  
+  .header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .detail-value {
+    margin-left: 0;
+    margin-top: 8px;
+  }
+  
+  .detail-label {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .company-detail-card mat-card-actions {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .company-detail-card mat-card-actions button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .header h1 {
+    font-size: 1.25rem;
+  }
+  
+  .company-detail-card mat-card-title {
+    font-size: 1.5rem;
+  }
+  
+  .detail-label mat-icon {
+    width: 32px;
+    height: 32px;
+    padding: 6px;
+  }
+}
+
+/* Animation for card appearance */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.company-detail-card {
+  animation: slideInUp 0.6s ease-out;
+}
+
+.detail-item {
+  animation: slideInUp 0.6s ease-out;
+  animation-fill-mode: both;
+}
+
+.detail-item:nth-child(1) { animation-delay: 0.1s; }
+.detail-item:nth-child(2) { animation-delay: 0.15s; }
+.detail-item:nth-child(3) { animation-delay: 0.2s; }
+.detail-item:nth-child(4) { animation-delay: 0.25s; }
+.detail-item:nth-child(5) { animation-delay: 0.3s; }
+.detail-item:nth-child(6) { animation-delay: 0.35s; }
+.detail-item:nth-child(7) { animation-delay: 0.4s; }

@@ -1,62 +1,118 @@
-<div>
-  <div>
-    <h1>Lista de Mercados</h1>
+<!-- listarlocalmarket.component.html -->
+<div class="markets-container">
+  <!-- Header Section -->
+  <div class="markets-header">
+    <div class="header-content">
+      <div class="header-info">
+        <h1 class="page-title">
+          <mat-icon class="title-icon">store</mat-icon>
+          Lista de Mercados Locales
+        </h1>
+        <p class="page-subtitle">Gestiona y visualiza todos los mercados locales registrados</p>
+      </div>
+      <div class="header-actions">
+        <button mat-raised-button class="add-button" routerLink="nuevo">
+          <mat-icon>add</mat-icon>
+          Nuevo Mercado
+        </button>
+      </div>
+    </div>
   </div>
-  <div>
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-      <!--- Note that these columns can be defined in any order.
-        The actual rendered columns are set as a property on the row definition" -->
 
-      <!-- Position Column -->
-      <ng-container matColumnDef="c1">
-        <th mat-header-cell *matHeaderCellDef>ID</th>
-        <td mat-cell *matCellDef="let element">{{ element.idLocalMarket }}</td>
-      </ng-container>
+  <!-- Cards Grid Section -->
+  <div class="cards-section" *ngIf="localMarkets.length > 0">
+    <div class="cards-container">
+      <mat-card *ngFor="let market of localMarkets; let i = index" 
+                class="market-card" 
+                [style.animation-delay.s]="i * 0.1">
+        
+        <!-- Card Header with ID Badge -->
+        <mat-card-header class="card-header">
+          <div class="header-left">
+            <mat-card-title class="market-title">{{ market.name }}</mat-card-title>
+            <mat-card-subtitle class="market-subtitle">ID: {{ market.idLocalMarket }}</mat-card-subtitle>
+          </div>
+          
+        </mat-card-header>
 
-      <!-- Name Column -->
-      <ng-container matColumnDef="c2">
-        <th mat-header-cell *matHeaderCellDef>Nombre</th>
-        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
-      </ng-container>
+        <!-- Card Content -->
+        <mat-card-content class="card-content">
+          <div class="market-info">
+            
+            <div class="info-item location-item">
+              <div class="info-icon-wrapper">
+                <mat-icon class="info-icon">location_on</mat-icon>
+              </div>
+              <div class="info-details">
+                <span class="info-label">Ubicación</span>
+                <span class="info-value">{{ market.location }}</span>
+              </div>
+            </div>
+            
+            <div class="info-item contact-item">
+              <div class="info-icon-wrapper">
+                <mat-icon class="info-icon">phone</mat-icon>
+              </div>
+              <div class="info-details">
+                <span class="info-label">Contacto</span>
+                <a [href]="'tel:' + market.contact" class="info-value contact-link">
+                  {{ market.contact }}
+                </a>
+              </div>
+            </div>
+            
+            <div class="info-item schedule-item">
+              <div class="info-icon-wrapper">
+                <mat-icon class="info-icon">schedule</mat-icon>
+              </div>
+              <div class="info-details">
+                <span class="info-label">Horario de Atención</span>
+                <span class="info-value">{{ market.attentionDate }}</span>
+              </div>
+            </div>
 
-      <!-- Weight Column -->
-      <ng-container matColumnDef="c3">
-        <th mat-header-cell *matHeaderCellDef>Ubicación</th>
-        <td mat-cell *matCellDef="let element">{{ element.location }}</td>
-      </ng-container>
+          </div>
+        </mat-card-content>
 
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="c4">
-        <th mat-header-cell *matHeaderCellDef>Contacto</th>
-        <td mat-cell *matCellDef="let element">{{ element.contact }}</td>
-      </ng-container>
+        <!-- Card Actions -->
+        <mat-card-actions class="card-actions">
+          <button mat-icon-button 
+                  class="action-button edit-button" 
+                  [routerLink]="['ediciones',market.idLocalMarket]"
+                  matTooltip="Editar mercado">
+            <mat-icon>edit</mat-icon>
+          </button>
+          
+          <button mat-icon-button 
+                  class="action-button delete-button" 
+                  (click)="eliminar(market.idLocalMarket)"
+                  matTooltip="Eliminar mercado">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-card-actions>
 
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="c5">
-        <th mat-header-cell *matHeaderCellDef>Fecha de atención</th>
-        <td mat-cell *matCellDef="let element">{{ element.attentionDate }}</td>
-      </ng-container>
+      </mat-card>
+    </div>
+  </div>
 
-            <ng-container matColumnDef="c6">
-        <th mat-header-cell *matHeaderCellDef> Actualizar </th>
-          <td mat-cell *matCellDef="let element">
-            <button matButton [routerLink]="['ediciones',element.idLocalMarket]">
-              <mat-icon>edit</mat-icon>
-            </button>
-          </td>
-      </ng-container>
-
-      <ng-container matColumnDef="c7">
-        <th mat-header-cell *matHeaderCellDef> Eliminar </th>
-          <td mat-cell *matCellDef="let element">
-            <button matButton (click)="eliminar(element.idLocalMarket)">
-              <mat-icon>delete</mat-icon>
-            </button>
-          </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-    </table>
+  <!-- Empty State -->
+  <div *ngIf="localMarkets.length === 0" class="empty-state">
+    <mat-card class="empty-card">
+      <mat-card-content>
+        <div class="empty-content">
+          <div class="empty-icon-wrapper">
+            <mat-icon class="empty-icon">store</mat-icon>
+          </div>
+          <h3 class="empty-title">No hay mercados registrados</h3>
+          <p class="empty-description">
+            Comienza agregando tu primer mercado local para gestionar mejor tus ventas
+          </p>
+          <button mat-raised-button class="add-button" routerLink="nuevo">
+            <mat-icon>add</mat-icon>
+            Agregar Primer Mercado
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
   </div>
 </div>
