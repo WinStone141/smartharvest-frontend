@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: smartharvest-frontend
+    env: static
+    buildCommand: npm install && ng build --configuration=production
+    staticPublishPath: ./dist/smart-harvest-frontend
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
