@@ -1,4 +1,4 @@
-export const enviroment={
-    production:false,
-    base:"http://localhost:8083"
-}
+export const environment = {
+  production: true,
+  base: "https://smartharvest-backend.onrender.com"
+};
