@@ -73,10 +73,11 @@
 
 .cards-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 24px;
   max-width: 1400px;
   margin: 0 auto;
+  align-items: stretch;
 }
 
 /* Market Card */
@@ -88,6 +89,9 @@
   transition: all 0.3s ease;
   height: fit-content;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .market-card:hover {
@@ -144,6 +148,7 @@
 /* Card Content */
 .card-content {
   padding: 24px;
+  flex: 1;
 }
 
 .market-info {
@@ -463,5 +468,14 @@
 .market-card {
   animation: slideInUp 0.6s ease-out both;
 }
+
+.img-ajustada {
+  width: 100%;
+  height: auto;
+  max-height: 150px; /* o el valor que prefieras */
+  object-fit: contain; /* mantiene toda la imagen visible */
+}
+
+
 
 /* Stagger animation delay is handled in HTML with [style.animation-delay.s] */
