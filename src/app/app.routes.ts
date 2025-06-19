@@ -13,12 +13,16 @@ import { ParcelComponent } from './components/parcel/parcel.component';
 import { InsertareditarparcelComponent } from './components/parcel/insertareditarparcel/insertareditarparcel.component';
 import { InsertareditarcropComponent } from './components/crop/insertareditarcrop/insertareditarcrop.component';
 import { DetallecompanyComponent } from './components/company/detallecompany/detallecompany.component';
+import { InicioComponent } from './components/inicio/inicio.component';
 
 export const routes: Routes = [
     {
         path: '',
-        redirectTo: '/companies',
+        redirectTo: '/inicio',
         pathMatch: 'full'
+    },
+    {
+        path:'incio',component:InicioComponent
     },
     {
         path:'companies',component:CompanyComponent,  
@@ -102,6 +106,6 @@ export const routes: Routes = [
     },
     {
         path: '**',
-        redirectTo: '/companies'
+        redirectTo: '/inicio'
     }
 ];

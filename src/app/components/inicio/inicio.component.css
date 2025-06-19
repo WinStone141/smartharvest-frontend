@@ -1,0 +1,277 @@
+/* default settings */
+html,
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+        sans-serif;
+    min-height: 100vh;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: inherit;
+}
+
+li {
+    list-style: none;
+}
+a {
+    text-decoration: none;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    outline: none;
+}
+
+:root {
+    --max-width: 1270px;
+}
+
+#main {
+    position: relative;
+}
+
+/* default settings */
+
+
+
+/* header */
+.header {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    z-index: 30;
+    color: white;
+}
+
+.header > section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo > h1 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.nav > ul {
+    display: flex;
+    gap: 20px;
+}
+
+.nav li {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.contact-button {
+    padding: 10px 20px;
+    background-color: #019d3d;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 19px;
+}
+
+.contact-button:hover {
+    background-color: #009648;
+}
+
+
+
+#menu-button {
+    display: none;
+    height: 24px;
+    width: 24px;
+}
+
+/* Responsive for header */
+@media screen and (max-width: 768px) {
+    .header > section {
+        gap: 10px;
+    }
+
+    .contact-button,
+    .nav,
+    .logo > h1 {
+        display: none;
+    }
+
+    #menu-button {
+        display: block;
+        background-image: url("./assets/images/menu-icon.svg");
+    }
+}
+
+.show-nav {
+    color: white;
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    height: 100vh;
+    width: 100%;
+    background-color: black;
+}
+
+.show-nav > ul {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    padding-top: 100px;
+}
+
+.show-menu {
+  background-image: url("./assets/images/close-icon.svg") !important;
+  z-index: 200;
+}
+
+/* hero */
+.hero {
+    width: 100%;
+    height: 665px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #f5f5f5;
+    background-image: url("./assets/images/hero.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    object-fit: cover;
+    position: relative;
+
+    padding: 10rem 1rem;
+}
+
+.hero-text {
+    width: 500px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    color: white;
+    align-items: center;
+    margin-bottom: 150px;
+}
+.hero-text > h1 {
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 48px;
+}
+.hero-text > h1 > span {
+    color: #019d3d;
+}
+.hero-text > p {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 24px;
+}
+
+.hero-text > a {
+    padding: 10px 20px;
+    background-color: #019d3d;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 19px;
+    width: fit-content;
+}
+
+.hero-text > a:hover {
+    background-color: #009648;
+}
+
+/* brands */
+.brands {
+    background-color: #009E3D;
+    width: 100%;
+    position: relative;
+    padding: 32px 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    z-index: 20;
+}
+
+
+.brands > h2 {
+    font-size: 36px;
+    font-weight: 700;
+}
+
+#top-wave {
+    position: absolute;
+    top: -48px;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    background-repeat: no-repeat;
+    z-index: 30;
+    background-image: url("./assets/images/top-wave.png");
+}
+
+#bottom-wave {
+    position: absolute;
+    bottom: -48px;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    background-repeat: repeat-x;
+    
+    background-image: url("./assets/images/top-wave.png");
+    z-index: 30;
+    rotate: 180deg;
+}
+
+.brands-images {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    margin-top: 32px;
+    overflow: hidden;
+}
+
+.brands-images > img {
+    height: 75px;
+}
+
+/* responsive brands */
+@media screen and (max-width: 1280px) {
+    .brands > h2 {
+        font-size: 24px;
+    }
+
+    .brands-images {
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .brands-images > img {
+        height: 50px;
+
+    }
+}

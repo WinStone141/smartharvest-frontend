@@ -1,0 +1,31 @@
+<mat-toolbar class="custom-toolbar">
+    <div>
+        <button mat-button routerLink="/incio">
+            <mat-icon>computer</mat-icon>
+            Inicio
+        </button>
+    </div>
+    <div>
+        <button mat-button [matMenuTriggerFor]="menuCompany" class="btn-rojo">
+            <mat-icon>computer</mat-icon>
+            Compañías
+        </button>
+    </div>
+    <div>
+        <button mat-button [matMenuTriggerFor]="menulocalmarkets" class="btn-rojo">
+            <mat-icon>computer</mat-icon>
+            Mercados Locales
+        </button>
+    </div>
+    
+</mat-toolbar>
+
+<mat-menu #menuCompany="matMenu">
+    <button mat-menu-item routerLink="/companies">Listar</button>
+    <button mat-menu-item routerLink="/companies/nuevo">Registrar</button>
+</mat-menu>
+
+<mat-menu #menulocalmarkets="matMenu">
+    <button mat-menu-item routerLink="/localmarkets">Listar</button>
+    <button mat-menu-item routerLink="/localmarkets/nuevo">Registrar</button>
+</mat-menu>
