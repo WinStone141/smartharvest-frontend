@@ -58,4 +58,10 @@ export class ListarlocalmarketComponent implements OnInit {
       });
     }
   }
+
+  onImageError(event: any): void {
+    // Si la imagen no se encuentra, mostrar una imagen por defecto con CSS
+    event.target.style.display = 'none';
+    event.target.parentElement.classList.add('image-error');
+  }
 }

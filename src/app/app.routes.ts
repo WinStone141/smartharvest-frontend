@@ -22,7 +22,7 @@ export const routes: Routes = [
         pathMatch: 'full'
     },
     {
-        path:'incio',component:InicioComponent
+        path:'inicio',component:InicioComponent
     },
     {
         path:'companies',component:CompanyComponent,  
