@@ -1,31 +1,67 @@
-<mat-toolbar class="custom-toolbar">
-    <div>
-        <button mat-button routerLink="/incio">
-            <mat-icon>computer</mat-icon>
-            Inicio
-        </button>
-    </div>
-    <div>
-        <button mat-button [matMenuTriggerFor]="menuCompany" class="btn-rojo">
-            <mat-icon>computer</mat-icon>
-            Compañías
-        </button>
-    </div>
-    <div>
-        <button mat-button [matMenuTriggerFor]="menulocalmarkets" class="btn-rojo">
-            <mat-icon>computer</mat-icon>
-            Mercados Locales
-        </button>
-    </div>
-    
+<mat-toolbar color="primary" class="navbar">
+  <!-- Logo que redirige a /inicio -->
+  <span class="navbar-brand" [routerLink]="['/inicio']" style="cursor: pointer;">
+    <mat-icon class="brand-icon">business</mat-icon>
+    SmartHarvest
+  </span>
+
+  <!-- Menú principal -->
+  <div class="navbar-links">
+    <button mat-button [matMenuTriggerFor]="menuCompany">
+      <mat-icon>domain</mat-icon>
+      Compañías
+      <mat-icon class="menu-caret">expand_more</mat-icon>
+    </button>
+
+    <button mat-button [matMenuTriggerFor]="menulocalmarkets">
+      <mat-icon>storefront</mat-icon>
+      Mercados Locales
+      <mat-icon class="menu-caret">expand_more</mat-icon>
+    </button>
+  </div>
+
+  <span class="spacer"></span>
+
+  <!-- Menú de usuario -->
+  <div class="navbar-user">
+    <button mat-button [matMenuTriggerFor]="menuSalir">
+      <mat-icon>person</mat-icon>
+      Usuario
+      <mat-icon class="menu-caret">expand_more</mat-icon>
+    </button>
+  </div>
 </mat-toolbar>
 
+<!-- Menús desplegables -->
 <mat-menu #menuCompany="matMenu">
-    <button mat-menu-item routerLink="/companies">Listar</button>
-    <button mat-menu-item routerLink="/companies/nuevo">Registrar</button>
+  <button mat-menu-item routerLink="/companies">
+    <mat-icon>list</mat-icon>
+    <span>Listar</span>
+  </button>
+  <button mat-menu-item routerLink="/companies/nuevo">
+    <mat-icon>add_circle</mat-icon>
+    <span>Registrar</span>
+  </button>
 </mat-menu>
 
 <mat-menu #menulocalmarkets="matMenu">
-    <button mat-menu-item routerLink="/localmarkets">Listar</button>
-    <button mat-menu-item routerLink="/localmarkets/nuevo">Registrar</button>
+  <button mat-menu-item routerLink="/localmarkets">
+    <mat-icon>list</mat-icon>
+    <span>Listar</span>
+  </button>
+  <button mat-menu-item routerLink="/localmarkets/nuevo">
+    <mat-icon>add_circle</mat-icon>
+    <span>Registrar</span>
+  </button>
+</mat-menu>
+
+<mat-menu #menuSalir="matMenu">
+  <button mat-menu-item routerLink="/login" (click)="cerrar()">
+    <mat-icon>logout</mat-icon>
+    <span>Cerrar sesión</span>
+  </button>
+  <button mat-menu-item disabled>
+    <mat-icon>verified_user</mat-icon>
+    <span>Rol: {{ role }}</span>
+  </button>
 </mat-menu>

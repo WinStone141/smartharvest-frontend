@@ -14,12 +14,16 @@ import { InsertareditarparcelComponent } from './components/parcel/insertaredita
 import { InsertareditarcropComponent } from './components/crop/insertareditarcrop/insertareditarcrop.component';
 import { DetallecompanyComponent } from './components/company/detallecompany/detallecompany.component';
 import { InicioComponent } from './components/inicio/inicio.component';
+import { LoginComponent } from './components/login/login.component';
 
 export const routes: Routes = [
     {
         path: '',
         redirectTo: '/inicio',
         pathMatch: 'full'
+    },
+    {
+        path:'login',component:LoginComponent
     },
     {
         path:'inicio',component:InicioComponent

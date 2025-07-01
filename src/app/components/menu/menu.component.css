@@ -1,0 +1,55 @@
+/* Colores de fondo en Angular Material los controla la propiedad 'color="primary"' */
+
+.navbar {
+  display: flex;
+  padding: 0 24px;
+  background-color: #2e7d32; /* sobrescribe si deseas otro tono */
+  color: white;
+  height: 64px;
+  font-family: 'Helvetica Neue', sans-serif;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Branding */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  font-size: 1.25rem;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.brand-icon {
+  font-size: 28px;
+}
+
+/* Menús */
+.navbar-links,
+.navbar-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.spacer {
+  flex: 1;
+}
+
+/* Estilo para botones */
+mat-toolbar button {
+  color: white;
+  font-weight: 500;
+  text-transform: none;
+  transition: background 0.3s;
+}
+
+mat-toolbar button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.menu-caret {
+  font-size: 20px;
+  margin-left: 4px;
+  opacity: 0.7;
+}
