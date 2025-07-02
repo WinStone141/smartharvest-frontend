@@ -101,12 +101,4 @@ export class InsertareditarusersComponent implements OnInit {
       })
     }
   }
-
-  eliminar(id: number) {
-    this.uS.deleteA(id).subscribe(data => {
-      this.uS.list().subscribe(data => {
-        this.uS.setList(data)
-      })
-    })
-  }
 }

@@ -1,13 +1,14 @@
 import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
+import { JwtModule } from '@auth0/angular-jwt';
 
 import { routes } from './app.routes';
 import {
   provideClientHydration,
   withEventReplay,
 } from '@angular/platform-browser';
-import { provideHttpClient, withFetch } from '@angular/common/http';
-import { JwtModule } from '@auth0/angular-jwt';
+import { provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
 
 export function tokenGetter() {
   // Si no hay window, devolvemos null (no hay token)
@@ -24,9 +25,10 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    //provideClientHydration(withEventReplay()),
-    provideHttpClient(withFetch()),
-    importProvidersFrom(
+    provideClientHydration(withEventReplay()),
+    provideHttpClient(withFetch(), withInterceptorsFromDi(),),
+    provideCharts(withDefaultRegisterables()),
+      importProvidersFrom(
       JwtModule.forRoot({
         config: {
           tokenGetter: tokenGetter,

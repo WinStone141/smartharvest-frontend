@@ -8,13 +8,30 @@
           <mat-icon class="title-icon">store</mat-icon>
           Lista de Mercados Locales
         </h1>
-        <p class="page-subtitle">Gestiona y visualiza todos los mercados locales registrados</p>
+        <p class="page-subtitle">
+          Gestiona y visualiza todos los mercados locales registrados
+        </p>
       </div>
       <div class="header-actions">
-        <button mat-raised-button class="add-button" routerLink="nuevo">
+        <!-- Solo mostrar el botón "Nuevo Mercado" si el usuario puede crear -->
+        <button
+          mat-raised-button
+          class="add-button"
+          routerLink="nuevo"
+          *ngIf="canCreateMarket()"
+        >
           <mat-icon>add</mat-icon>
           Nuevo Mercado
         </button>
+
+        <!-- Mensaje informativo para usuarios sin permisos de creación -->
+        <div *ngIf="!canCreateMarket()" class="no-permission-msg">
+          <mat-icon>info</mat-icon>
+          <span
+            >Solo administradores y dueños de mercado pueden crear
+            mercados</span
+          >
+        </div>
       </div>
     </div>
   </div>
@@ -22,25 +39,32 @@
   <!-- Cards Grid Section -->
   <div class="cards-section" *ngIf="localMarkets.length > 0">
     <div class="cards-container">
-      <mat-card *ngFor="let market of localMarkets; let i = index" 
-                class="market-card" 
-                [style.animation-delay.s]="i * 0.1">
-        
+      <mat-card
+        *ngFor="let market of localMarkets; let i = index"
+        class="market-card"
+        [style.animation-delay.s]="i * 0.1"
+      >
         <!-- Card Header with ID Badge -->
         <mat-card-header class="card-header">
           <div class="header-left">
-            <mat-card-title class="market-title">{{ market.name }}</mat-card-title>
-            <mat-card-subtitle class="market-subtitle">ID: {{ market.idLocalMarket }}</mat-card-subtitle>
+            <mat-card-title class="market-title">{{
+              market.name
+            }}</mat-card-title>
+            <mat-card-subtitle class="market-subtitle"
+              >ID: {{ market.idLocalMarket }}</mat-card-subtitle
+            >
           </div>
-          
         </mat-card-header>
         <div>
-          <img class="img-ajustada" src="imagenes/mercadito.png" alt="Imagen del mercado">
+          <img
+            class="img-ajustada"
+            src="imagenes/mercadito.png"
+            alt="Imagen del mercado"
+          />
         </div>
         <!-- Card Content -->
         <mat-card-content class="card-content">
           <div class="market-info">
-            
             <div class="info-item location-item">
               <div class="info-icon-wrapper">
                 <mat-icon class="info-icon">location_on</mat-icon>
@@ -50,19 +74,22 @@
                 <span class="info-value">{{ market.location }}</span>
               </div>
             </div>
-            
+
             <div class="info-item contact-item">
               <div class="info-icon-wrapper">
                 <mat-icon class="info-icon">phone</mat-icon>
               </div>
               <div class="info-details">
                 <span class="info-label">Contacto</span>
-                <a [href]="'tel:' + market.contact" class="info-value contact-link">
+                <a
+                  [href]="'tel:' + market.contact"
+                  class="info-value contact-link"
+                >
                   {{ market.contact }}
                 </a>
               </div>
             </div>
-            
+
             <div class="info-item schedule-item">
               <div class="info-icon-wrapper">
                 <mat-icon class="info-icon">schedule</mat-icon>
@@ -72,27 +99,42 @@
                 <span class="info-value">{{ market.attentionDate }}</span>
               </div>
             </div>
-
           </div>
         </mat-card-content>
 
         <!-- Card Actions -->
         <mat-card-actions class="card-actions">
-          <button mat-icon-button 
-                  class="action-button edit-button" 
-                  [routerLink]="['ediciones',market.idLocalMarket]"
-                  matTooltip="Editar mercado">
+          <!-- Botón de editar - solo visible para ADMIN y DUEÑO_DE_MERCADO -->
+          <button
+            mat-icon-button
+            class="action-button edit-button"
+            [routerLink]="['ediciones', market.idLocalMarket]"
+            matTooltip="Editar mercado"
+            *ngIf="canEditMarket()"
+          >
             <mat-icon>edit</mat-icon>
           </button>
-          
-          <button mat-icon-button 
-                  class="action-button delete-button" 
-                  (click)="eliminar(market.idLocalMarket)"
-                  matTooltip="Eliminar mercado">
+
+          <!-- Botón de eliminar - solo visible para ADMIN y DUEÑO_DE_MERCADO -->
+          <button
+            mat-icon-button
+            class="action-button delete-button"
+            (click)="eliminar(market.idLocalMarket)"
+            matTooltip="Eliminar mercado"
+            *ngIf="canDeleteMarket()"
+          >
             <mat-icon>delete</mat-icon>
           </button>
-        </mat-card-actions>
 
+          <!-- Mensaje para usuarios que solo pueden ver -->
+          <div
+            *ngIf="!canEditMarket() && !canDeleteMarket()"
+            class="read-only-actions"
+          >
+            <mat-icon class="read-only-icon">visibility</mat-icon>
+            <span class="read-only-text">Solo lectura</span>
+          </div>
+        </mat-card-actions>
       </mat-card>
     </div>
   </div>
@@ -107,12 +149,24 @@
           </div>
           <h3 class="empty-title">No hay mercados registrados</h3>
           <p class="empty-description">
-            Comienza agregando tu primer mercado local para gestionar mejor tus ventas
+            Comienza agregando tu primer mercado local para gestionar mejor tus
+            ventas
           </p>
-          <button mat-raised-button class="add-button" routerLink="nuevo">
+          <!-- Solo mostrar botón de agregar si tiene permisos -->
+          <button
+            mat-raised-button
+            class="add-button"
+            routerLink="nuevo"
+            *ngIf="canCreateMarket()"
+          >
             <mat-icon>add</mat-icon>
             Agregar Primer Mercado
           </button>
+
+          <!-- Mensaje para usuarios sin permisos -->
+          <div *ngIf="!canCreateMarket()" class="no-permission-empty">
+            <p>Contacta a un administrador para agregar mercados</p>
+          </div>
         </div>
       </mat-card-content>
     </mat-card>

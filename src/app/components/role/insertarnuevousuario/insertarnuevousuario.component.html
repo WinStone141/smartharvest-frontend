@@ -1,0 +1,98 @@
+<div class="role-selection-container">
+  <div class="welcome-section">
+    <mat-card class="welcome-card">
+      <mat-card-header>
+        <mat-card-title class="welcome-title">
+          <mat-icon class="welcome-icon">how_to_reg</mat-icon>
+          ¡Bienvenido a SmartHarvest!
+        </mat-card-title>
+        <mat-card-subtitle class="welcome-subtitle">
+          Para completar tu registro, selecciona tu rol en la plataforma
+        </mat-card-subtitle>
+      </mat-card-header>
+    </mat-card>
+  </div>
+
+  <div class="role-cards-section">
+    <h2 class="section-title">Selecciona tu perfil:</h2>
+    
+    <form [formGroup]="roleForm" (ngSubmit)="assignRole()">
+      <div class="role-cards-grid">
+        <mat-card 
+          *ngFor="let roleType of availableRoleTypes" 
+          class="role-option-card"
+          [class.selected]="isRoleSelected(roleType.type)"
+          (click)="selectRoleType(roleType.type)">
+          
+          <mat-card-content class="role-card-content">
+            <div class="role-icon-wrapper">
+              <mat-icon class="role-icon">{{ roleType.icon }}</mat-icon>
+            </div>
+            
+            <div class="role-info">
+              <h3 class="role-name">{{ roleType.type }}</h3>
+              <p class="role-description">{{ roleType.description }}</p>
+            </div>
+            
+            <div class="selection-indicator">
+              <mat-icon 
+                class="check-icon" 
+                *ngIf="isRoleSelected(roleType.type)">
+                check_circle
+              </mat-icon>
+              <mat-icon 
+                class="unchecked-icon" 
+                *ngIf="!isRoleSelected(roleType.type)">
+                radio_button_unchecked
+              </mat-icon>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <!-- Mensaje de error si no se selecciona nada -->
+      <div *ngIf="roleForm.get('selectedRoleType')?.invalid && roleForm.get('selectedRoleType')?.touched" 
+           class="error-message">
+        <mat-icon>error</mat-icon>
+        <span>Debes seleccionar un rol para continuar</span>
+      </div>
+
+      <!-- Botones de acción -->
+      <div class="action-buttons">
+        <button 
+          mat-raised-button 
+          color="primary" 
+          type="submit"
+          [disabled]="roleForm.invalid || isLoading"
+          class="continue-button">
+          <mat-icon *ngIf="isLoading">hourglass_empty</mat-icon>
+          <mat-icon *ngIf="!isLoading">check</mat-icon>
+          {{ isLoading ? 'Asignando rol...' : 'Continuar' }}
+        </button>
+        
+        <button 
+          mat-button 
+          type="button"
+          class="back-button"
+          (click)="goToLogin()">
+          <mat-icon>arrow_back</mat-icon>
+          Volver al login
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Información adicional -->
+  <div class="info-section">
+    <mat-card class="info-card">
+      <mat-card-content>
+        <div class="info-content">
+          <mat-icon class="info-icon">info</mat-icon>
+          <div class="info-text">
+            <p><strong>Nota:</strong> Una vez seleccionado tu rol, podrás acceder a las funcionalidades específicas de tu perfil. Si necesitas cambiar tu rol más adelante, contacta a un administrador.</p>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
