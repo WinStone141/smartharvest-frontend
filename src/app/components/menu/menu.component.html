@@ -1,31 +1,56 @@
-<mat-toolbar class="custom-toolbar">
-    <div>
-        <button mat-button routerLink="/incio">
-            <mat-icon>computer</mat-icon>
-            Inicio
-        </button>
-    </div>
-    <div>
-        <button mat-button [matMenuTriggerFor]="menuCompany" class="btn-rojo">
-            <mat-icon>computer</mat-icon>
-            Compañías
-        </button>
-    </div>
-    <div>
-        <button mat-button [matMenuTriggerFor]="menulocalmarkets" class="btn-rojo">
-            <mat-icon>computer</mat-icon>
-            Mercados Locales
-        </button>
-    </div>
-    
+<mat-toolbar class="custom-toolbar" *ngIf="estaLogueado">
+  <div>
+    <button mat-button [routerLink]="['/home']" style="color: green">
+      <mat-icon>home</mat-icon>Home
+    </button>
+  </div>
+  <div>
+    <button
+      mat-button
+      [matMenuTriggerFor]="menuCompany"
+      class="btn-rojo"
+      *ngIf="isAdmin()"
+    >
+      <mat-icon>computer</mat-icon>
+      Compañías
+    </button>
+  </div>
+  <div>
+    <button
+      mat-button
+      [matMenuTriggerFor]="menulocalmarkets"
+      class="btn-rojo"
+      *ngIf="isOwner()"
+    >
+      <mat-icon>computer</mat-icon>
+      Mercados Locales
+    </button>
+  </div>
+  <span class="toolbar-spacer"></span>
+  <div class="right-menu">
+    <button mat-button [matMenuTriggerFor]="menuSalir">
+      <mat-icon>person</mat-icon>Usuario
+    </button>
+  </div>
 </mat-toolbar>
 
 <mat-menu #menuCompany="matMenu">
-    <button mat-menu-item routerLink="/companies">Listar</button>
-    <button mat-menu-item routerLink="/companies/nuevo">Registrar</button>
+  <button mat-menu-item routerLink="/companies">Listar</button>
+  <button mat-menu-item routerLink="/companies/nuevo">Registrar</button>
 </mat-menu>
 
 <mat-menu #menulocalmarkets="matMenu">
-    <button mat-menu-item routerLink="/localmarkets">Listar</button>
-    <button mat-menu-item routerLink="/localmarkets/nuevo">Registrar</button>
+  <button mat-menu-item routerLink="/localmarkets">Listar</button>
+  <button mat-menu-item routerLink="/localmarkets/nuevo">Registrar</button>
+</mat-menu>
+
+<mat-menu #menuSalir="matMenu">
+  <button mat-menu-item routerLink="/login" (click)="cerrar()">
+    <mat-icon>logout</mat-icon>
+    <span>Cerrar sesión</span>
+  </button>
+  <button mat-menu-item>
+    Rol:
+    <span>{{ role }}</span>
+  </button>
 </mat-menu>

@@ -1,130 +1,173 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SmartHarvest - Revolución Digital en Agricultura</title>
-    <link rel="stylesheet" href="inicio.component.css" />
-    <script src="./assets/scripts/main.js" defer></script>
-</head>
-<body>
-    <!-- TU HTML ORIGINAL -->
-    <main id="main">
-        <section class="hero">
-            <div class="hero-text">
-                <h1>
-                    Lleva la revolución digital a la
-                    <span>agricultura</span>
-                </h1>
-                <p>Integra tecnología a tu negocio</p>
-                <a href="./">Empieza ahora</a>
-            </div>
-        </section>
+<!-- Barra de navegación superior -->
+<mat-toolbar class="landing-navbar">
+  <div class="navbar-content">
+    <div class="logo-section">
+      <mat-icon class="logo-icon">agriculture</mat-icon>
+      <span class="logo-text">SmartHarvest</span>
+    </div>
+    
+    <div class="navbar-actions">
+      <button mat-button class="nav-button" (click)="goToLogin()">
+        <mat-icon>login</mat-icon>
+        Iniciar Sesión
+      </button>
+      <button mat-raised-button color="primary" class="register-button" (click)="goToRegister()">
+        <mat-icon>person_add</mat-icon>
+        Registrarse
+      </button>
+    </div>
+  </div>
+</mat-toolbar>
 
-        <section class="brands">
-            <div id="top-wave"></div>
-            <div id="bottom-wave"></div>
-
-            <h2>Empresas que confían en nosotros</h2>
-
-            <div class="brands-images">
-                <img src="assets/images/johnDeere.png" loading="lazy" />
-                <img src="assets/images/fieldView.png" loading="lazy" />
-                <img src="assets/images/trimble.png" loading="lazy" />
-            </div>
-        </section>
-    </main>
-
-    <!-- SECCIONES ADICIONALES -->
-    <section class="services-section">
-        <div class="section-container">
-            <h2 class="section-title">¿Qué ofrecemos?</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">💡</div>
-                    <h3 class="service-title">
-                        Soluciones de Tecnología para agricultores
-                    </h3>
-                    <p class="service-description">
-                        Con nuestros sistemas en tiempo real, obtén datos precisos de cómo y
-                        cuándo aumentar tu productividad
-                    </p>
-                    <button class="service-button">Unirte</button>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">🌱</div>
-                    <h3 class="service-title">
-                        Procesos sostenibles para un mejor planeta
-                    </h3>
-                    <p class="service-description">
-                        También nos comprometemos con procesos sostenibles para contribuir a
-                        un mejor planeta.
-                    </p>
-                    <button class="service-button">Unirte</button>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">🌍</div>
-                    <h3 class="service-title">Asesorías en las nuevas tecnologías</h3>
-                    <p class="service-description">
-                        Uno de nuestros objetivos es transformar la agricultura con
-                        tecnología. Para ello brindamos asesorías en las últimas herramientas
-                    </p>
-                    <button class="service-button">Unirte</button>
-                </div>
+<!-- TU HTML ORIGINAL CON BOTONES ACTUALIZADOS -->
+<main id="main">
+    <section class="hero">
+        <div class="hero-text">
+            <h1>
+                Lleva la revolución digital a la
+                <span>agricultura</span>
+            </h1>
+            <p>Integra tecnología a tu negocio</p>
+            
+            <!-- Botón actualizado con navegación -->
+            <div class="hero-actions">
+              <button mat-raised-button color="primary" class="hero-cta-primary" (click)="goToRegister()">
+                <mat-icon>rocket_launch</mat-icon>
+                Empieza ahora
+              </button>
+              <button mat-stroked-button class="hero-cta-secondary" (click)="goToLogin()">
+                <mat-icon>login</mat-icon>
+                Ya tengo cuenta
+              </button>
             </div>
         </div>
     </section>
 
-    <section class="technology-section">
-        <h2 class="tech-title">Añade tecnología y sé parte de la revolución</h2>
-        <div class="tech-gallery">
-            <div class="tech-image">
-                <img
-                    src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-                    alt="Agricultura con drones"
-                />
-            </div>
-            <div class="tech-image">
-                <img
-                    src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-                    alt="Tecnología agrícola"
-                />
-            </div>
-            <div class="tech-image">
-                <img
-                    src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-                    alt="Agricultura moderna"
-                />
-            </div>
-        </div>
-        <button class="tech-cta-button">Unirte</button>
-    </section>
+    <section class="brands">
+        <div id="top-wave"></div>
+        <div id="bottom-wave"></div>
 
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>SmartHarvest</h3>
-                <p>Revolucionando la agricultura con tecnología de vanguardia.</p>
+        <h2>Empresas que confían en nosotros</h2>
+
+        <div class="brands-images">
+            <img src="assets/images/johnDeere.png" loading="lazy" />
+            <img src="assets/images/fieldView.png" loading="lazy" />
+            <img src="assets/images/trimble.png" loading="lazy" />
+        </div>
+    </section>
+</main>
+
+<!-- SECCIONES ADICIONALES CON BOTONES ACTUALIZADOS -->
+<section class="services-section">
+    <div class="section-container">
+        <h2 class="section-title">¿Qué ofrecemos?</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">💡</div>
+                <h3 class="service-title">
+                    Soluciones de Tecnología para agricultores
+                </h3>
+                <p class="service-description">
+                    Con nuestros sistemas en tiempo real, obtén datos precisos de cómo y
+                    cuándo aumentar tu productividad
+                </p>
+                <!-- Botón actualizado -->
+                <button mat-raised-button color="accent" class="service-button" (click)="goToRegister()">
+                  <mat-icon>group_add</mat-icon>
+                  Unirte
+                </button>
             </div>
-            <div class="footer-section">
-                <h3>Enlaces</h3>
-                <p><a href="#companies">Empresas</a></p>
-                <p><a href="#localmarkets">Mercados</a></p>
-                <p><a href="#inicio">Inicio</a></p>
+            <div class="service-card">
+                <div class="service-icon">🌱</div>
+                <h3 class="service-title">
+                    Procesos sostenibles para un mejor planeta
+                </h3>
+                <p class="service-description">
+                    También nos comprometemos con procesos sostenibles para contribuir a
+                    un mejor planeta.
+                </p>
+                <!-- Botón actualizado -->
+                <button mat-raised-button color="accent" class="service-button" (click)="goToRegister()">
+                  <mat-icon>group_add</mat-icon>
+                  Unirte
+                </button>
             </div>
-            <div class="footer-section">
-                <h3>Contacto</h3>
-                <p>infomartharvest.com</p>
-                <p>+51 987 654 321</p>
+            <div class="service-card">
+                <div class="service-icon">🌍</div>
+                <h3 class="service-title">Asesorías en las nuevas tecnologías</h3>
+                <p class="service-description">
+                    Uno de nuestros objetivos es transformar la agricultura con
+                    tecnología. Para ello brindamos asesorías en las últimas herramientas
+                </p>
+                <!-- Botón actualizado -->
+                <button mat-raised-button color="accent" class="service-button" (click)="goToRegister()">
+                  <mat-icon>group_add</mat-icon>
+                  Unirte
+                </button>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 SmartHarvest - Derechos reservados</p>
-            <div class="social-icons">
-                <a href="#" class="social-icon">𝕏</a>
-                <a href="#" class="social-icon">💬</a>
+    </div>
+</section>
+
+<section class="technology-section">
+    <h2 class="tech-title">Añade tecnología y sé parte de la revolución</h2>
+    <div class="tech-gallery">
+        <div class="tech-image">
+            <img
+                src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                alt="Agricultura con drones"
+            />
+        </div>
+        <div class="tech-image">
+            <img
+                src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                alt="Tecnología agrícola"
+            />
+        </div>
+        <div class="tech-image">
+            <img
+                src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                alt="Agricultura moderna"
+            />
+        </div>
+    </div>
+    <!-- Botón actualizado -->
+    <button mat-raised-button color="primary" class="tech-cta-button" (click)="goToRegister()">
+      <mat-icon>rocket_launch</mat-icon>
+      Unirte
+    </button>
+</section>
+
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>SmartHarvest</h3>
+            <p>Revolucionando la agricultura con tecnología de vanguardia.</p>
+            <!-- Botón adicional en footer -->
+            <div class="footer-actions">
+              <button mat-button class="footer-button" (click)="goToRegister()">
+                <mat-icon>person_add</mat-icon>
+                Crear cuenta
+              </button>
             </div>
         </div>
-    </footer>
-</body>
-</html>
+        <div class="footer-section">
+            <h3>Enlaces</h3>
+            <p><a href="#companies">Empresas</a></p>
+            <p><a href="#localmarkets">Mercados</a></p>
+            <p><a href="#inicio">Inicio</a></p>
+        </div>
+        <div class="footer-section">
+            <h3>Contacto</h3>
+            <p>info.com</p>
+            <p>+51 987 654 321</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 SmartHarvest - Derechos reservados</p>
+        <div class="social-icons">
+            <a href="#" class="social-icon">𝕏</a>
+            <a href="#" class="social-icon">💬</a>
+        </div>
+    </div>
+</footer>

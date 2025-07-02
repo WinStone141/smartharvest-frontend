@@ -14,98 +14,176 @@ import { InsertareditarparcelComponent } from './components/parcel/insertaredita
 import { InsertareditarcropComponent } from './components/crop/insertareditarcrop/insertareditarcrop.component';
 import { DetallecompanyComponent } from './components/company/detallecompany/detallecompany.component';
 import { InicioComponent } from './components/inicio/inicio.component';
+import { seguridadGuard } from './guard/seguridad.guard';
+import { roleGuard } from './guard/role.guard';
+import { LoginComponent } from './components/login/login.component';
+import { CropComponent } from './components/crop/crop.component';
+import { InsertarnuevousuarioComponent } from './components/role/insertarnuevousuario/insertarnuevousuario.component';
+import { HomeComponent } from './components/home/home.component';
 
 export const routes: Routes = [
-    {
-        path: '',
-        redirectTo: '/inicio',
-        pathMatch: 'full'
-    },
-    {
-        path:'inicio',component:InicioComponent
-    },
-    {
-        path:'companies',component:CompanyComponent,  
-        children:[
-            {
-                path:'nuevo',component:InsertareditarComponent
-            },
-            {
-                path:'ediciones/:id',component:InsertareditarComponent
-            },
-            {
-                path:'detalle/:id',component:DetallecompanyComponent
-            }
-        ]
-    },
-    {
-        path:'localmarkets',component:LocalmarketComponent,
-        children:[
-            {
-                path:'nuevo',component:InsertareditarlocalmarketComponent
-            },
-            {
-                path:'ediciones/:id',component:InsertareditarlocalmarketComponent
-            }
-        ]
-    },
-    {
-        path:'inputs',component:InputComponent,
-        children:[
-            {
-                path:'nuevo',component:InsertareditarinputComponent
-            },
-            {
-                path:'ediciones/:id',component:InsertareditarinputComponent
-            }
-        ]
-    },
-    {
-        path:'roles',component:RoleComponent,
-        children:[
-            {
-                path:'nuevo',component:InsertareditarroleComponent
-            },
-            {
-                path:'ediciones/:id',component:InsertareditarroleComponent
-            }
-        ]
-    },
-    {
-        path:'users',component:UsersComponent,
-        children:[
-            {
-                path:'nuevo',component:InsertareditarusersComponent
-            },
-            {
-                path:'ediciones/:id',component:InsertareditarusersComponent
-            }
-        ]
-    },
-    {
-        path:'parcels',component:ParcelComponent,
-        children:[
-            {
-                path:'nuevo',component:InsertareditarparcelComponent
-            },
-            {
-                path:'ediciones/:id',component:InsertareditarparcelComponent
-            }
-        ]
-    },
-    {
-        path:'crops',component:ParcelComponent,
-        children:[
-            {
-                path:'nuevo',component:InsertareditarcropComponent
-            },
-            {
-                path:'ediciones/:id',component:InsertareditarcropComponent
-            }
-        ]
-    },
-    {
-        path: '**',
-        redirectTo: '/inicio'
-    }
+  {
+    path: '',
+    redirectTo: '/inicio',
+    pathMatch: 'full',
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
+  {
+    path: 'inicio',
+    component: InicioComponent,
+  },
+  {
+    path: 'seleccionar-rol',
+    component: InsertarnuevousuarioComponent,
+    canActivate: [seguridadGuard], // Solo usuarios autenticados
+  },
+  {
+    path: 'home',
+    component: HomeComponent,
+    canActivate: [seguridadGuard], // Solo usuarios autenticados
+  },
+  {
+    path: 'companies',
+    component: CompanyComponent,
+    children: [
+      {
+        path: 'nuevo',
+        component: InsertareditarComponent,
+      },
+      {
+        path: 'ediciones/:id',
+        component: InsertareditarComponent,
+      },
+      {
+        path: 'detalle/:id',
+        component: DetallecompanyComponent,
+      },
+    ],
+    canActivate: [seguridadGuard, roleGuard],
+    data: { expectedRoles: ['ADMIN'] },
+  },
+  {
+    path: 'localmarkets',
+    component: LocalmarketComponent,
+    children: [
+      {
+        path: 'nuevo',
+        component: InsertareditarlocalmarketComponent,
+        canActivate: [roleGuard],
+        data: { expectedRoles: ['ADMIN', 'DUEÑO_DE_MERCADO'] }, // Solo ADMIN y DUEÑO_DE_MERCADO pueden crear
+      },
+      {
+        path: 'ediciones/:id',
+        component: InsertareditarlocalmarketComponent,
+        canActivate: [roleGuard],
+        data: { expectedRoles: ['ADMIN', 'DUEÑO_DE_MERCADO'] }, // Solo ADMIN y DUEÑO_DE_MERCADO pueden editar
+      },
+    ],
+    canActivate: [seguridadGuard, roleGuard],
+    data: { expectedRoles: ['ADMIN', 'AGRICULTOR', 'DUEÑO_DE_MERCADO'] }, // Todos pueden ver la lista
+  },
+  {
+    path: 'inputs',
+    component: InputComponent,
+    children: [
+      {
+        path: 'nuevo',
+        component: InsertareditarinputComponent,
+        canActivate: [roleGuard],
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // ADMIN y AGRICULTOR pueden crear
+      },
+      {
+        path: 'ediciones/:id',
+        component: InsertareditarinputComponent,
+        canActivate: [roleGuard],
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // ADMIN y AGRICULTOR pueden editar
+      },
+    ],
+    canActivate: [seguridadGuard, roleGuard],
+    data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // ADMIN y AGRICULTOR pueden ver la lista
+  },
+  {
+    path: 'roles',
+    component: RoleComponent,
+    children: [
+      {
+        path: 'all',
+        component: InsertarnuevousuarioComponent,
+      },
+      {
+        path: 'nuevo',
+        component: InsertareditarroleComponent,
+        canActivate: [roleGuard],
+        data: { expectedRoles: ['ADMIN'] }, // Solo ADMIN puede crear roles
+      },
+      {
+        path: 'ediciones/:id',
+        component: InsertareditarroleComponent,
+        canActivate: [roleGuard],
+        data: { expectedRoles: ['ADMIN'] }, // Solo ADMIN puede editar roles
+      },
+    ],
+    canActivate: [seguridadGuard, roleGuard],
+    data: { expectedRoles: ['ADMIN'] }, // Solo ADMIN puede ver la gestión de roles
+  },
+  {
+    path: 'users',
+    component: UsersComponent,
+    canActivate: [seguridadGuard], // Para verificar login o token
+    canActivateChild: [roleGuard], // Este maneja los roles de forma condicional
+    data: { expectedRoles: ['ADMIN', 'AGRICULTOR', 'DUEÑO_DE_MERCADO'] },
+    children: [
+      {
+        path: 'ediciones/:id',
+        component: InsertareditarusersComponent,
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR', 'DUEÑO_DE_MERCADO'] },
+      },
+    ],
+  },
+  {
+    path: 'parcels',
+    component: ParcelComponent,
+    children: [
+      {
+        path: 'nuevo',
+        component: InsertareditarparcelComponent,
+        canActivate: [roleGuard],
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
+      },
+      {
+        path: 'ediciones/:id',
+        component: InsertareditarparcelComponent,
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
+      },
+    ],
+    canActivate: [seguridadGuard, roleGuard],
+    data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // ADMIN y AGRICULTOR pueden manejar parcelas
+  },
+  {
+    path: 'crops',
+    component: CropComponent,
+    children: [
+      {
+        path: 'nuevo',
+        component: InsertareditarcropComponent,
+        canActivate: [roleGuard],
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // Solo ADMIN y AGRICULTOR pueden crear
+      },
+      {
+        path: 'ediciones/:id',
+        component: InsertareditarcropComponent,
+        canActivate: [roleGuard],
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // Solo ADMIN y AGRICULTOR pueden editar
+      },
+    ],
+    canActivate: [seguridadGuard, roleGuard],
+    data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // ADMIN y AGRICULTOR pueden manejar cultivos
+  },
+  {
+    path: 'newuser',
+    component: InsertareditarusersComponent, // libre
+  },
 ];
