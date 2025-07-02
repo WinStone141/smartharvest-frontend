@@ -32,6 +32,6 @@ export const roleGuard: CanActivateFn = (
   }
 
   // Si no tiene el rol adecuado, redirigir a inicio
-  router.navigate(['/inicio']);
+  router.navigate(['/home']);
   return false;
 };

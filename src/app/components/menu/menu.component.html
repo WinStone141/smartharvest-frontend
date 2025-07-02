@@ -26,6 +26,72 @@
       Mercados Locales
     </button>
   </div>
+  <div>
+    <button
+      mat-button
+      [matMenuTriggerFor]="menucrops"
+      class="btn-rojo"
+      *ngIf="isAdmin() || isAgricultor()"
+    >
+      <mat-icon>eco</mat-icon>
+      Cultivos
+    </button>
+  </div>
+  <div>
+    <button
+      mat-button
+      [matMenuTriggerFor]="menuinput"
+      class="btn-rojo"
+      *ngIf="isAdmin() || isAgricultor()"
+    >
+      <mat-icon>grain</mat-icon>
+      Insumos
+    </button>
+  </div>
+  <div>
+    <button
+      mat-button
+      [matMenuTriggerFor]="menuparcel"
+      class="btn-rojo"
+      *ngIf="isAdmin() || isAgricultor()"
+    >
+      <mat-icon>grass</mat-icon>
+      Parcelas
+    </button>
+  </div>
+  <div>
+    <button
+      mat-button
+      [matMenuTriggerFor]="menusensor"
+      class="btn-rojo"
+      *ngIf="isAdmin() || isAgricultor()"
+    >
+      <mat-icon>barcode_reader</mat-icon>
+      Sensor
+    </button>
+  </div>
+  <div>
+    <button
+      mat-button
+      [matMenuTriggerFor]="menuusuarios"
+      class="btn-rojo"
+      *ngIf="isAdmin()"
+    >
+      <mat-icon>groups</mat-icon>
+      Usuarios
+    </button>
+  </div>
+  <div>
+    <button
+      mat-button
+      [matMenuTriggerFor]="menuroles"
+      class="btn-rojo"
+      *ngIf="isAdmin()"
+    >
+      <mat-icon>assignment_ind</mat-icon>
+      Roles
+    </button>
+  </div>
   <span class="toolbar-spacer"></span>
   <div class="right-menu">
     <button mat-button [matMenuTriggerFor]="menuSalir">
@@ -42,6 +108,36 @@
 <mat-menu #menulocalmarkets="matMenu">
   <button mat-menu-item routerLink="/localmarkets">Listar</button>
   <button mat-menu-item routerLink="/localmarkets/nuevo">Registrar</button>
+</mat-menu>
+
+<mat-menu #menucrops="matMenu">
+  <button mat-menu-item routerLink="/crops">Listar</button>
+  <button mat-menu-item routerLink="/crops/nuevo">Registrar</button>
+</mat-menu>
+
+<mat-menu #menuinput="matMenu">
+  <button mat-menu-item routerLink="/inputs">Listar</button>
+  <button mat-menu-item routerLink="/inputs/nuevo">Registrar</button>
+</mat-menu>
+
+<mat-menu #menuparcel="matMenu">
+  <button mat-menu-item routerLink="/parcels">Listar</button>
+  <button mat-menu-item routerLink="/parcels/nuevo">Registrar</button>
+</mat-menu>
+
+<mat-menu #menusensor="matMenu">
+  <button mat-menu-item routerLink="/sensors">Listar</button>
+  <button mat-menu-item routerLink="/sensors/nuevo">Registrar</button>
+</mat-menu>
+
+<mat-menu #menuusuarios="matMenu">
+  <button mat-menu-item routerLink="/users">Listar</button>
+  <button mat-menu-item routerLink="/newuser">Registrar</button>
+</mat-menu>
+
+<mat-menu #menuroles="matMenu">
+  <button mat-menu-item routerLink="/roles">Listar</button>
+  <button mat-menu-item routerLink="/roles/all">Registrar</button>
 </mat-menu>
 
 <mat-menu #menuSalir="matMenu">
