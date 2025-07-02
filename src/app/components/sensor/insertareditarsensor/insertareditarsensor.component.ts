@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-insertareditarsensor',
@@ -21,6 +22,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     CommonModule,
     MatSelectModule,
     MatDatepickerModule,
+    MatNativeDateModule,
     MatFormFieldModule,
     ReactiveFormsModule],
   templateUrl: './insertareditarsensor.component.html',
@@ -61,7 +63,7 @@ export class InsertareditarsensorComponent {
 
     this.form = this.formBuilder.group({
       codigo: [''],
-      tiposensor: ['', [Validators.required, Validators.maxLength(70)]],
+      tiposensor: ['', Validators.required],
       fechainstalacion: ['', Validators.required],
       estado: ['', Validators.required],
       ultimalectura: ['', Validators.required],
@@ -72,6 +74,7 @@ export class InsertareditarsensorComponent {
     });
 
     this.loadParcels();
+    this.loadCrops();
   }
 
   loadParcels():void {

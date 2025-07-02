@@ -4,28 +4,29 @@
     <form [formGroup]="form" (submit)="aceptar()">
       <mat-form-field *ngIf="edicion">
         <mat-label>ID</mat-label>
-        <input matInput formControlName="codigo" />
+        <input matInput formControlName="codigo" readonly/>
         <mat-error *ngIf="form.get('codigo')?.hasError('required')">
           El código es obligatorio!!
         </mat-error>
       </mat-form-field>
       <br />
       <mat-form-field>
-        <mat-label>Tipo de sensor</mat-label>
-        <input matInput formControlName="tiposensor"/>
+        <mat-label>Tipo</mat-label>
+        <mat-select formControlName="tiposensor">
+          <mat-option *ngFor="let tipo of tipos" [value]="tipo.value">
+            {{tipo.viewValue}}
+          </mat-option>
+        </mat-select>
         <mat-error *ngIf="form.get('tiposensor')?.hasError('required')">
-          El tipo de sensor es obligatorio!!
-        </mat-error>
-        <mat-error *ngIf="form.get('tiposensor')?.hasError('maxlength')">
-          El tipo de sensor no puede exceder 70 caracteres
+          El tipo es obligatorio!!
         </mat-error>
       </mat-form-field>
       <br />
       <mat-form-field>
         <mat-label>Fecha de Instalación</mat-label>
-        <input matInput [matDatepicker]="registrationPicker" formControlName="fechainstalacion">
-        <mat-datepicker-toggle matSuffix [for]="registrationPicker"></mat-datepicker-toggle>
-        <mat-datepicker #registrationPicker></mat-datepicker>
+        <input matInput [matDatepicker]="finstalacionPicker" formControlName="fechainstalacion">
+        <mat-datepicker-toggle matSuffix [for]="finstalacionPicker"></mat-datepicker-toggle>
+        <mat-datepicker #finstalacionPicker></mat-datepicker>
         <mat-error *ngIf="form.get('fechainstalacion')?.hasError('required')">
           La fecha de instalación es obligatoria!!
         </mat-error>
@@ -43,17 +44,18 @@
 
       <mat-form-field>
         <mat-label>Ultima lectura</mat-label>
-        <input matInput [matDatepicker]="registrationPicker" formControlName="ultimalectura">
-        <mat-datepicker-toggle matSuffix [for]="registrationPicker"></mat-datepicker-toggle>
-        <mat-datepicker #registrationPicker></mat-datepicker>
+        <input matInput [matDatepicker]="ulecturaPicker" formControlName="ultimalectura">
+        <mat-datepicker-toggle matSuffix [for]="ulecturaPicker"></mat-datepicker-toggle>
+        <mat-datepicker #ulecturaPicker></mat-datepicker>
         <mat-error *ngIf="form.get('ultimalectura')?.hasError('required')">
           La fecha de ultima lectura es obligatoria!!
         </mat-error>
       </mat-form-field>
+      <br/>
 
       <mat-form-field>
         <mat-label>Nivel de batería</mat-label>
-        <input matInput formControlName="tiposensor"/>
+        <input matInput formControlName="niveldebateria"/>
         <mat-error *ngIf="form.get('niveldebateria')?.hasError('required')">
           El tipo de sensor es obligatorio!!
         </mat-error>
@@ -64,6 +66,7 @@
           El nivel de batería no puede ser menor a 100
         </mat-error>
       </mat-form-field>
+      <br/>
 
       <mat-form-field>
         <mat-label>Nivel de Humedad</mat-label>
@@ -78,6 +81,7 @@
           El nivel de humedad no puede ser menor a 100
         </mat-error>
       </mat-form-field>
+      <br/>
 
       <mat-form-field>
         <mat-label>Parcela</mat-label>
@@ -96,11 +100,11 @@
         <mat-label>Cultivo</mat-label>
         <mat-select formControlName="cultivo">
           <mat-option *ngFor="let crop of crops" [value]="crop.idCrop">
-            {{crop.typeCrop}}
+             {{crop.typeCrop}} ID:{{crop.idCrop}}
           </mat-option>
         </mat-select>
         <mat-error *ngIf="form.get('cultivo')?.hasError('required')">
-          Debe seleccionar una parcela
+          Debe seleccionar un cultivo
         </mat-error>
       </mat-form-field>
       <br />

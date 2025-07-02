@@ -73,6 +73,17 @@
   <div>
     <button
       mat-button
+      [matMenuTriggerFor]="menuagriproduct"
+      class="btn-rojo"
+      *ngIf="isAdmin() || isAgricultor()"
+    >
+      <mat-icon>hive</mat-icon>
+      Producto Agrícola
+    </button>
+  </div>
+  <div>
+    <button
+      mat-button
       [matMenuTriggerFor]="menuusuarios"
       class="btn-rojo"
       *ngIf="isAdmin()"
@@ -128,6 +139,11 @@
 <mat-menu #menusensor="matMenu">
   <button mat-menu-item routerLink="/sensors">Listar</button>
   <button mat-menu-item routerLink="/sensors/nuevo">Registrar</button>
+</mat-menu>
+
+<mat-menu #menuagriproduct="matMenu">
+  <button mat-menu-item routerLink="/agriculturalproducts">Listar</button>
+  <button mat-menu-item routerLink="/agriculturalproducts/nuevo">Registrar</button>
 </mat-menu>
 
 <mat-menu #menuusuarios="matMenu">

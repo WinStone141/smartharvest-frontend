@@ -38,7 +38,7 @@
 
 /* Estilo para botones */
 mat-toolbar button {
-  color: white;
+  color: hsl(126, 77%, 50%);
   font-weight: 500;
   text-transform: none;
   transition: background 0.3s;

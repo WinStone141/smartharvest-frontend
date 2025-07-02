@@ -1,1 +1,82 @@
-<p>insertareditarcrop works!</p>
+
+<div>
+  <div><h1>Registrar Cultivo</h1></div>
+  <div>
+    <form [formGroup]="form" (submit)="aceptar()">
+      <mat-form-field *ngIf="edicion">
+        <mat-label>ID</mat-label>
+        <input matInput formControlName="codigo" readonly/>
+        <mat-error *ngIf="form.get('codigo')?.hasError('required')">
+          El código es obligatorio!!
+        </mat-error>
+      </mat-form-field>
+      <br />
+
+      <mat-form-field>
+        <mat-label>Tipo</mat-label>
+        <mat-select formControlName="tipo">
+          <mat-option *ngFor="let tipo of tipoC" [value]="tipo.value">
+            {{tipo.viewValue}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('tipo')?.hasError('required')">
+          El tipo es obligatorio!!
+        </mat-error>
+      </mat-form-field>
+      <br />
+
+      <mat-form-field>
+        <mat-label>Fecha de Sembrado</mat-label>
+        <input matInput [matDatepicker]="sembradoPicker" formControlName="fechaSembrado">
+        <mat-datepicker-toggle matSuffix [for]="sembradoPicker"></mat-datepicker-toggle>
+        <mat-datepicker #sembradoPicker></mat-datepicker>
+        <mat-error *ngIf="form.get('fechaSembrado')?.hasError('required')">
+          La fecha de sembrado es obligatoria!!
+        </mat-error>
+      </mat-form-field>
+      <br />
+
+      <mat-form-field>
+        <mat-label>Fecha de Cosecha</mat-label>
+        <input matInput [matDatepicker]="cosechaPicker" formControlName="fechaCosecha">
+        <mat-datepicker-toggle matSuffix [for]="cosechaPicker"></mat-datepicker-toggle>
+        <mat-datepicker #cosechaPicker></mat-datepicker>
+        <mat-error *ngIf="form.get('fechaCosecha')?.hasError('required')">
+          La fecha de cosecha es obligatoria!!
+        </mat-error>
+      </mat-form-field>
+      <br />
+
+      <mat-form-field>
+        <mat-label>Estado</mat-label>
+        <mat-select formControlName="estado">
+          <mat-option *ngFor="let estado of estados" [value]="estado.value">
+            {{estado.viewValue}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('estado')?.hasError('required')">
+          El estado es obligatorio!!
+        </mat-error>
+      </mat-form-field>
+      <br/>
+
+      <!-- CAMPO USUARIO - NUEVO -->
+      <mat-form-field>
+        <mat-label>Usuario</mat-label>
+        <mat-select formControlName="idParcela">
+          <mat-option *ngFor="let parcel of parcels" [value]="parcel.idParcel">
+            {{parcel.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('idParcela')?.hasError('required')">
+          La parcela es obligatoria!!
+        </mat-error>
+      </mat-form-field>
+      <br />
+
+      <button type="submit" mat-raised-button color="primary" [disabled]="!form.valid">
+        Registrar Cultivo
+      </button>
+    </form>
+  </div>
+</div>
