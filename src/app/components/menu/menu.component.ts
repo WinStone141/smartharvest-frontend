@@ -36,6 +36,11 @@ export class MenuComponent implements OnInit{
       this.role = status ? this.loginService.showRole() : null;
     });
   }
+  verificar() {
+    this.role = this.loginService.showRole();
+    return this.loginService.verificar();
+  }
+  
   cerrar() {
     this.loginService.logout();
   }
