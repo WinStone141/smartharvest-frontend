@@ -19,6 +19,7 @@ import { roleGuard } from './guard/role.guard';
 import { LoginComponent } from './components/login/login.component';
 import { CropComponent } from './components/crop/crop.component';
 import { InsertarnuevousuarioComponent } from './components/role/insertarnuevousuario/insertarnuevousuario.component';
+import { HomeComponent } from './components/home/home.component';
 
 export const routes: Routes = [
   {
@@ -37,6 +38,11 @@ export const routes: Routes = [
   {
     path: 'seleccionar-rol',
     component: InsertarnuevousuarioComponent,
+    canActivate: [seguridadGuard], // Solo usuarios autenticados
+  },
+  {
+    path: 'home',
+    component: HomeComponent,
     canActivate: [seguridadGuard], // Solo usuarios autenticados
   },
   {
@@ -177,7 +183,7 @@ export const routes: Routes = [
     data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // ADMIN y AGRICULTOR pueden manejar cultivos
   },
   {
-        path: 'newuser',
-        component: InsertareditarusersComponent, // libre
+    path: 'newuser',
+    component: InsertareditarusersComponent, // libre
   },
 ];

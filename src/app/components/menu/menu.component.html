@@ -1,6 +1,6 @@
-<mat-toolbar class="custom-toolbar" *ngIf="verificar()">
+<mat-toolbar class="custom-toolbar" *ngIf="estaLogueado">
   <div>
-    <button mat-button [routerLink]="['/inicio']" style="color: green">
+    <button mat-button [routerLink]="['/home']" style="color: green">
       <mat-icon>home</mat-icon>Home
     </button>
   </div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -23,17 +23,23 @@ import { CommonModule } from '@angular/common';
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css',
 })
-export class MenuComponent {
-  role: string = '';
-  constructor(private loginService: LoginService) {}
-  cerrar() {
-    sessionStorage.clear();
-  }
+export class MenuComponent implements OnInit{
+  role: string | null = null;
+  estaLogueado: boolean = false;
 
-  verificar() {
-    this.role = this.loginService.showRole();
-    return this.loginService.verificar();
+  constructor(private loginService: LoginService) {}
+
+  ngOnInit(): void {
+    // Escucha en tiempo real el estado de login
+    this.loginService.getLoginStatus().subscribe(status => {
+      this.estaLogueado = status;
+      this.role = status ? this.loginService.showRole() : null;
+    });
   }
+  cerrar() {
+    this.loginService.logout();
+  }
+  
   isAdmin() {
     return this.role === 'ADMIN';
   }

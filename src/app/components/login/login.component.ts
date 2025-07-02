@@ -28,10 +28,11 @@ export class LoginComponent implements OnInit {
     let request = new JwtRequest();
     request.username = this.username;
     request.password = this.password;
+
     this.loginService.login(request).subscribe(
       (data: any) => {
-        sessionStorage.setItem('token', data.jwttoken);
-        this.router.navigate(['inicio']);
+        this.loginService.loginSuccess(data.jwttoken); // ✅ Notifica a toda la app
+        this.router.navigate(['home']);
       },
       (error) => {
         this.mensaje = 'Credenciales incorrectas!!!';

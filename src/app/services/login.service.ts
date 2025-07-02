@@ -2,27 +2,49 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtRequest } from '../models/jwtRequest';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoginService {
-  constructor(private http: HttpClient) { }
-    login(request: JwtRequest) {
+  private loginSubject = new BehaviorSubject<boolean>(this.tokenPresente());
+
+  constructor(private http: HttpClient) {}
+
+  login(request: JwtRequest) {
     return this.http.post('http://localhost:8083/login', request);
   }
-  verificar() {
-    let token = sessionStorage.getItem('token');
-    return token != null;
+
+  // Verifica si hay token (internamente usado por el subject)
+  private tokenPresente(): boolean {
+    return sessionStorage.getItem('token') != null;
   }
-  showRole() {
-    let token = sessionStorage.getItem('token');
-    if (!token) {
-      // Manejar el caso en el que el token es nulo.
-      return null; // O cualquier otro valor predeterminado dependiendo del contexto.
-    }
+
+  verificar(): boolean {
+    return this.loginSubject.value;
+  }
+
+  loginSuccess(token: string) {
+    sessionStorage.setItem('token', token);
+    this.loginSubject.next(true); // Notifica login
+  }
+
+  logout() {
+    sessionStorage.removeItem('token');
+    this.loginSubject.next(false); // Notifica logout
+  }
+
+  showRole(): string {
+    const token = sessionStorage.getItem('token');
+    if (!token) return '';
     const helper = new JwtHelperService();
     const decodedToken = helper.decodeToken(token);
-    return decodedToken?.role;
+    return decodedToken?.role || '';
+  }
+
+  // Permite suscribirse al estado de login
+  getLoginStatus(): Observable<boolean> {
+    return this.loginSubject.asObservable();
   }
 }
