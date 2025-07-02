@@ -4,13 +4,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { LoginService } from '../../services/login.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { JwtRequest } from '../../models/jwtRequest';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
-  imports: [MatFormFieldModule,FormsModule,MatInputModule,MatButtonModule],
+  imports: [MatFormFieldModule,FormsModule,MatInputModule,MatButtonModule,RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
     this.loginService.login(request).subscribe(
       (data: any) => {
         sessionStorage.setItem('token', data.jwttoken);
-        this.router.navigate(['inicio']);
+        this.router.navigate(['home']);
       },
       (error) => {
         this.mensaje = 'Credenciales incorrectas!!!';

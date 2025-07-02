@@ -2,7 +2,7 @@
   <!-- Logo que redirige a /inicio -->
   <span class="navbar-brand" [routerLink]="['/inicio']" style="cursor: pointer;">
     <mat-icon class="brand-icon">business</mat-icon>
-    SmartHarvest
+    INICIO
   </span>
 
   <!-- Menú principal -->
@@ -34,6 +34,18 @@
     <button mat-button [matMenuTriggerFor]="menuUsers">
       <mat-icon>storefront</mat-icon>
       Usuarios
+      <mat-icon class="menu-caret">expand_more</mat-icon>
+    </button>
+
+    <button mat-button [matMenuTriggerFor]="menuRol">
+      <mat-icon>storefront</mat-icon>
+      Roles
+      <mat-icon class="menu-caret">expand_more</mat-icon>
+    </button>
+
+    <button mat-button [matMenuTriggerFor]="menuInput">
+      <mat-icon>storefront</mat-icon>
+      Insumos
       <mat-icon class="menu-caret">expand_more</mat-icon>
     </button>
 
@@ -107,8 +119,30 @@
   </button>
 </mat-menu>
 
+<mat-menu #menuRol="matMenu">
+  <button mat-menu-item routerLink="/roles">
+    <mat-icon>list</mat-icon>
+    <span>Listar</span>
+  </button>
+  <button mat-menu-item routerLink="/roles/nuevo">
+    <mat-icon>add_circle</mat-icon>
+    <span>Registrar</span>
+  </button>
+</mat-menu>
+
+<mat-menu #menuInput="matMenu">
+  <button mat-menu-item routerLink="/inputs">
+    <mat-icon>list</mat-icon>
+    <span>Listar</span>
+  </button>
+  <button mat-menu-item routerLink="/inputs/nuevo">
+    <mat-icon>add_circle</mat-icon>
+    <span>Registrar</span>
+  </button>
+</mat-menu>
+
 <mat-menu #menuSalir="matMenu">
-  <button mat-menu-item routerLink="/login" (click)="cerrar()">
+  <button mat-menu-item routerLink="/inicio" (click)="cerrar()">
     <mat-icon>logout</mat-icon>
     <span>Cerrar sesión</span>
   </button>

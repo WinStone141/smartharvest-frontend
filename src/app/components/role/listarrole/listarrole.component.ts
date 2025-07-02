@@ -6,10 +6,11 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCard, MatCardContent } from '@angular/material/card';
 
 @Component({
   selector: 'app-listarrole',
-  imports: [MatTableModule, RouterLink, MatIconModule, MatButtonModule, CommonModule],
+  imports: [MatTableModule, RouterLink, MatIconModule, MatButtonModule, CommonModule,MatCard,MatCardContent],
   templateUrl: './listarrole.component.html',
   styleUrl: './listarrole.component.css'
 })

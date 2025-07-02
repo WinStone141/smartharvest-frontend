@@ -6,10 +6,11 @@ import { Inputs } from '../../../models/inputs';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCard, MatCardContent } from '@angular/material/card';
 
 @Component({
   selector: 'app-listarinput',
-  imports: [MatTableModule, RouterLink, MatIconModule, MatButtonModule, CommonModule],
+  imports: [MatTableModule, RouterLink, MatIconModule, MatButtonModule, CommonModule,MatCard,MatCardContent],
   templateUrl: './listarinput.component.html',
   styleUrl: './listarinput.component.css'
 })
