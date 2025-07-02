@@ -20,6 +20,8 @@ import { LoginComponent } from './components/login/login.component';
 import { CropComponent } from './components/crop/crop.component';
 import { InsertarnuevousuarioComponent } from './components/role/insertarnuevousuario/insertarnuevousuario.component';
 import { HomeComponent } from './components/home/home.component';
+import { SensorComponent } from './components/sensor/sensor.component';
+import { InsertareditarsensorComponent } from './components/sensor/insertareditarsensor/insertareditarsensor.component';
 
 export const routes: Routes = [
   {
@@ -132,9 +134,6 @@ export const routes: Routes = [
   {
     path: 'users',
     component: UsersComponent,
-    canActivate: [seguridadGuard], // Para verificar login o token
-    canActivateChild: [roleGuard], // Este maneja los roles de forma condicional
-    data: { expectedRoles: ['ADMIN', 'AGRICULTOR', 'DUEÑO_DE_MERCADO'] },
     children: [
       {
         path: 'ediciones/:id',
@@ -142,6 +141,8 @@ export const routes: Routes = [
         data: { expectedRoles: ['ADMIN', 'AGRICULTOR', 'DUEÑO_DE_MERCADO'] },
       },
     ],
+    canActivate: [seguridadGuard, roleGuard], // Para verificar login o token
+    data: { expectedRoles: ['ADMIN'] },
   },
   {
     path: 'parcels',
@@ -175,6 +176,26 @@ export const routes: Routes = [
       {
         path: 'ediciones/:id',
         component: InsertareditarcropComponent,
+        canActivate: [roleGuard],
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // Solo ADMIN y AGRICULTOR pueden editar
+      },
+    ],
+    canActivate: [seguridadGuard, roleGuard],
+    data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // ADMIN y AGRICULTOR pueden manejar cultivos
+  },
+  {
+    path: 'sensors',
+    component: SensorComponent,
+    children: [
+      {
+        path: 'nuevo',
+        component: InsertareditarsensorComponent,
+        canActivate: [roleGuard],
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // Solo ADMIN y AGRICULTOR pueden crear
+      },
+      {
+        path: 'ediciones/:id',
+        component: InsertareditarsensorComponent,
         canActivate: [roleGuard],
         data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // Solo ADMIN y AGRICULTOR pueden editar
       },
