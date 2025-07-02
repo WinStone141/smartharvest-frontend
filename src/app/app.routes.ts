@@ -15,6 +15,7 @@ import { InsertareditarcropComponent } from './components/crop/insertareditarcro
 import { DetallecompanyComponent } from './components/company/detallecompany/detallecompany.component';
 import { InicioComponent } from './components/inicio/inicio.component';
 import { LoginComponent } from './components/login/login.component';
+import { CropComponent } from './components/crop/crop.component';
 
 export const routes: Routes = [
     {
@@ -98,7 +99,7 @@ export const routes: Routes = [
         ]
     },
     {
-        path:'crops',component:ParcelComponent,
+        path:'crops',component:CropComponent,
         children:[
             {
                 path:'nuevo',component:InsertareditarcropComponent
