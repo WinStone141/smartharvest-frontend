@@ -137,12 +137,4 @@ export class InsertareditarinputComponent implements OnInit{
       })
     }
   }
-
-  eliminar(id: number) {
-    this.iS.deleteA(id).subscribe(data => {
-      this.iS.list().subscribe(data => {
-        this.iS.setList(data)
-      })
-    })
-  }
 }

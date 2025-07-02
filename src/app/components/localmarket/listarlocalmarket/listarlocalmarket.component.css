@@ -476,6 +476,111 @@
   object-fit: contain; /* mantiene toda la imagen visible */
 }
 
+/* Estilos adicionales para los mensajes de permisos */
+.no-permission-msg {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  color: #666;
+  font-size: 14px;
+  margin-left: 16px;
+}
 
+.no-permission-msg mat-icon {
+  color: #ff9800;
+  font-size: 20px;
+}
+
+/* Estilos para acciones de solo lectura */
+.read-only-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  color: #6c757d;
+  font-size: 12px;
+  border: 1px solid #e9ecef;
+}
+
+.read-only-icon {
+  font-size: 16px;
+  color: #6c757d;
+}
+
+.read-only-text {
+  font-weight: 500;
+}
+
+/* Estilos para el estado vacío sin permisos */
+.no-permission-empty {
+  text-align: center;
+  margin-top: 16px;
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.no-permission-empty p {
+  color: #6c757d;
+  margin: 0;
+  font-size: 14px;
+}
+
+/* Mejorar la apariencia de las acciones de las tarjetas */
+.card-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid #f0f0f0;
+  min-height: 56px;
+}
+
+/* Estilos para botones de acción */
+.action-button {
+  transition: all 0.2s ease;
+}
+
+.edit-button:hover {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.delete-button:hover {
+  background-color: #ffebee;
+  color: #d32f2f;
+}
+
+/* Animación suave para elementos que aparecen/desaparecen */
+.add-button,
+.action-button,
+.no-permission-msg,
+.read-only-actions {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Responsive: ocultar texto en pantallas pequeñas */
+@media (max-width: 768px) {
+  .no-permission-msg span {
+    display: none;
+  }
+  
+  .read-only-text {
+    display: none;
+  }
+  
+  .no-permission-msg,
+  .read-only-actions {
+    justify-content: center;
+  }
+}
 
 /* Stagger animation delay is handled in HTML with [style.animation-delay.s] */
