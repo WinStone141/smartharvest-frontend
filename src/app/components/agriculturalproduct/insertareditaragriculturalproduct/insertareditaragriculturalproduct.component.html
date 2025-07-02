@@ -1,0 +1,88 @@
+
+<div>
+  <div><h1>Registrar Producto Agrícola</h1></div>
+  <div>
+    <form [formGroup]="form" (submit)="aceptar()">
+      <mat-form-field *ngIf="edicion">
+        <mat-label>ID</mat-label>
+        <input matInput formControlName="codigo" readonly/>
+        <mat-error *ngIf="form.get('codigo')?.hasError('required')">
+          El código es obligatorio!!
+        </mat-error>
+      </mat-form-field>
+      <br />
+
+      <mat-form-field>
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="nombre" />
+        <mat-error *ngIf="form.get('nombre')?.hasError('required')">
+          El nombre es obligatorio!!
+        </mat-error>
+        <mat-error *ngIf="form.get('nombre')?.hasError('maxlength')">
+          El nombre no puede exceder 50 caracteres
+        </mat-error>
+        <mat-error *ngIf="form.get('nombre')?.hasError('minlength')">
+          El nombre no puede exceder 3 caracteres
+        </mat-error>
+      </mat-form-field>
+      <br />
+
+      <mat-form-field>
+        <mat-label>Cantidad</mat-label>
+        <input matInput formControlName="cantidad" />
+        <mat-error *ngIf="form.get('cantidad')?.hasError('required')">
+          La cantidad es obligatorio!!
+        </mat-error>
+        <mat-error *ngIf="form.get('cantidad')?.hasError('max')">
+          La cantidad no puede ser mayor a 1000
+        </mat-error>
+        <mat-error *ngIf="form.get('cantidad')?.hasError('min')">
+          La cantidad no puede ser menor a 1
+        </mat-error>
+      </mat-form-field>
+      <br />
+
+      <mat-form-field>
+        <mat-label>Unidad de Medida</mat-label>
+        <mat-select formControlName="unidaddemedida">
+          <mat-option *ngFor="let um of udemedida" [value]="um.value">
+            {{um.viewValue}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('unidaddemedida')?.hasError('required')">
+          La unidad de medida es obligatoria!!
+        </mat-error>
+      </mat-form-field>
+      <br />
+
+      <mat-form-field>
+        <mat-label>Fecha de Cosecha</mat-label>
+        <input matInput [matDatepicker]="cosechaPicker" formControlName="fechadecosecha">
+        <mat-datepicker-toggle matSuffix [for]="cosechaPicker"></mat-datepicker-toggle>
+        <mat-datepicker #cosechaPicker></mat-datepicker>
+        <mat-error *ngIf="form.get('fechadecosecha')?.hasError('required')">
+          La fecha de cosecha es obligatoria!!
+        </mat-error>
+      </mat-form-field>
+      <br />
+
+      <!-- CAMPO USUARIO - NUEVO -->
+      <mat-form-field>
+        <mat-label>Sensor</mat-label>
+        <mat-select formControlName="idCultivo">
+          <mat-option *ngFor="let cultivo of cultivos" [value]="cultivo.idCrop">
+            {{cultivo.typeCrop}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('idCultivo')?.hasError('required')">
+          El sensor es obligatorio!!
+        </mat-error>
+      </mat-form-field>
+      <br />
+
+      <button type="submit" mat-raised-button color="primary" [disabled]="!form.valid">
+        Registrar Producto Agrícola
+      </button>
+    </form>
+  </div>
+</div>

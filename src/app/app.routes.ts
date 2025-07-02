@@ -22,6 +22,8 @@ import { InsertarnuevousuarioComponent } from './components/role/insertarnuevous
 import { HomeComponent } from './components/home/home.component';
 import { SensorComponent } from './components/sensor/sensor.component';
 import { InsertareditarsensorComponent } from './components/sensor/insertareditarsensor/insertareditarsensor.component';
+import { AgriculturalproductComponent } from './components/agriculturalproduct/agriculturalproduct.component';
+import { InsertareditaragriculturalproductComponent } from './components/agriculturalproduct/insertareditaragriculturalproduct/insertareditaragriculturalproduct.component';
 
 export const routes: Routes = [
   {
@@ -196,6 +198,26 @@ export const routes: Routes = [
       {
         path: 'ediciones/:id',
         component: InsertareditarsensorComponent,
+        canActivate: [roleGuard],
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // Solo ADMIN y AGRICULTOR pueden editar
+      },
+    ],
+    canActivate: [seguridadGuard, roleGuard],
+    data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // ADMIN y AGRICULTOR pueden manejar cultivos
+  },
+  {
+    path: 'agriculturalproducts',
+    component: AgriculturalproductComponent,
+    children: [
+      {
+        path: 'nuevo',
+        component: InsertareditaragriculturalproductComponent,
+        canActivate: [roleGuard],
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // Solo ADMIN y AGRICULTOR pueden crear
+      },
+      {
+        path: 'ediciones/:id',
+        component: InsertareditaragriculturalproductComponent,
         canActivate: [roleGuard],
         data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // Solo ADMIN y AGRICULTOR pueden editar
       },

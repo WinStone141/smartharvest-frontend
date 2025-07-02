@@ -7,9 +7,10 @@ import { iif } from 'rxjs';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCard, MatCardContent } from '@angular/material/card';
 @Component({
   selector: 'app-listarusers',
-  imports: [MatTableModule, RouterLink, MatIconModule, MatButtonModule, CommonModule],
+  imports: [MatTableModule, RouterLink, MatIconModule, MatButtonModule, CommonModule,MatCard,MatCardContent],
   templateUrl: './listarusers.component.html',
   styleUrl: './listarusers.component.css'
 })
