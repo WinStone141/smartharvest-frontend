@@ -1,22 +1,48 @@
-/* Estilo general */
-body {
+/* Quita los márgenes y establece altura completa */
+body, html {
     margin: 0;
     padding: 0;
+    height: 100%;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f6f8;
+    overflow: hidden;
+}
+
+/* Video de fondo pantalla completa */
+.video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Coloca el video detrás del contenido */
+    overflow: hidden;
+}
+
+.video-background video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Contenedor del contenido centrado */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
 }
 
-/* Contenedor centrado */
+/* Caja blanca con sombra */
 .container {
     text-align: center;
-    background-color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.85); /* Transparencia sutil */
     padding: 40px;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 /* Título */
@@ -25,7 +51,7 @@ h1 {
     color: #333;
 }
 
-/* Marca SmartHarvest en otro color */
+/* Marca SmartHarvest destacada */
 h1 span {
-    color: #28a745; /* Verde SmartHarvest */
+    color: #28a745;
 }
