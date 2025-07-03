@@ -25,6 +25,7 @@ import { InsertareditarsensorComponent } from './components/sensor/insertaredita
 import { AgriculturalproductComponent } from './components/agriculturalproduct/agriculturalproduct.component';
 import { InsertareditaragriculturalproductComponent } from './components/agriculturalproduct/insertareditaragriculturalproduct/insertareditaragriculturalproduct.component';
 import { IaComponent } from './components/ia/ia.component';
+import { CropsNeedingAttentionComponent } from './components/reportes/crops-needing-attention/crops-needing-attention.component';
 
 export const routes: Routes = [
   {
@@ -208,6 +209,19 @@ export const routes: Routes = [
     ],
     canActivate: [seguridadGuard, roleGuard],
     data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // ADMIN y AGRICULTOR pueden manejar cultivos
+  },
+  //Report access
+  {
+    path: 'reportes',
+    canActivate: [seguridadGuard, roleGuard],
+    data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
+    children: [
+      {
+        path: 'cultivos-peligro',
+        component: CropsNeedingAttentionComponent,
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }
+      }
+    ]
   },
   {
     path: 'agriculturalproducts',

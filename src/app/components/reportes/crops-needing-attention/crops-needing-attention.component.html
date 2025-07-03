@@ -1,0 +1,75 @@
+<div class="table-container">
+  <div class="table-header">
+    <div class="header-content">
+      <div class="header-info">
+        <div class="page-title">
+          <mat-icon class="title-icon">warning</mat-icon>
+          Cultivos en Peligro
+        </div>
+        <p class="page-subtitle">
+          Listado de cultivos que requieren atención inmediata por su estado actual.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <mat-card class="table-card">
+    <mat-card-content>
+      <div class="table-wrapper">
+        <mat-table *ngIf="!loading && crops.length > 0" [dataSource]="crops" class="companies-table">
+
+          <!-- ID Column -->
+          <ng-container matColumnDef="idcrop">
+            <mat-header-cell *matHeaderCellDef class="mat-mdc-header-cell id-column">ID</mat-header-cell>
+            <mat-cell *matCellDef="let crop" class="mat-mdc-cell id-cell">
+              <span class="id-badge">{{ crop.idCrop }}</span>
+            </mat-cell>
+          </ng-container>
+
+          <!-- Tipo Column -->
+          <ng-container matColumnDef="typecrop">
+            <mat-header-cell *matHeaderCellDef class="mat-mdc-header-cell">Tipo</mat-header-cell>
+            <mat-cell *matCellDef="let crop" class="mat-mdc-cell name-cell">
+              <span class="company-name"><span class="primary-text">{{ crop.typeCrop }}</span></span>
+            </mat-cell>
+          </ng-container>
+
+          <!-- Parcela Column -->
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef class="mat-mdc-header-cell">Parcela</mat-header-cell>
+            <mat-cell *matCellDef="let crop" class="mat-mdc-cell">{{ crop.name }}</mat-cell>
+          </ng-container>
+
+          <!-- Estado Column -->
+          <ng-container matColumnDef="actualstate">
+            <mat-header-cell *matHeaderCellDef class="mat-mdc-header-cell">Estado</mat-header-cell>
+            <mat-cell *matCellDef="let crop" class="mat-mdc-cell">{{ crop.actualState }}</mat-cell>
+          </ng-container>
+
+          <!-- Fecha de Siembra Column -->
+          <ng-container matColumnDef="sowingdate">
+            <mat-header-cell *matHeaderCellDef class="mat-mdc-header-cell">Fecha de Siembra</mat-header-cell>
+            <mat-cell *matCellDef="let crop" class="mat-mdc-cell">{{ crop.sowingDate | date:'dd/MM/yyyy' }}</mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns" class="table-header-row"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;" class="table-row"></mat-row>
+        </mat-table>
+
+        <div *ngIf="!loading && crops.length === 0" class="empty-state">
+          <mat-icon class="empty-icon">spa</mat-icon>
+          <h3>No hay cultivos en peligro</h3>
+          <p>¡Todos los cultivos están en buen estado!</p>
+        </div>
+        <div *ngIf="loading" class="empty-state">
+          <mat-icon class="empty-icon">hourglass_empty</mat-icon>
+          <h3>Cargando cultivos...</h3>
+        </div>
+        <div *ngIf="error" class="empty-state">
+          <mat-icon class="empty-icon">error_outline</mat-icon>
+          <h3>{{ error }}</h3>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
