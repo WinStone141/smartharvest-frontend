@@ -383,8 +383,8 @@ button {
 }
 
 .service-button {
-    background: linear-gradient(45deg, var(--primary-green), var(--light-green));
-    color: var(--white);
+    background-color: white !important;
+    color: #276d3e !important;
     padding: 12px 24px;
     border: none;
     border-radius: 25px;
@@ -455,8 +455,8 @@ button {
 }
 
 .tech-cta-button {
-    background: rgba(255, 255, 255, 0.2);
-    color: var(--white);
+    background: white !important;
+    color: #276d3e !important;
     padding: 16px 32px;
     border: 2px solid var(--white);
     border-radius: 30px;
@@ -479,7 +479,7 @@ button {
 
 /* FOOTER */
 .footer {
-    background: linear-gradient(135deg, var(--forest-green), #0d2818);
+    background: #019d3d;
     color: var(--white);
     padding: 60px 20px 20px;
     text-align: center;
@@ -503,7 +503,7 @@ button {
 
 .footer-section h3 {
     margin-bottom: 20px;
-    color: var(--light-green);
+    color: white;
     font-size: 1.2rem;
     font-weight: 600;
 }
@@ -512,6 +512,7 @@ button {
     margin-bottom: 10px;
     line-height: 1.6;
     opacity: 0.9;
+    color: white;
 }
 
 .footer-section a {
@@ -527,7 +528,7 @@ button {
 }
 
 .footer-bottom {
-    border-top: 1px solid rgba(76, 175, 80, 0.3);
+    border-top: 1px solid rgba(18, 43, 19, 0.523);
     padding-top: 20px;
     display: flex;
     justify-content: space-between;
@@ -536,6 +537,24 @@ button {
     gap: 20px;
     position: relative;
     z-index: 2;
+    color: white;
+}
+
+.footer-button {
+  background-color: #019d3d;
+  color: #1a4a2a;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 8px 16px;
+  text-transform: none;
+}
+
+.footer-button:hover {
+  background-color: #009648;
+}
+
+.footer-button mat-icon {
+    color: white;
 }
 
 .social-icons {
@@ -705,7 +724,7 @@ button {
 }
 
 .nav-button {
-  color: #1a4a2a;
+  color: #276d3e !important;
   font-weight: 500;
   transition: color 0.2s ease;
 }
@@ -715,3 +734,72 @@ button {
 }
 
 
+.register-button {  
+  background-color: white !important;
+  color: #276d3e !important;
+  border-radius: 30px;
+  padding: 10px 24px;
+  font-weight: 600;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.register-button:hover {
+  background-color: #e8f5e9 !important; /* verde claro sutil */
+  color: #019d3d !important;
+}
+
+
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.hero-cta-primary {
+  background-color: white !important;
+  color: #019d3d !important;
+  border-radius: 30px;
+  padding: 10px 24px;
+  font-weight: 600;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero-cta-primary mat-icon {
+  color: #019d3d !important;
+}
+
+.hero-cta-primary:hover {
+  background-color: #e8f5e9 !important;
+  color: #019d3d !important;
+}
+
+.hero-cta-primary:hover mat-icon {
+  color: #019d3d !important;
+}
+
+.hero-cta-secondary {
+  border: 2px solid white !important;
+  color: white !important;
+  border-radius: 30px;
+  padding: 10px 24px;
+  font-weight: 600;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero-cta-secondary mat-icon {
+  color: white !important;
+}
+
+    .hero-cta-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;    
+    }
