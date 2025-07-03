@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'; // Agregar OnInit
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UsersForRegister } from '../../../models/usersforregister';
 import { UsersService } from '../../../services/users.service';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router, RouterLink } from '@angular/router';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -19,7 +19,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     CommonModule,
     MatSelectModule,
     MatFormFieldModule,
-    ReactiveFormsModule
+    ReactiveFormsModule, RouterLink
   ],
   templateUrl: './insertareditarusers.component.html',
   styleUrl: './insertareditarusers.component.css'
