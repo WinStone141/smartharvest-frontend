@@ -1,0 +1,94 @@
+/* Fondo que cubre toda la página */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.fondo {
+  background-color: #388e3c;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Tarjeta contenedora */
+.container {
+  max-width: 400px;
+  width: 100%;
+  padding: 40px 30px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 128, 0, 0.2);
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Logo */
+.container img {
+  width: 100px;
+  margin-bottom: 20px;
+}
+
+/* Título */
+.container h2 {
+  margin-bottom: 30px;
+  font-size: 24px;
+  color: #2e7d32;
+}
+
+/* Campos */
+mat-form-field.example-full-width {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+/* Grupo de radio botones */
+.radio-group {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+/* Contenedor de botones */
+.botones {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+/* Botones personalizados */
+.custom-button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  text-transform: none;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+  border: 2px solid #388e3c;
+}
+
+/* Botón Registrar (verde) */
+.ingresar {
+  background-color: #388e3c !important;
+  color: #ffffff !important;
+}
+
+.ingresar:hover {
+  background-color: #ffffff !important;
+  color: #388e3c !important;
+  transform: scale(1.02);
+}
+
+/* Botón Cancelar (blanco) */
+.cancelar {
+  background-color: #ffffff !important;
+  color: #388e3c !important;
+}
+
+.cancelar:hover {
+  background-color: #388e3c !important;
+  color: #ffffff !important;
+  transform: scale(1.02);
+}

@@ -1,11 +1,22 @@
-/* Estilo principal del contenedor */
+/* Fondo que cubre toda la página */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
 .fondo {
   background-color: #388e3c;
-
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+/* Tarjeta contenedora del login */
 .container {
   max-width: 400px;
-  margin: 5% auto;
+  width: 100%;
   padding: 40px 30px;
   background-color: #ffffff;
   border-radius: 20px;
@@ -24,30 +35,54 @@
 .container h2 {
   margin-bottom: 30px;
   font-size: 24px;
-  color: #2e7d32; /* Verde oscuro */
+  color: #2e7d32;
 }
 
-/* Campos de formulario */
+/* Campos del formulario */
 mat-form-field.example-full-width {
   width: 100%;
   margin-bottom: 20px;
 }
 
-/* Botón en tonos verdes */
-
-.mat-mdc-raised-button:not(:disabled) {
-    background-color: #388e3c;
+/* Contenedor de botones */
+.botones {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 10px;
+  flex-wrap: wrap;
 }
+
+/* Estilo base común para ambos botones */
 .custom-button {
-  color: #ffffff !important;   /* Fuerza el texto blanco */
   padding: 10px 20px;
   border-radius: 8px;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  text-transform: none; /* Opcional: evita que el texto esté en mayúsculas */
+  font-weight: bold;
+  text-transform: none;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+  border: 2px solid #388e3c;
 }
 
-.custom-button:hover {
-  background-color: #ffffff;
+/* Botón Ingresar */
+.ingresar {
+  background-color: #388e3c !important;
+  color: #ffffff !important;
+}
+
+.ingresar:hover {
+  background-color: #ffffff !important;
+  color: #388e3c !important;
   transform: scale(1.02);
-  color: #388e3c !important; /* Asegura que no cambie al hacer hover */
+}
+
+/* Botón Cancelar */
+.cancelar {
+  background-color: #ffffff !important;
+  color: #388e3c !important;
+}
+
+.cancelar:hover {
+  background-color: #388e3c !important;
+  color: #ffffff !important;
+  transform: scale(1.02);
 }
