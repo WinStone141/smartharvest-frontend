@@ -127,10 +127,10 @@ button {
         display: none;
     }
 
-    #menu-button {
+    /*#menu-button {
         display: block;
-        background-image: url("./assets/images/menu-icon.svg");
-    }
+        background-image: url("asse");
+    }*/
 }
 
 .show-nav {
@@ -153,10 +153,10 @@ button {
     padding-top: 100px;
 }
 
-.show-menu {
+/*.show-menu {
   background-image: url("./assets/images/close-icon.svg") !important;
   z-index: 200;
-}
+}*/
 
 /* hero */
 .hero {
@@ -167,7 +167,7 @@ button {
     justify-content: center;
 
     background-color: #f5f5f5;
-    background-image: url("./assets/images/hero.png");
+    /*background-image: url("./assets/images/hero.png");*/
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -242,7 +242,7 @@ button {
     object-fit: cover;
     background-repeat: no-repeat;
     z-index: 30;
-    background-image: url("./assets/images/top-wave.png");
+   /* background-image: url("./assets/images/top-wave.png"); */
 }
 
 #bottom-wave {
@@ -254,7 +254,7 @@ button {
     object-fit: cover;
     background-repeat: repeat-x;
     
-    background-image: url("./assets/images/top-wave.png");
+    /*background-image: url("./assets/images/top-wave.png");*/
     z-index: 30;
     rotate: 180deg;
 }
