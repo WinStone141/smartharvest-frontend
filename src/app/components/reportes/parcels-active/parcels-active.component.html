@@ -1,0 +1,57 @@
+<div class="table-container">
+  <div class="table-header">
+    <div class="header-content">
+      <div class="header-info">
+        <div class="page-title">
+          <mat-icon class="title-icon">map</mat-icon>
+          Parcelas Activas
+        </div>
+        <p class="page-subtitle">
+          Listado de parcelas registradas en los últimos 30 días.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <mat-card class="table-card">
+    <mat-card-content>
+      <div class="table-wrapper">
+        <mat-table *ngIf="!loading && parcels.length > 0" [dataSource]="parcels" class="companies-table">
+
+          <!-- ID Column -->
+          <ng-container matColumnDef="idParcel">
+            <mat-header-cell *matHeaderCellDef class="mat-mdc-header-cell id-column">ID</mat-header-cell>
+            <mat-cell *matCellDef="let parcel" class="mat-mdc-cell id-cell">
+              <span class="id-badge">{{ parcel.idParcel }}</span>
+            </mat-cell>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef class="mat-mdc-header-cell">Nombre</mat-header-cell>
+            <mat-cell *matCellDef="let parcel" class="mat-mdc-cell name-cell">
+              <span class="company-name"><span class="primary-text">{{ parcel.name }}</span></span>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns" class="table-header-row"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;" class="table-row"></mat-row>
+        </mat-table>
+
+        <div *ngIf="!loading && parcels.length === 0" class="empty-state">
+          <mat-icon class="empty-icon">map</mat-icon>
+          <h3>No hay parcelas activas</h3>
+          <p>No se han registrado parcelas en los últimos 30 días.</p>
+        </div>
+        <div *ngIf="loading" class="empty-state">
+          <mat-icon class="empty-icon">hourglass_empty</mat-icon>
+          <h3>Cargando parcelas...</h3>
+        </div>
+        <div *ngIf="error" class="empty-state">
+          <mat-icon class="empty-icon">error_outline</mat-icon>
+          <h3>{{ error }}</h3>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

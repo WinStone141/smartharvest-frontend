@@ -26,6 +26,7 @@ import { AgriculturalproductComponent } from './components/agriculturalproduct/a
 import { InsertareditaragriculturalproductComponent } from './components/agriculturalproduct/insertareditaragriculturalproduct/insertareditaragriculturalproduct.component';
 import { IaComponent } from './components/ia/ia.component';
 import { CropsNeedingAttentionComponent } from './components/reportes/crops-needing-attention/crops-needing-attention.component';
+import { ParcelsActiveComponent } from './components/reportes/parcels-active/parcels-active.component';
 
 export const routes: Routes = [
   {
@@ -219,6 +220,11 @@ export const routes: Routes = [
       {
         path: 'cultivos-peligro',
         component: CropsNeedingAttentionComponent,
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }
+      },
+      {
+        path: 'parcelas-activas',
+        component: ParcelsActiveComponent,
         data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }
       }
     ]
