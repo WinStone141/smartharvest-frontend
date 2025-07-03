@@ -1,0 +1,95 @@
+.ia-container {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 32px;
+  background-color: #0f1c0f;
+  border: 1px solid #2ecc71;
+  border-radius: 12px;
+  box-shadow: 0 0 25px rgba(46, 204, 113, 0.2);
+  font-family: 'Courier New', monospace;
+  color: #c8facc;
+  transition: all 0.3s ease;
+}
+
+.ia-container h2 {
+  text-align: center;
+  color: #2ecc71;
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 1px solid #2ecc71;
+  padding-bottom: 10px;
+}
+
+textarea {
+  width: 100%;
+  background-color: #142a14;
+  color: #a8ffb0;
+  border: 1px solid #2ecc71;
+  border-radius: 6px;
+  padding: 12px;
+  font-size: 15px;
+  resize: none;
+  box-shadow: inset 0 0 10px rgba(46, 204, 113, 0.1);
+  transition: border-color 0.3s;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: #00e676;
+  background-color: #1d3a1d;
+}
+
+button {
+  margin-top: 16px;
+  width: 100%;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #00e676, #2ecc71);
+  color: #0f1c0f;
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 0 12px rgba(0, 230, 118, 0.4);
+  transition: all 0.3s ease;
+}
+
+button:hover:not(:disabled) {
+  transform: scale(1.03);
+  box-shadow: 0 0 18px rgba(0, 255, 135, 0.6);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.respuesta {
+  margin-top: 28px;
+  padding: 20px;
+  background-color: #142a14;
+  border-left: 4px solid #00e676;
+  border-radius: 6px;
+  box-shadow: 0 0 10px rgba(0, 230, 118, 0.2);
+  animation: fadeIn 0.6s ease-out;
+}
+
+.respuesta h3 {
+  color: #2ecc71;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+/* Animación de entrada suave */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

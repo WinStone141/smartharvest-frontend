@@ -127,13 +127,13 @@ export const routes: Routes = [
         path: 'nuevo',
         component: InsertareditarroleComponent,
         canActivate: [roleGuard],
-        data: { expectedRoles: ['ADMIN'] }, // Solo ADMIN puede crear roles
+        //data: { expectedRoles: ['ADMIN'] }, // Solo ADMIN puede crear roles
       },
       {
         path: 'ediciones/:id',
         component: InsertareditarroleComponent,
         canActivate: [roleGuard],
-        data: { expectedRoles: ['ADMIN'] }, // Solo ADMIN puede editar roles
+        //data: { expectedRoles: ['ADMIN'] }, // Solo ADMIN puede editar roles
       },
     ],
     canActivate: [seguridadGuard, roleGuard],
@@ -146,11 +146,11 @@ export const routes: Routes = [
       {
         path: 'ediciones/:id',
         component: InsertareditarusersComponent,
-        data: { expectedRoles: ['ADMIN', 'AGRICULTOR', 'DUEÑO_DE_MERCADO'] },
+        //data: { expectedRoles: ['ADMIN', 'AGRICULTOR', 'DUEÑO_DE_MERCADO'] },
       },
     ],
     canActivate: [seguridadGuard, roleGuard], // Para verificar login o token
-    data: { expectedRoles: ['ADMIN'] },
+    //data: { expectedRoles: ['ADMIN'] },
   },
   {
     path: 'parcels',

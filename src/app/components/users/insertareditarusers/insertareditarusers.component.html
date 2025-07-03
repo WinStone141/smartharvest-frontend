@@ -1,16 +1,18 @@
-<div>
-  <div><h1>Registro de Usuarios</h1></div>
-  <div>
-    <form [formGroup]="form" (submit)="aceptar()">
-      <mat-form-field *ngIf="edicion">
+<div class="fondo">
+  <div class="container">
+    <img src="assets/images/favicon.svg" alt="Logo de la empresa" />
+    <h2>Registro de Usuarios</h2>
+
+    <form [formGroup]="form" (ngSubmit)="aceptar()">
+      <mat-form-field class="example-full-width" *ngIf="edicion">
         <mat-label>ID</mat-label>
         <input matInput formControlName="codigo" />
         <mat-error *ngIf="form.get('codigo')?.hasError('required')">
           El código es obligatorio!!
         </mat-error>
       </mat-form-field>
-      <br />
-      <mat-form-field>
+
+      <mat-form-field class="example-full-width">
         <mat-label>Username</mat-label>
         <input matInput formControlName="username" maxlength="30" />
         <mat-error *ngIf="form.get('username')?.hasError('required')">
@@ -20,8 +22,8 @@
           El nombre no puede exceder 30 caracteres
         </mat-error>
       </mat-form-field>
-      <br />
-      <mat-form-field>
+
+      <mat-form-field class="example-full-width">
         <mat-label>Contraseña</mat-label>
         <input matInput type="password" formControlName="password" />
         <mat-error *ngIf="form.get('password')?.hasError('required')">
@@ -31,21 +33,33 @@
           La contraseña debe tener al menos 6 caracteres
         </mat-error>
       </mat-form-field>
-      <br />
-      
-      <!-- CORREGIDO: Radio buttons fuera de mat-form-field -->
-      <div>
+
+      <div class="radio-group">
         <label>Estado</label>
         <mat-radio-group formControlName="enabled">
           <mat-radio-button [value]="true">Activo</mat-radio-button>
           <mat-radio-button [value]="false">Inactivo</mat-radio-button>
         </mat-radio-group>
       </div>
-      <br />
 
-      <button type="submit" mat-raised-button color="primary" [disabled]="!form.valid">
-        Registrar usuario
-      </button>
+      <div class="botones">
+        <button
+          type="submit"
+          mat-raised-button
+          class="custom-button ingresar"
+          [disabled]="!form.valid"
+        >
+          Registrar usuario
+        </button>
+        <button
+          type="button"
+          mat-raised-button
+          class="custom-button cancelar"
+          routerLink="/inicio"
+        >
+          Cancelar
+        </button>
+      </div>
     </form>
   </div>
 </div>
