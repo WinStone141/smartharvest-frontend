@@ -1,0 +1,14 @@
+<div class="ia-container">
+  <h2>Asistente Agrícola Inteligente</h2>
+
+  <textarea [(ngModel)]="pregunta" rows="4" placeholder="Ej. ¿Qué puedo sembrar en la costa en invierno?"></textarea>
+
+  <button (click)="preguntarIA()" [disabled]="cargando || !pregunta">
+    {{ cargando ? 'Consultando...' : 'Consultar IA' }}
+  </button>
+
+  <div class="respuesta" *ngIf="respuesta">
+    <h3>Respuesta:</h3>
+    <p>{{ respuesta }}</p>
+  </div>
+</div>

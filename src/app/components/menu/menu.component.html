@@ -84,6 +84,17 @@
   <div>
     <button
       mat-button
+      [matMenuTriggerFor]="menureportes"
+      class="btn-rojo"
+      *ngIf="isAdmin() || isAgricultor()"
+    >
+      <mat-icon>bar_chart</mat-icon>
+      Reportes
+    </button>
+  </div>
+  <div>
+    <button
+      mat-button
       [matMenuTriggerFor]="menuusuarios"
       class="btn-rojo"
       *ngIf="isAdmin()"
@@ -144,6 +155,18 @@
 <mat-menu #menuagriproduct="matMenu">
   <button mat-menu-item routerLink="/agriculturalproducts">Listar</button>
   <button mat-menu-item routerLink="/agriculturalproducts/nuevo">Registrar</button>
+</mat-menu>
+
+<mat-menu #menureportes="matMenu">
+  <button mat-menu-item routerLink="/reportes/cultivos-peligro">
+    <mat-icon>warning</mat-icon>
+    Cultivos en Peligro
+  </button>
+  <button mat-menu-item routerLink="/reportes/parcelas-activas">
+    <mat-icon>map</mat-icon>
+    Parcelas activas
+  </button>
+  <!-- añadir otros accesos de queries -->
 </mat-menu>
 
 <mat-menu #menuusuarios="matMenu">
