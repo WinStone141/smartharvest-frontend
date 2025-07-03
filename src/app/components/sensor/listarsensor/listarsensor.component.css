@@ -1,0 +1,132 @@
+/* Contenedor principal */
+.sensor-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Encabezado */
+.header-section {
+  margin-bottom: 30px;
+  color: white;
+  text-align: center;
+}
+
+.header-section h1 {
+  font-size: 2.5rem;
+  font-weight: 300;
+  margin: 0;
+}
+
+/* Tabla */
+.table-section {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  overflow-x: auto;
+}
+
+/* Estilos para la tabla de Angular Material */
+.sensor-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Encabezado de tabla */
+.sensor-table th {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 12px;
+  border-bottom: 2px solid #c8e6c9;
+}
+
+/* Celdas de tabla */
+.sensor-table td {
+  padding: 12px;
+  font-size: 0.93rem;
+  border-bottom: 1px solid #f0f0f0;
+  color: #333;
+}
+
+/* Fila hover */
+.sensor-table tr:hover {
+  background-color: #f1f8e9;
+}
+
+/* Botones */
+button[mat-button] {
+  min-width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button[mat-button] mat-icon {
+  font-size: 20px;
+}
+
+/* Editar */
+button[color="primary"] {
+  background-color: rgba(33, 150, 243, 0.1);
+  color: #1976d2;
+  transition: all 0.2s ease;
+}
+
+button[color="primary"]:hover {
+  background-color: rgba(33, 150, 243, 0.2);
+}
+
+/* Eliminar */
+button[color="warn"] {
+  background-color: rgba(244, 67, 54, 0.1);
+  color: #d32f2f;
+  transition: all 0.2s ease;
+}
+
+button[color="warn"]:hover {
+  background-color: rgba(244, 67, 54, 0.2);
+}
+
+/* Paginador */
+mat-paginator {
+  margin-top: 16px;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 12px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sensor-container {
+    padding: 12px;
+  }
+
+  .header-section h1 {
+    font-size: 1.8rem;
+  }
+
+  .table-section {
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .sensor-table th,
+  .sensor-table td {
+    font-size: 0.85rem;
+    padding: 8px;
+  }
+
+  button[mat-button] {
+    min-width: 32px;
+    height: 32px;
+  }
+
+  mat-paginator {
+    font-size: 12px;
+  }
+}

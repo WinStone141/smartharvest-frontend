@@ -20,7 +20,7 @@
       mat-button
       [matMenuTriggerFor]="menulocalmarkets"
       class="btn-rojo"
-      *ngIf="isOwner()"
+      *ngIf="isOwner() || isAdmin()"
     >
       <mat-icon>computer</mat-icon>
       Mercados Locales

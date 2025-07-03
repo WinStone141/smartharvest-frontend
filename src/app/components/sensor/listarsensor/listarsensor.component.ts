@@ -8,12 +8,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CommonModule } from '@angular/common';
-
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { ViewChild } from '@angular/core';
 @Component({
   selector: 'app-listarsensor',
   imports: [MatTableModule, RouterLink, MatIconModule, MatButtonModule, MatCardModule,
     MatTooltipModule,
-    CommonModule],
+    CommonModule,MatPaginatorModule],
   templateUrl: './listarsensor.component.html',
   styleUrl: './listarsensor.component.css'
 })
@@ -22,14 +23,18 @@ export class ListarsensorComponent implements OnInit {
 
   displayedColumns: string[] = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6'];
 
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+
   constructor(private sS: SensorService) {}
 
   ngOnInit(): void {
     this.sS.list().subscribe(data => {
       this.dataSource = new MatTableDataSource(data)
+      this.dataSource.paginator = this.paginator
     })
     this.sS.getList().subscribe(data => {
       this.dataSource = new MatTableDataSource(data)
+      this.dataSource.paginator = this.paginator
     })
   }
 
