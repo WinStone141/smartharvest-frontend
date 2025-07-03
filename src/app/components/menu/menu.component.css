@@ -1,55 +1,106 @@
-/* Colores de fondo en Angular Material los controla la propiedad 'color="primary"' */
-
-.navbar {
+/* Container full height */
+.sidenav-container {
+  height: 100vh;
   display: flex;
-  padding: 0 24px;
-  background-color: #2e7d32; /* sobrescribe si deseas otro tono */
-  color: white;
-  height: 64px;
-  font-family: 'Helvetica Neue', sans-serif;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  background-color: #f4fdf6;
 }
 
-/* Branding */
-.navbar-brand {
-  display: flex;
-  align-items: center;
-  font-weight: 600;
-  font-size: 1.25rem;
-  gap: 8px;
-  cursor: pointer;
+/* Estilo del menú lateral */
+.app-sidenav {
+  width: 260px;
+  background-color: #e8f5e9;
+  color: #1b5e20;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
 }
 
-.brand-icon {
-  font-size: 28px;
+mat-sidenav mat-icon {
+  color: #388e3c;
 }
 
-/* Menús */
-.navbar-links,
-.navbar-user {
+/* Lista de navegación */
+mat-nav-list a {
   display: flex;
   align-items: center;
   gap: 12px;
-}
-
-.spacer {
-  flex: 1;
-}
-
-/* Estilo para botones */
-mat-toolbar button {
-  color: hsl(126, 77%, 50%);
+  padding: 10px 16px;
+  color: #2e7d32;
   font-weight: 500;
-  text-transform: none;
+  border-radius: 6px;
   transition: background 0.3s;
+  text-decoration: none;
+}
+
+mat-nav-list a:hover {
+  background-color: rgba(56, 142, 60, 0.1);
+}
+
+/* Paneles desplegables */
+mat-expansion-panel {
+  background-color: transparent;
+  box-shadow: none;
+  margin: 4px 0;
+}
+
+mat-expansion-panel-header {
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+mat-expansion-panel-header mat-icon {
+  margin-right: 8px;
+  color: #388e3c;
+}
+
+/* Toolbar */
+mat-toolbar {
+  background-color: #2e7d32;
+  color: white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: 16px;
+}
+
+mat-toolbar button {
+  color: white;
 }
 
 mat-toolbar button:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
-.menu-caret {
-  font-size: 20px;
-  margin-left: 4px;
-  opacity: 0.7;
+/* Botón de menú */
+mat-toolbar mat-icon {
+  color: white;
+}
+
+/* Separador flexible */
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+/* Información de usuario */
+.user-info {
+  margin: 16px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #1b5e20;
+  font-weight: 500;
+}
+
+mat-divider {
+  margin-top: 12px;
+  margin-bottom: 8px;
+}
+
+/* Responsive (opcional) */
+@media (max-width: 768px) {
+  .app-sidenav {
+    width: 220px;
+  }
+
+  mat-toolbar {
+    font-size: 14px;
+  }
 }
