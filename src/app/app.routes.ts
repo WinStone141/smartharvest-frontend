@@ -24,12 +24,16 @@ import { SensorComponent } from './components/sensor/sensor.component';
 import { InsertareditarsensorComponent } from './components/sensor/insertareditarsensor/insertareditarsensor.component';
 import { AgriculturalproductComponent } from './components/agriculturalproduct/agriculturalproduct.component';
 import { InsertareditaragriculturalproductComponent } from './components/agriculturalproduct/insertareditaragriculturalproduct/insertareditaragriculturalproduct.component';
+import { IaComponent } from './components/ia/ia.component';
 
 export const routes: Routes = [
   {
     path: '',
     redirectTo: '/inicio',
     pathMatch: 'full',
+  },
+  {
+  path:'ia',component:IaComponent
   },
   {
     path: 'login',
