@@ -1,0 +1,26 @@
+.ia-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  resize: vertical;
+  margin-bottom: 12px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+.respuesta {
+  margin-top: 20px;
+  background-color: #f1f8e9;
+  padding: 16px;
+  border-left: 5px solid #8bc34a;
+  border-radius: 8px;
+}
