@@ -1,106 +1,104 @@
-/* Container full height */
-.sidenav-container {
-  height: 100vh;
-  display: flex;
-  background-color: #f4fdf6;
-}
-
-/* Estilo del menú lateral */
+/* CONTENEDOR DEL SIDENAV */
 .app-sidenav {
   width: 260px;
-  background-color: #e8f5e9;
+  background-color: #f4fdf6; /* Verde muy claro */
+  color: #2e7d32;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+  padding-top: 16px;
+}
+
+/* TITULO */
+.app-sidenav h1 {
   color: #1b5e20;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+  font-size: 20px;
+  text-align: center;
+  margin: 0 0 24px 0;
+  font-weight: bold;
+  font-family: 'Segoe UI', sans-serif;
 }
 
-mat-sidenav mat-icon {
-  color: #388e3c;
-}
-
-/* Lista de navegación */
+/* ENTRADAS DEL MENÚ */
 mat-nav-list a {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px 16px;
-  color: #2e7d32;
+  padding: 12px 20px;
+  color: #1b5e20;
   font-weight: 500;
-  border-radius: 6px;
-  transition: background 0.3s;
   text-decoration: none;
+  transition: background 0.3s, color 0.2s;
+  border-left: 4px solid transparent;
+  font-size: 15px;
 }
 
-mat-nav-list a:hover {
-  background-color: rgba(56, 142, 60, 0.1);
+/* HOVER O SELECCIÓN */
+mat-nav-list a:hover,
+mat-nav-list a.active {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border-left: 4px solid #66bb6a;
 }
 
-/* Paneles desplegables */
+/* EXPANSIÓN DE SECCIONES */
 mat-expansion-panel {
-  background-color: transparent;
-  box-shadow: none;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  border: none;
   margin: 4px 0;
 }
 
 mat-expansion-panel-header {
   color: #2e7d32;
   font-weight: 600;
+  padding: 10px 20px;
+  font-family: 'Segoe UI', sans-serif;
 }
 
 mat-expansion-panel-header mat-icon {
-  margin-right: 8px;
   color: #388e3c;
+  margin-right: 8px;
 }
 
-/* Toolbar */
-mat-toolbar {
-  background-color: #2e7d32;
-  color: white;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  font-family: 'Helvetica Neue', sans-serif;
-  font-size: 16px;
-}
-
-mat-toolbar button {
-  color: white;
-}
-
-mat-toolbar button:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-/* Botón de menú */
-mat-toolbar mat-icon {
-  color: white;
-}
-
-/* Separador flexible */
-.toolbar-spacer {
-  flex: 1 1 auto;
-}
-
-/* Información de usuario */
-.user-info {
-  margin: 16px;
+/* ENLACES DENTRO DE GRUPOS */
+mat-expansion-panel a[mat-list-item] {
+  padding-left: 40px;
   font-size: 14px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  color: #2e7d32;
+}
+
+mat-expansion-panel a[mat-list-item]:hover {
+  background-color: #dcedc8;
   color: #1b5e20;
-  font-weight: 500;
 }
 
-mat-divider {
-  margin-top: 12px;
-  margin-bottom: 8px;
+/* ICONOS */
+mat-icon {
+  color: #2e7d32;
 }
 
-/* Responsive (opcional) */
-@media (max-width: 768px) {
-  .app-sidenav {
-    width: 220px;
-  }
-
-  mat-toolbar {
-    font-size: 14px;
-  }
+/* GENERAL: ELIMINA BORDES REDONDEADOS */
+mat-sidenav,
+button,
+mat-expansion-panel,
+mat-expansion-panel-header {
+  border-radius: 0 !important;
 }
+
+mat-toolbar {
+  position: relative;
+  z-index: 2;
+}
+
+mat-sidenav-container {
+  height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+mat-sidenav-content {
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
