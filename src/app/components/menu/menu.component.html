@@ -39,6 +39,14 @@
 
         <mat-expansion-panel>
           <mat-expansion-panel-header>
+            <mat-icon>rule</mat-icon><span>Recomendaciones</span>
+          </mat-expansion-panel-header>
+          <a mat-list-item routerLink="/recommendations"><mat-icon> list_alt</mat-icon> Listar</a>
+          <a mat-list-item routerLink="/recommendations/nuevo"><mat-icon>playlist_add</mat-icon> Registrar</a>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
             <mat-icon>grain</mat-icon><span>Insumos</span>
           </mat-expansion-panel-header>
           <a mat-list-item routerLink="/inputs"><mat-icon> list_alt</mat-icon> Listar</a>
@@ -63,7 +71,7 @@
 
         <mat-expansion-panel>
           <mat-expansion-panel-header>
-            <mat-icon>hive</mat-icon><span>Producto Agrícola</span>
+            <mat-icon>spa</mat-icon><span>Producto Agrícola</span>
           </mat-expansion-panel-header>
             <a mat-list-item routerLink="/agriculturalproducts"><mat-icon> list_alt</mat-icon> Listar</a>
             <a mat-list-item routerLink="/agriculturalproducts/nuevo"><mat-icon>playlist_add</mat-icon> Registrar</a>

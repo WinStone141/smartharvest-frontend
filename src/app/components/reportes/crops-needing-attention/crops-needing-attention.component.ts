@@ -9,7 +9,7 @@ import { CropsNeedingAttention } from '../../../models/crops-needing-attention.m
 @Component({
   selector: 'app-crops-needing-attention',
   standalone: true,
-  imports: [CommonModule, NgIf, NgFor, MatTableModule, MatCardModule, MatIconModule],
+  imports: [CommonModule, NgIf, MatTableModule, MatCardModule, MatIconModule],
   templateUrl: './crops-needing-attention.component.html',
   styleUrl: './crops-needing-attention.component.css',
 })
