@@ -1,63 +1,59 @@
 <div>
-  <div><h1>Registrar mantenimiento</h1></div>
+  <div><h1>Registrar Mantenimiento</h1></div>
   <div>
     <form [formGroup]="form" (submit)="aceptar()">
-      <!-- Campo ID (solo en edición) -->
       <mat-form-field *ngIf="edicion">
         <mat-label>ID</mat-label>
-        <input matInput formControlName="idMaintenance" readonly />
+        <input matInput formControlName="codigo" />
+        <mat-error *ngIf="form.get('codigo')?.hasError('required')">
+          El código es obligatorio!!
+        </mat-error>
       </mat-form-field>
       <br />
 
       <!-- Campo Fecha de Instalación -->
       <mat-form-field>
         <mat-label>Fecha de Instalación</mat-label>
-        <input matInput [matDatepicker]="installationPicker" formControlName="installationDate">
-        <mat-datepicker-toggle matSuffix [for]="installationPicker"></mat-datepicker-toggle>
-        <mat-datepicker #installationPicker></mat-datepicker>
-        <mat-error *ngIf="form.get('installationDate')?.hasError('required')">
-          La fecha de instalación es obligatoria!!
+        <input matInput [matDatepicker]="registrationPicker" formControlName="fechaInstalacion">
+        <mat-datepicker-toggle matSuffix [for]="registrationPicker"></mat-datepicker-toggle>
+        <mat-datepicker #registrationPicker></mat-datepicker>
+        <mat-error *ngIf="form.get('fechaInstalacion')?.hasError('required')">
+          La fecha de registro es obligatoria!!
         </mat-error>
       </mat-form-field>
       <br />
-
-      <!-- Campo Tipo de Mantenimiento -->
+      <!-- Campo tipoMantenimiento -->
       <mat-form-field>
-        <mat-label>Tipo de Mantenimiento</mat-label>
+        <mat-label>Tipo</mat-label>
         <mat-select formControlName="tipoMantenimiento">
-          <mat-option *ngFor="let tipo of maintenanceTypes" [value]="tipo.value">
+          <mat-option *ngFor="let tipo of tipos" [value]="tipo.value">
             {{tipo.viewValue}}
           </mat-option>
         </mat-select>
         <mat-error *ngIf="form.get('tipoMantenimiento')?.hasError('required')">
-          El tipo de mantenimiento es obligatorio!!
+          El tipo es obligatorio!!
         </mat-error>
       </mat-form-field>
       <br />
-
-      <!-- Campo Descripción -->
+      <!-- Campo descripcion -->
       <mat-form-field>
         <mat-label>Descripción</mat-label>
-        <textarea matInput formControlName="description" rows="3" maxlength="200"></textarea>
-        <mat-hint align="end">{{ form.get('description')?.value?.length || 0 }}/200</mat-hint>
-        <mat-error *ngIf="form.get('description')?.hasError('required')">
-          La descripción es obligatoria!!
+        <input matInput formControlName="descripcion" maxlength="200" />
+        <mat-error *ngIf="form.get('descripcion')?.hasError('required')">
+          El nombre es obligatorio!!
         </mat-error>
-        <mat-error *ngIf="form.get('description')?.hasError('minlength')">
-          La descripción debe tener al menos 20 caracteres
-        </mat-error>
-        <mat-error *ngIf="form.get('description')?.hasError('maxlength')">
-          La descripción no puede exceder 200 caracteres
+        <mat-error *ngIf="form.get('descripcion')?.hasError('maxlength')">
+          La descripcion no puede exceder 200 caracteres
         </mat-error>
       </mat-form-field>
       <br />
 
-      <!-- Campo Sensor -->
-       <mat-form-field>
+      <!-- CAMPO SENSOR -->
+      <mat-form-field>
         <mat-label>Sensor</mat-label>
         <mat-select formControlName="sensor">
           <mat-option *ngFor="let sensor of sensors" [value]="sensor.idSensor">
-            {{sensor.sensorType}}
+            {{sensor.idSensor}}
           </mat-option>
         </mat-select>
         <mat-error *ngIf="form.get('sensor')?.hasError('required')">
@@ -67,7 +63,7 @@
       <br />
 
       <button type="submit" mat-raised-button color="primary" [disabled]="!form.valid">
-        {{ edicion ? 'Actualizar' : 'Registrar' }} Mantenimiento
+        Registrar mantenimiento
       </button>
     </form>
   </div>
