@@ -1,55 +1,126 @@
-/* Colores de fondo en Angular Material los controla la propiedad 'color="primary"' */
-
-.navbar {
-  display: flex;
-  padding: 0 24px;
-  background-color: #2e7d32; /* sobrescribe si deseas otro tono */
-  color: white;
-  height: 64px;
-  font-family: 'Helvetica Neue', sans-serif;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+/* CONTENEDOR DEL SIDENAV */
+.app-sidenav {
+  width: 260px;
+  background-color: #f4fdf6; /* Verde muy claro */
+  color: #2e7d32;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+  padding-top: 16px;
 }
 
-/* Branding */
-.navbar-brand {
-  display: flex;
-  align-items: center;
-  font-weight: 600;
-  font-size: 1.25rem;
-  gap: 8px;
-  cursor: pointer;
+/* TITULO */
+.app-sidenav h1 {
+  color: #1b5e20;
+  font-size: 20px;
+  text-align: center;
+  margin: 0 0 24px 0;
+  font-weight: bold;
+  font-family: 'Segoe UI', sans-serif;
 }
 
-.brand-icon {
-  font-size: 28px;
-}
-
-/* Menús */
-.navbar-links,
-.navbar-user {
+/* ENTRADAS DEL MENÚ */
+mat-nav-list a {
   display: flex;
   align-items: center;
   gap: 12px;
-}
-
-.spacer {
-  flex: 1;
-}
-
-/* Estilo para botones */
-mat-toolbar button {
-  color: hsl(126, 77%, 50%);
+  padding: 12px 20px;
+  color: #1b5e20;
   font-weight: 500;
-  text-transform: none;
-  transition: background 0.3s;
+  text-decoration: none;
+  transition: background 0.3s, color 0.2s;
+
+  font-size: 15px;
 }
 
-mat-toolbar button:hover {
-  background: rgba(255, 255, 255, 0.1);
+/* HOVER O SELECCIÓN */
+mat-nav-list a:hover,
+mat-nav-list a.active {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+
 }
 
-.menu-caret {
+/* EXPANSIÓN DE SECCIONES */
+mat-expansion-panel {
+  background-color: transparent !important;
+  box-shadow: none !important;
+
+  border: none;
+  margin: 4px 0;
+}
+
+mat-expansion-panel-header {
+  color: #2e7d32;
+  font-weight: 600;
+  padding: 10px 20px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+mat-expansion-panel-header mat-icon {
+  color: #388e3c;
+  margin-right: 8px;
+}
+
+/* ENLACES DENTRO DE GRUPOS */
+mat-expansion-panel a[mat-list-item] {
+  /*padding-left: 40px;
+  font-size: 14px;*/
+  color: #2e7d32;
+}
+
+mat-expansion-panel a[mat-list-item]:hover {
+  background-color: #dcedc8;
+  color: #1b5e20;
+}
+
+/* ICONOS */
+mat-icon {
+  color: #2e7d32;
+}
+
+
+mat-toolbar {
+  position: relative;
+  z-index: 2;
+    background-color: #f4fdf6; /* Verde muy claro */
+
+}
+
+mat-sidenav-container {
+  height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+mat-sidenav-content {
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  text-align: center;
+  text-decoration: none; /* elimina subrayado */
+  cursor: pointer;
+}
+
+.logo-container img {
+  width: 60px;
+  height: auto;
+  margin-bottom: 8px;
+}
+
+.logo-container h1 {
+  color: #1b5e20;
   font-size: 20px;
-  margin-left: 4px;
-  opacity: 0.7;
+  font-weight: bold;
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+}
+.toolbar-spacer {
+  flex: 1 1 auto;
 }
