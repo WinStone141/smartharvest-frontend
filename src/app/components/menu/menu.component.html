@@ -1,20 +1,20 @@
 <mat-sidenav-container class="sidenav-container" *ngIf="estaLogueado">
   <mat-sidenav #drawer mode="side" class="app-sidenav">
-    <h1>SmartHarvest</h1>
+    <a class="logo-container" [routerLink]="['/home']">
+      <img src="assets/images/favicon.svg" alt="Logo de la empresa">
+      <h1>SmartHarvest</h1>
+    </a>
+    
     <mat-nav-list>
-      <a mat-list-item [routerLink]="['/home']">
-        <mat-icon>home</mat-icon>
-        <span>Home</span>
-      </a>
       
 
       <ng-container *ngIf="isAdmin()">
         <mat-expansion-panel>
           <mat-expansion-panel-header>
-            <mat-icon>computer</mat-icon><span>Compañías</span>
+            <mat-icon>domain</mat-icon><span>Compañías</span>
           </mat-expansion-panel-header>
-          <a mat-list-item routerLink="/companies">Listar</a>
-          <a mat-list-item routerLink="/companies/nuevo">Registrar</a>
+          <a mat-list-item routerLink="/companies"> <mat-icon> list_alt</mat-icon> Listar</a>
+          <a mat-list-item routerLink="/companies/nuevo"><mat-icon>playlist_add</mat-icon> Registrar</a>
         </mat-expansion-panel>
       </ng-container>
 
@@ -23,8 +23,8 @@
           <mat-expansion-panel-header>
             <mat-icon>computer</mat-icon><span>Mercados Locales</span>
           </mat-expansion-panel-header>
-          <a mat-list-item routerLink="/localmarkets">Listar</a>
-          <a mat-list-item routerLink="/localmarkets/nuevo">Registrar</a>
+          <a mat-list-item routerLink="/localmarkets"><mat-icon> list_alt</mat-icon> Listar</a>
+          <a mat-list-item routerLink="/localmarkets/nuevo"><mat-icon>playlist_add</mat-icon> Registrar</a>
         </mat-expansion-panel>
       </ng-container>
 
@@ -33,40 +33,40 @@
           <mat-expansion-panel-header>
             <mat-icon>eco</mat-icon><span>Cultivos</span>
           </mat-expansion-panel-header>
-          <a mat-list-item routerLink="/crops">Listar</a>
-          <a mat-list-item routerLink="/crops/nuevo">Registrar</a>
+          <a mat-list-item routerLink="/crops"><mat-icon> list_alt</mat-icon> Listar</a>
+          <a mat-list-item routerLink="/crops/nuevo"><mat-icon>playlist_add</mat-icon> Registrar</a>
         </mat-expansion-panel>
 
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-icon>grain</mat-icon><span>Insumos</span>
           </mat-expansion-panel-header>
-          <a mat-list-item routerLink="/inputs">Listar</a>
-          <a mat-list-item routerLink="/inputs/nuevo">Registrar</a>
+          <a mat-list-item routerLink="/inputs"><mat-icon> list_alt</mat-icon> Listar</a>
+          <a mat-list-item routerLink="/inputs/nuevo"><mat-icon>playlist_add</mat-icon> Registrar</a>
         </mat-expansion-panel>
 
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-icon>grass</mat-icon><span>Parcelas</span>
           </mat-expansion-panel-header>
-          <a mat-list-item routerLink="/parcels">Listar</a>
-          <a mat-list-item routerLink="/parcels/nuevo">Registrar</a>
+          <a mat-list-item routerLink="/parcels"><mat-icon> list_alt</mat-icon> Listar</a>
+          <a mat-list-item routerLink="/parcels/nuevo"><mat-icon>playlist_add</mat-icon> Registrar</a>
         </mat-expansion-panel>
 
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-icon>barcode_reader</mat-icon><span>Sensores</span>
           </mat-expansion-panel-header>
-          <a mat-list-item routerLink="/sensors">Listar</a>
-          <a mat-list-item routerLink="/sensors/nuevo">Registrar</a>
+          <a mat-list-item routerLink="/sensors"><mat-icon> list_alt</mat-icon> Listar</a>
+          <a mat-list-item routerLink="/sensors/nuevo"><mat-icon>playlist_add</mat-icon> Registrar</a>
         </mat-expansion-panel>
 
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-icon>hive</mat-icon><span>Producto Agrícola</span>
           </mat-expansion-panel-header>
-          <a mat-list-item routerLink="/agriculturalproducts">Listar</a>
-          <a mat-list-item routerLink="/agriculturalproducts/nuevo">Registrar</a>
+          <a mat-list-item routerLink="/agriculturalproducts"><mat-icon> list_alt</mat-icon> Listar</a>
+          <a mat-list-item routerLink="/agriculturalproducts/nuevo"><mat-icon>playlist_add</mat-icon> Registrar</a>
         </mat-expansion-panel>
 
         <mat-expansion-panel>
@@ -87,16 +87,16 @@
           <mat-expansion-panel-header>
             <mat-icon>groups</mat-icon><span>Usuarios</span>
           </mat-expansion-panel-header>
-          <a mat-list-item routerLink="/users">Listar</a>
-          <a mat-list-item routerLink="/newuser">Registrar</a>
+          <a mat-list-item routerLink="/users"><mat-icon> list_alt</mat-icon> Listar</a>
+          <a mat-list-item routerLink="/newuser"><mat-icon>playlist_add</mat-icon> Registrar</a>
         </mat-expansion-panel>
 
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-icon>assignment_ind</mat-icon><span>Roles</span>
           </mat-expansion-panel-header>
-          <a mat-list-item routerLink="/roles">Listar</a>
-          <a mat-list-item routerLink="/roles/all">Registrar</a>
+          <a mat-list-item routerLink="/roles"><mat-icon> list_alt</mat-icon> Listar</a>
+          <a mat-list-item routerLink="/roles/all"><mat-icon>playlist_add</mat-icon> Registrar</a>
         </mat-expansion-panel>
       </ng-container>
 
@@ -109,7 +109,7 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-  <mat-toolbar color="primary">
+  <mat-toolbar>
   <!-- Botón de menú -->
   <button mat-icon-button (click)="drawer.toggle()" matTooltip="Menú">
     <mat-icon>menu</mat-icon>

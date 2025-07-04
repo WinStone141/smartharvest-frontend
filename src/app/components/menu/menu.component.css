@@ -27,7 +27,7 @@ mat-nav-list a {
   font-weight: 500;
   text-decoration: none;
   transition: background 0.3s, color 0.2s;
-  border-left: 4px solid transparent;
+
   font-size: 15px;
 }
 
@@ -36,14 +36,14 @@ mat-nav-list a:hover,
 mat-nav-list a.active {
   background-color: #e8f5e9;
   color: #2e7d32;
-  border-left: 4px solid #66bb6a;
+
 }
 
 /* EXPANSIÓN DE SECCIONES */
 mat-expansion-panel {
   background-color: transparent !important;
   box-shadow: none !important;
-  border-radius: 0 !important;
+
   border: none;
   margin: 4px 0;
 }
@@ -62,8 +62,8 @@ mat-expansion-panel-header mat-icon {
 
 /* ENLACES DENTRO DE GRUPOS */
 mat-expansion-panel a[mat-list-item] {
-  padding-left: 40px;
-  font-size: 14px;
+  /*padding-left: 40px;
+  font-size: 14px;*/
   color: #2e7d32;
 }
 
@@ -77,17 +77,12 @@ mat-icon {
   color: #2e7d32;
 }
 
-/* GENERAL: ELIMINA BORDES REDONDEADOS */
-mat-sidenav,
-button,
-mat-expansion-panel,
-mat-expansion-panel-header {
-  border-radius: 0 !important;
-}
 
 mat-toolbar {
   position: relative;
   z-index: 2;
+    background-color: #f4fdf6; /* Verde muy claro */
+
 }
 
 mat-sidenav-container {
@@ -102,3 +97,30 @@ mat-sidenav-content {
   z-index: 1;
 }
 
+.logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  text-align: center;
+  text-decoration: none; /* elimina subrayado */
+  cursor: pointer;
+}
+
+.logo-container img {
+  width: 60px;
+  height: auto;
+  margin-bottom: 8px;
+}
+
+.logo-container h1 {
+  color: #1b5e20;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+}
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
