@@ -16,11 +16,10 @@ import { ViewChild } from '@angular/core';
   templateUrl: './listarmaintenance.component.html',
   styleUrl: './listarmaintenance.component.css'
 })
-export class ListarmaintenanceComponent implements OnInit{
+export class ListarmaintenanceComponent {
   dataSource: MatTableDataSource<Maintenance> = new MatTableDataSource();
-
   displayedColumns: string[] = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7'];
-  
+
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
   constructor(private mS: MaintenanceService) {}
@@ -43,4 +42,5 @@ export class ListarmaintenanceComponent implements OnInit{
       })
     })
   }
+
 }
