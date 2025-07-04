@@ -1,0 +1,74 @@
+<div>
+  <div><h1>Registrar mantenimiento</h1></div>
+  <div>
+    <form [formGroup]="form" (submit)="aceptar()">
+      <!-- Campo ID (solo en edición) -->
+      <mat-form-field *ngIf="edicion">
+        <mat-label>ID</mat-label>
+        <input matInput formControlName="idMaintenance" readonly />
+      </mat-form-field>
+      <br />
+
+      <!-- Campo Fecha de Instalación -->
+      <mat-form-field>
+        <mat-label>Fecha de Instalación</mat-label>
+        <input matInput [matDatepicker]="installationPicker" formControlName="installationDate">
+        <mat-datepicker-toggle matSuffix [for]="installationPicker"></mat-datepicker-toggle>
+        <mat-datepicker #installationPicker></mat-datepicker>
+        <mat-error *ngIf="form.get('installationDate')?.hasError('required')">
+          La fecha de instalación es obligatoria!!
+        </mat-error>
+      </mat-form-field>
+      <br />
+
+      <!-- Campo Tipo de Mantenimiento -->
+      <mat-form-field>
+        <mat-label>Tipo de Mantenimiento</mat-label>
+        <mat-select formControlName="tipoMantenimiento">
+          <mat-option *ngFor="let tipo of maintenanceTypes" [value]="tipo.value">
+            {{tipo.viewValue}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('tipoMantenimiento')?.hasError('required')">
+          El tipo de mantenimiento es obligatorio!!
+        </mat-error>
+      </mat-form-field>
+      <br />
+
+      <!-- Campo Descripción -->
+      <mat-form-field>
+        <mat-label>Descripción</mat-label>
+        <textarea matInput formControlName="description" rows="3" maxlength="200"></textarea>
+        <mat-hint align="end">{{ form.get('description')?.value?.length || 0 }}/200</mat-hint>
+        <mat-error *ngIf="form.get('description')?.hasError('required')">
+          La descripción es obligatoria!!
+        </mat-error>
+        <mat-error *ngIf="form.get('description')?.hasError('minlength')">
+          La descripción debe tener al menos 20 caracteres
+        </mat-error>
+        <mat-error *ngIf="form.get('description')?.hasError('maxlength')">
+          La descripción no puede exceder 200 caracteres
+        </mat-error>
+      </mat-form-field>
+      <br />
+
+      <!-- Campo Sensor -->
+       <mat-form-field>
+        <mat-label>Sensor</mat-label>
+        <mat-select formControlName="sensor">
+          <mat-option *ngFor="let sensor of sensors" [value]="sensor.idSensor">
+            {{sensor.sensorType}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('sensor')?.hasError('required')">
+          El sensor es obligatorio!!
+        </mat-error>
+      </mat-form-field>
+      <br />
+
+      <button type="submit" mat-raised-button color="primary" [disabled]="!form.valid">
+        {{ edicion ? 'Actualizar' : 'Registrar' }} Mantenimiento
+      </button>
+    </form>
+  </div>
+</div>

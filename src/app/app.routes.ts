@@ -27,6 +27,8 @@ import { InsertareditaragriculturalproductComponent } from './components/agricul
 import { IaComponent } from './components/ia/ia.component';
 import { CropsNeedingAttentionComponent } from './components/reportes/crops-needing-attention/crops-needing-attention.component';
 import { ParcelsActiveComponent } from './components/reportes/parcels-active/parcels-active.component';
+import { InsertareditarmaintenanceComponent } from './components/maintenance/insertareditarmaintenance/insertareditarmaintenance.component';
+import { MaintenanceComponent } from './components/maintenance/maintenance.component';
 
 export const routes: Routes = [
   {
@@ -204,6 +206,26 @@ export const routes: Routes = [
       {
         path: 'ediciones/:id',
         component: InsertareditarsensorComponent,
+        canActivate: [roleGuard],
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // Solo ADMIN y AGRICULTOR pueden editar
+      },
+    ],
+    canActivate: [seguridadGuard, roleGuard],
+    data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // ADMIN y AGRICULTOR pueden manejar cultivos
+  },
+  {
+    path: 'maintenances',
+    component: MaintenanceComponent,
+    children: [
+      {
+        path: 'nuevo',
+        component: InsertareditarmaintenanceComponent,
+        canActivate: [roleGuard],
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // Solo ADMIN y AGRICULTOR pueden crear
+      },
+      {
+        path: 'ediciones/:id',
+        component: InsertareditarmaintenanceComponent,
         canActivate: [roleGuard],
         data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // Solo ADMIN y AGRICULTOR pueden editar
       },
