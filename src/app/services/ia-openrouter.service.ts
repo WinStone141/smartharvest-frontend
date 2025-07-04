@@ -18,7 +18,7 @@ export class IaOpenrouterService {
     const body = {
       model: 'deepseek/deepseek-r1-0528-qwen3-8b:free',
       messages: [
-        { role: 'system', content: 'Eres un experto en agricultura de precisión. No sabes otras cosas que no tengan que ver con agricultura. Limita tus respuestas a maximo 300 caracteres' },
+        { role: 'system', content: 'Eres un experto en agricultura de precisión. No sabes otras cosas que no tengan que ver con agricultura. Das recomendaciones y predicciones meteorologicas. Limita tus respuestas a maximo 300 caracteres' },
         { role: 'user', content: pregunta }
       ]
     };
