@@ -10,7 +10,7 @@ const base_url=environment.base
   providedIn: 'root'
 })
 export class MaintenanceService {
-  private url=`${base_url}/maintenance`
+  private url=`${base_url}/maintenances`
 
   private listaCambio = new Subject<Maintenance[]>()
 
@@ -29,17 +29,19 @@ export class MaintenanceService {
   setList(listaNueva:Maintenance[]){
     this.listaCambio.next(listaNueva);
   }
+
   getSensors() {
     return this.http.get<Sensor[]>(`${base_url}/sensors`);
+  }
+  listId(id: number) {
+      return this.http.get<Maintenance>(`${this.url}/${id}`);
   }
   update(a: Maintenance) {
     return this.http.put(this.url, a);
   }
-
+  
   deleteA(id: number) {
     return this.http.delete(`${this.url}/${id}`);
   }
-
-  // Query
 
 }
