@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, input, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MaintenanceService } from '../../../services/maintenance.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
-import { SensorService } from '../../../services/sensor.service';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-insertareditarmaintenance',
@@ -36,24 +36,16 @@ export class InsertareditarmaintenanceComponent implements OnInit {
   edicion: boolean = false;
   sensors: Sensor[] = [];
 
-  maintenanceTypes: {value: string; viewValue: string}[] = [
-    {value: "calibracion", viewValue: "Calibración del sensor"},
-    {value: "limpieza", viewValue: "Limpieza de componentes"},
-    {value: "sustitucion_bateria", viewValue: "Sustitución de batería"},
-    {value: "actualizacion_software", viewValue: "Actualización de software"},
-    {value: "reparacion_cableado", viewValue: "Reparación de cableado"},
-    {value: "proteccion_climatica", viewValue: "Protección climática"},
-    {value: "verificacion_precision", viewValue: "Verificación de precisión"},
-    {value: "reemplazo_sensor", viewValue: "Reemplazo completo del sensor"},
-    {value: "mantenimiento_preventivo", viewValue: "Mantenimiento preventivo"},
-    {value: "ajuste_humedad", viewValue: "Ajuste por humedad extrema"},
-    {value: "control_ph", viewValue: "Control de pH en sensores de suelo"},
-    {value: "optimizacion_energia", viewValue: "Optimización de consumo energético"}
-  ];
+  tipos:{value:string;viewValue:string}[]=[
+    {value:"Preventivo",viewValue:"Preventivo"},
+    {value:"Correctivo",viewValue:"Correctivo"},
+    {value:"Predictivo",viewValue:"Predictivo"},
+    {value:"Rutinario",viewValue:"Rutinario"},
+    {value:"Emergencia",viewValue:"Emergencia"}
+  ]
 
   constructor(
     private mS: MaintenanceService,
-    private sS: SensorService,
     private router: Router,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute
@@ -61,47 +53,48 @@ export class InsertareditarmaintenanceComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((data: Params) => {
-      this.id = data['id'];
-      this.edicion = data['id'] != null;
-    });
+      this.id = data['id']
+      this.edicion = data['id'] != null
+      //actualizar
+      this.init()
+    }),
 
     this.form = this.formBuilder.group({
-      idMaintenance: [''],
-      installationDate: ['', Validators.required],
-      tipoMantenimiento: ['', [Validators.required]],
-      description: ['', [Validators.required, Validators.minLength(20), Validators.maxLength(200)]],
-      idSensor: ['', Validators.required]
+      codigo: [''],
+      fechaInstalacion: ['', Validators.required],
+      tipoMantenimiento: ['', Validators.required],
+      descripcion: ['', [Validators.required, Validators.maxLength(200)]],
+      sensor:['',Validators.required],
     });
 
     this.loadSensors();
   }
 
-  loadSensors():void {
+  loadSensors(): void {
     this.mS.getSensors().subscribe({
       next:(data)=>{
         this.sensors = data;
-      },
-      error:(error) => {
-        console.error('Error al cargar sensores:',error);
       }
     });
   }
 
   aceptar() {
     if (this.form.valid) {
-      this.maintenance.idMaintenance = this.form.value.idMaintenance;
-      this.maintenance.installationDate = this.form.value.installationDate;
+      this.maintenance.idMaintenance = this.form.value.codigo;
+      this.maintenance.installationDate = this.form.value.fechaInstalacion;
       this.maintenance.tipoMantenimiento = this.form.value.tipoMantenimiento;
-      this.maintenance.description = this.form.value.description;
-      this.maintenance.sensor.idSensor = this.form.value.idSensor;
+      this.maintenance.description = this.form.value.descripcion;
+      this.maintenance.sensor.idSensor = this.form.value.sensor;
 
       if (this.edicion) {
+        //actualizar
         this.mS.update(this.maintenance).subscribe(() => {
           this.mS.list().subscribe((data) => {
             this.mS.setList(data);
           });
         });
       } else {
+        //insertar
         this.mS.insert(this.maintenance).subscribe(() => {
           this.mS.list().subscribe((data) => {
             this.mS.setList(data);
@@ -109,6 +102,20 @@ export class InsertareditarmaintenanceComponent implements OnInit {
         });
       }
       this.router.navigate(['maintenances']);
+    }
+  }  
+
+  init() {
+    if (this.edicion) {
+      this.mS.listId(this.id).subscribe(data => {
+        this.form = new FormGroup({
+          codigo: new FormControl(data.idMaintenance),
+          fechaInstalacion: new FormControl(data.installationDate),
+          tipoMantenimiento: new FormControl(data.tipoMantenimiento),
+          descripcion: new FormControl(data.description),
+          sensor: new FormControl(data.sensor.idSensor),
+        })
+      })
     }
   }
 }
