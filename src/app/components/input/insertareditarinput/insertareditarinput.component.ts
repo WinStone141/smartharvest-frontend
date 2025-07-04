@@ -21,7 +21,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatDatepickerModule,
     MatNativeDateModule,
     MatButtonModule,
-    CommonModule],
+    CommonModule
+  ],
   templateUrl: './insertareditarinput.component.html',
   styleUrl: './insertareditarinput.component.css'
 })
