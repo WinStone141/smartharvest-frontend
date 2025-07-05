@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-home',
@@ -6,6 +6,12 @@ import { Component } from '@angular/core';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit, OnDestroy {
+  ngOnInit(): void {
+    document.body.style.overflow = 'hidden';
+  }
 
+  ngOnDestroy(): void {
+    document.body.style.overflow = 'auto';
+  }
 }

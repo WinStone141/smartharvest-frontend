@@ -1,3 +1,12 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+
 /* CONTENEDOR DEL SIDENAV */
 .app-sidenav {
   width: 260px;
@@ -79,6 +88,10 @@ mat-icon {
 
 
 mat-toolbar {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 16px;
+  margin: 0;
   position: relative;
   z-index: 2;
     background-color: #f4fdf6; /* Verde muy claro */
@@ -87,6 +100,10 @@ mat-toolbar {
 
 mat-sidenav-container {
   height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   position: relative;
   z-index: 1;
 }
@@ -95,6 +112,23 @@ mat-sidenav-content {
   height: 100%;
   position: relative;
   z-index: 1;
+  overflow-x: hidden;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+
+}
+
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+mat-sidenav-container, mat-sidenav-content {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 .logo-container {

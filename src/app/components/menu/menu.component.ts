@@ -9,6 +9,7 @@ import { LoginService } from '../../services/login.service';
 import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatListModule } from '@angular/material/list';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -30,7 +31,7 @@ export class MenuComponent implements OnInit{
   role: string | null = null;
   estaLogueado: boolean = false;
 
-  constructor(private loginService: LoginService) {}
+  constructor(private loginService: LoginService, private router: Router) {}
 
   ngOnInit(): void {
     // Escucha en tiempo real el estado de login
@@ -46,6 +47,9 @@ export class MenuComponent implements OnInit{
   
   cerrar() {
     this.loginService.logout();
+     this.router.navigate(['/inicio']).then(() => {
+    window.location.reload();
+  });
   }
   
   isAdmin() {
