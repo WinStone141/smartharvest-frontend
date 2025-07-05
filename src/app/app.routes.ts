@@ -27,6 +27,10 @@ import { InsertareditaragriculturalproductComponent } from './components/agricul
 import { IaComponent } from './components/ia/ia.component';
 import { CropsNeedingAttentionComponent } from './components/reportes/crops-needing-attention/crops-needing-attention.component';
 import { ParcelsActiveComponent } from './components/reportes/parcels-active/parcels-active.component';
+import { MaintenanceComponent } from './components/maintenance/maintenance.component';
+import { InsertareditarmaintenanceComponent } from './components/maintenance/insertareditarmaintenance/insertareditarmaintenance.component';
+import { RecommendationComponent } from './components/recommendation/recommendation.component';
+import { InsertareditarrecommendationComponent } from './components/recommendation/insertareditarrecommendation/insertareditarrecommendation.component';
 
 export const routes: Routes = [
   {
@@ -192,6 +196,26 @@ export const routes: Routes = [
     data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // ADMIN y AGRICULTOR pueden manejar cultivos
   },
   {
+    path: 'recommendations',
+    component: RecommendationComponent,
+    children: [
+      {
+        path: 'nuevo',
+        component: InsertareditarrecommendationComponent,
+        canActivate: [roleGuard],
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // Solo ADMIN y AGRICULTOR pueden crear
+      },
+      {
+        path: 'ediciones/:id',
+        component: InsertareditarrecommendationComponent,
+        canActivate: [roleGuard],
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // Solo ADMIN y AGRICULTOR pueden editar
+      },
+    ],
+    canActivate: [seguridadGuard, roleGuard],
+    data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // ADMIN y AGRICULTOR pueden manejar cultivos
+  },
+  {
     path: 'sensors',
     component: SensorComponent,
     children: [
@@ -210,6 +234,26 @@ export const routes: Routes = [
     ],
     canActivate: [seguridadGuard, roleGuard],
     data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // ADMIN y AGRICULTOR pueden manejar cultivos
+  },
+  {
+    path: 'maintenances',
+    component: MaintenanceComponent,
+    children: [
+      {
+        path: 'nuevo',
+        component: InsertareditarmaintenanceComponent,
+        canActivate: [roleGuard],
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // ADMIN y AGRICULTOR pueden crear
+      },
+      {
+        path: 'ediciones/:id',
+        component: InsertareditarmaintenanceComponent,
+        canActivate: [roleGuard],
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // ADMIN y AGRICULTOR pueden editar
+      },
+    ],
+    canActivate: [seguridadGuard, roleGuard],
+    data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // ADMIN y AGRICULTOR pueden ver la lista
   },
   //Report access
   {

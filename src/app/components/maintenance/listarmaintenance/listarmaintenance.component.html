@@ -1,0 +1,76 @@
+<div class="table-container">
+  <div class="table-header">
+    <div class="header-content">
+      <div class="header-info">
+        <h1 class="page-title">
+          <mat-icon class="title-icon" style="color: white;">build</mat-icon>
+          Lista de Mantenimientos
+        </h1>
+        <p class="page-subtitle">Consulta y gestiona los mantenimientos registrados</p>
+      </div>
+    </div>
+  </div>
+
+  <mat-card class="table-card">
+    <mat-card-content>
+      <div class="table-wrapper">
+        <table mat-table [dataSource]="dataSource" class="companies-table">
+
+          <!-- ID Column -->
+          <ng-container matColumnDef="c1">
+            <th mat-header-cell *matHeaderCellDef><div class="header-content"><mat-icon>badge</mat-icon><span>ID</span></div></th>
+            <td mat-cell *matCellDef="let element">{{ element.idMaintenance }}</td>
+          </ng-container>
+
+          <!-- Fecha Instalación Column -->
+          <ng-container matColumnDef="c2">
+            <th mat-header-cell *matHeaderCellDef><div class="header-content"><mat-icon>calendar_month</mat-icon><span>Fecha Instalación</span></div></th>
+            <td mat-cell *matCellDef="let element">{{ element.installationDate | date:'dd/MM/yyyy' }}</td>
+          </ng-container>
+
+          <!-- Tipo Mantenimiento Column -->
+          <ng-container matColumnDef="c3">
+            <th mat-header-cell *matHeaderCellDef><div class="header-content"><mat-icon>handyman</mat-icon><span>Tipo Mantenimiento</span></div></th>
+            <td mat-cell *matCellDef="let element">{{ element.tipoMantenimiento }}</td>
+          </ng-container>
+
+          <!-- Descripción Column -->
+          <ng-container matColumnDef="c4">
+            <th mat-header-cell *matHeaderCellDef><div class="header-content"><mat-icon>description</mat-icon><span>Descripción</span></div></th>
+            <td mat-cell *matCellDef="let element">{{ element.description }}</td>
+          </ng-container>
+
+          <!-- Sensor Column -->
+          <ng-container matColumnDef="c5">
+            <th mat-header-cell *matHeaderCellDef><div class="header-content"><mat-icon>sensors</mat-icon><span>ID Sensor</span></div></th>
+            <td mat-cell *matCellDef="let element">{{ element.sensor?.idSensor }}</td>
+          </ng-container>
+
+          <!-- Editar Column -->
+          <ng-container matColumnDef="c6">
+            <th mat-header-cell *matHeaderCellDef class="actions-header"><span>Editar</span></th>
+            <td mat-cell *matCellDef="let element" class="action-cell">
+              <button mat-icon-button class="action-button edit-button" [routerLink]="['ediciones',element.idMaintenance]">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <!-- Eliminar Column -->
+          <ng-container matColumnDef="c7">
+            <th mat-header-cell *matHeaderCellDef class="actions-header"><span>Eliminar</span></th>
+            <td mat-cell *matCellDef="let element" class="action-cell">
+              <button mat-icon-button class="action-button delete-button" (click)="eliminar(element.idMaintenance)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
