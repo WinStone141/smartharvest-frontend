@@ -31,6 +31,14 @@ import { MaintenanceComponent } from './components/maintenance/maintenance.compo
 import { InsertareditarmaintenanceComponent } from './components/maintenance/insertareditarmaintenance/insertareditarmaintenance.component';
 import { RecommendationComponent } from './components/recommendation/recommendation.component';
 import { InsertareditarrecommendationComponent } from './components/recommendation/insertareditarrecommendation/insertareditarrecommendation.component';
+import { CountmaintenancebysensortypeComponent } from './components/reportes/countmaintenancebysensortype/countmaintenancebysensortype.component';
+import { CropsbystateComponent } from './components/reportes/cropsbystate/cropsbystate.component';
+import { TopcropsbymaintenanceComponent } from './components/reportes/topcropsbymaintenance/topcropsbymaintenance.component';
+import { TypesensoraactiveComponent } from './components/reportes/typesensoraactive/typesensoraactive.component';
+import { HarvestbycroptypeComponent } from './components/reportes/harvestbycroptype/harvestbycroptype.component';
+import { ParcelsbymonthComponent } from './components/reportes/parcelsbymonth/parcelsbymonth.component';
+import { RecommendationsByMonthInYear } from './models/recommendationsbymonth';
+import { RecommendationsbymonthComponent } from './components/reportes/recommendationsbymonth/recommendationsbymonth.component';
 
 export const routes: Routes = [
   {
@@ -269,6 +277,41 @@ export const routes: Routes = [
       {
         path: 'parcelas-activas',
         component: ParcelsActiveComponent,
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }
+      },
+      {
+        path: 'mantenimientos-por-tipo-sensor',
+        component: CountmaintenancebysensortypeComponent,
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }
+      },
+      {
+        path: 'cultivos-por-estado-actual',
+        component: CropsbystateComponent,
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }
+      },
+      {
+        path: 'cultivos-por-mantenimientos',
+        component: TopcropsbymaintenanceComponent,
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }
+      },
+      {
+        path: 'sensores-activos-por-tipo-sensor',
+        component: TypesensoraactiveComponent,
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }
+      },
+      {
+        path: 'cosechas-por-tipo-cultivo',
+        component: HarvestbycroptypeComponent,
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }
+      },
+      {
+        path: 'parcelas-por-mes',
+        component: ParcelsbymonthComponent,
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }
+      },
+      {
+        path: 'recomendaciones-por-mes',
+        component: RecommendationsbymonthComponent,
         data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }
       }
     ]

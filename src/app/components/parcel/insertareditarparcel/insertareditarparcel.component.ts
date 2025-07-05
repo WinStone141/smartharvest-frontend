@@ -137,6 +137,7 @@ export class InsertareditarparcelComponent implements OnInit {
           idUser: new FormControl(data.users.id),
         })
       })
+      this.loadUsers();
     }
   }
 
