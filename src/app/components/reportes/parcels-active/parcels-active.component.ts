@@ -9,7 +9,7 @@ import { ParcelActive } from '../../../models/parcel-active.model';
 @Component({
   selector: 'app-parcels-active',
   standalone: true,
-  imports: [CommonModule, NgIf, NgFor, MatTableModule, MatCardModule, MatIconModule],
+  imports: [CommonModule, NgIf, MatTableModule, MatCardModule, MatIconModule],
   templateUrl: './parcels-active.component.html',
   styleUrl: './parcels-active.component.css',
 })

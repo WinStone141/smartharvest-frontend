@@ -50,6 +50,6 @@ export class ParcelService {
 
   // PARCELAS ACTIVAS (ultimos 30 días)
   getActiveParcels() {
-    return this.http.get<ParcelActive[]>(`${this.url}/findActiveParcels`);
+    return this.http.get<ParcelActive[]>(`${this.url}/findactiveparcels`);
   }
 }
