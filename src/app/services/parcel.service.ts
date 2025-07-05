@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Parcel } from '../models/parcel';
-import { ParcelActive } from '../models/parcel-active.model'; // <-- AGREGA ESTA LÍNEA
+import { ParcelActive } from '../models/parcel-active.model'; 
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Users } from '../models/users';

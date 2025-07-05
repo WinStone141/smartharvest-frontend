@@ -3,10 +3,13 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { LoginService } from '../../services/login.service';
 import { CommonModule } from '@angular/common';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatListModule } from '@angular/material/list';
+
 
 @Component({
   selector: 'app-menu',
@@ -18,7 +21,7 @@ import { CommonModule } from '@angular/common';
     RouterLink,
     MatSidenavModule,
     CommonModule,
-    RouterLink,
+    RouterLink,MatExpansionModule,MatListModule,RouterOutlet
   ],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css',

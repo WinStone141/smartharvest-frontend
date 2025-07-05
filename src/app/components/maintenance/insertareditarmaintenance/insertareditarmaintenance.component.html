@@ -1,0 +1,70 @@
+<div>
+  <div><h1>Registrar Mantenimiento</h1></div>
+  <div>
+    <form [formGroup]="form" (submit)="aceptar()">
+      <mat-form-field *ngIf="edicion">
+        <mat-label>ID</mat-label>
+        <input matInput formControlName="codigo" />
+        <mat-error *ngIf="form.get('codigo')?.hasError('required')">
+          El código es obligatorio!!
+        </mat-error>
+      </mat-form-field>
+      <br />
+
+      <!-- Campo Fecha de Instalación -->
+      <mat-form-field>
+        <mat-label>Fecha de Instalación</mat-label>
+        <input matInput [matDatepicker]="registrationPicker" formControlName="fechaInstalacion">
+        <mat-datepicker-toggle matSuffix [for]="registrationPicker"></mat-datepicker-toggle>
+        <mat-datepicker #registrationPicker></mat-datepicker>
+        <mat-error *ngIf="form.get('fechaInstalacion')?.hasError('required')">
+          La fecha de registro es obligatoria!!
+        </mat-error>
+      </mat-form-field>
+      <br />
+      <!-- Campo tipoMantenimiento -->
+      <mat-form-field>
+        <mat-label>Tipo</mat-label>
+        <mat-select formControlName="tipoMantenimiento">
+          <mat-option *ngFor="let tipo of tipos" [value]="tipo.value">
+            {{tipo.viewValue}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('tipoMantenimiento')?.hasError('required')">
+          El tipo es obligatorio!!
+        </mat-error>
+      </mat-form-field>
+      <br />
+      <!-- Campo descripcion -->
+      <mat-form-field>
+        <mat-label>Descripción</mat-label>
+        <input matInput formControlName="descripcion" maxlength="200" />
+        <mat-error *ngIf="form.get('descripcion')?.hasError('required')">
+          El nombre es obligatorio!!
+        </mat-error>
+        <mat-error *ngIf="form.get('descripcion')?.hasError('maxlength')">
+          La descripcion no puede exceder 200 caracteres
+        </mat-error>
+      </mat-form-field>
+      <br />
+
+      <!-- CAMPO SENSOR -->
+      <mat-form-field>
+        <mat-label>Sensor</mat-label>
+        <mat-select formControlName="sensor">
+          <mat-option *ngFor="let sensor of sensors" [value]="sensor.idSensor">
+            {{sensor.idSensor}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('sensor')?.hasError('required')">
+          El sensor es obligatorio!!
+        </mat-error>
+      </mat-form-field>
+      <br />
+
+      <button type="submit" mat-raised-button color="primary" [disabled]="!form.valid">
+        Registrar mantenimiento
+      </button>
+    </form>
+  </div>
+</div>

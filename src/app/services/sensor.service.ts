@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Parcel } from '../models/parcel';
 import { Crop } from '../models/crop';
+
 const base_url = environment.base;
 @Injectable({
   providedIn: 'root',
