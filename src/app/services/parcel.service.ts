@@ -1,27 +1,28 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Parcel } from '../models/parcel';
-import { ParcelActive } from '../models/parcel-active.model'; 
+import { ParcelActive } from '../models/parcel-active.model';
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Users } from '../models/users';
+import { ParcelsByMonth } from '../models/parcelsbymonth';
 const base_url = environment.base;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ParcelService {
   private url = `${base_url}/parcels`;
   private listaCambio = new Subject<Parcel[]>();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   list() {
-    return this.http.get<Parcel[]>(this.url)
+    return this.http.get<Parcel[]>(this.url);
   }
 
   insert(p: Parcel) {
-    return this.http.post(this.url, p)
+    return this.http.post(this.url, p);
   }
 
   getList() {
@@ -51,5 +52,11 @@ export class ParcelService {
   // PARCELAS ACTIVAS (ultimos 30 días)
   getActiveParcels() {
     return this.http.get<ParcelActive[]>(`${this.url}/findactiveparcels`);
+  }
+
+  getParcelsByMonth(year: number) {
+    return this.http.get<ParcelsByMonth[]>(
+      `${this.url}/parcelsbymonth/${year}`
+    );
   }
 }

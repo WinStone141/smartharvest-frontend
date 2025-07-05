@@ -4,6 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Sensor } from '../models/sensor';
 import { Maintenance } from '../models/maintenance';
+import { TopCropsByMaintenance } from '../models/topcropsbymaintenance';
 
 const base_url=environment.base
 @Injectable({
@@ -44,4 +45,7 @@ export class MaintenanceService {
     return this.http.delete(`${this.url}/${id}`);
   }
 
+  getCropsByMaintenance():Observable<TopCropsByMaintenance[]> {
+    return this.http.get<TopCropsByMaintenance[]>(`${this.url}/top-cultivos-mantenimientos`);
+  }
 }

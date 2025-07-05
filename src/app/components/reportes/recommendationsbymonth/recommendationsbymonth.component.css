@@ -1,0 +1,66 @@
+.title-container {
+  background-color: #e9f5ec; /* verde claro */
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  margin: 1rem auto;
+  max-width: 95%;
+}
+
+.title h1 {
+  font-size: 1.8rem;
+  color: #2e7d32; /* verde oscuro */
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+}
+
+.chart-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+canvas {
+  background-color: white;
+  border-radius: 15px;
+  padding: 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+form label {
+  font-weight: 500;
+  color: #388e3c;
+}
+
+form input[type="date"],
+form input[type="number"] {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  outline: none;
+  font-size: 1rem;
+}
+
+form button {
+  background-color: #66bb6a;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 0.6rem 1.2rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+form button:hover {
+  background-color: #4caf50;
+}

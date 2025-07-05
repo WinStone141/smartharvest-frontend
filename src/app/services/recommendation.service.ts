@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Recommendation } from '../models/recommendation';
 import { Crop } from '../models/crop';
 import { Users } from '../models/users';
+import { RecommendationsByMonthInYear } from '../models/recommendationsbymonth';
 
 const base_url = environment.base;
 @Injectable({
@@ -51,5 +52,9 @@ export class RecommendationService {
 
   deleteA(id: number) {
     return this.http.delete(`${this.url}/${id}`);
+  }
+
+  getRecommendationsByMonth(year: number): Observable<RecommendationsByMonthInYear[]> {
+    return this.http.get<RecommendationsByMonthInYear[]>(`${this.url}/recommendationsbymonth/${year}`);
   }
 }
