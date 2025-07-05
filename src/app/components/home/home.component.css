@@ -1,39 +1,32 @@
-/* Quita los márgenes y establece altura completa */
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    overflow: hidden;
+:host {
+  display: block;
+  height: 100vh;
+  overflow: hidden;
 }
+
 
 /* Video de fondo pantalla completa */
 .video-background {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset:0;
     z-index: -1; /* Coloca el video detrás del contenido */
     overflow: hidden;
 }
 
 .video-background video {
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     object-fit: cover;
 }
 
 /* Contenedor del contenido centrado */
 .overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset:0;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
 /* Caja blanca con sombra */
@@ -54,4 +47,24 @@ h1 {
 /* Marca SmartHarvest destacada */
 h1 span {
     color: #28a745;
+}
+
+app-root, mat-sidenav-container, mat-sidenav-content, router-outlet {
+  height: 100%;
+  display: block;
+  overflow: hidden;
+}
+
+mat-sidenav-content {
+  overflow: hidden !important;
+}
+
+
+.overlay {
+  animation: fadeIn 1s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
 }
