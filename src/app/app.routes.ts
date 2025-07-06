@@ -148,8 +148,8 @@ export const routes: Routes = [
         //data: { expectedRoles: ['ADMIN'] }, // Solo ADMIN puede editar roles
       },
     ],
-    canActivate: [seguridadGuard, roleGuard],
-    data: { expectedRoles: ['ADMIN'] }, // Solo ADMIN puede ver la gestión de roles
+    //canActivate: [seguridadGuard, roleGuard],
+    //data: { expectedRoles: ['ADMIN'] }, // Solo ADMIN puede ver la gestión de roles
   },
   {
     path: 'users',
