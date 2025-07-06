@@ -1,45 +1,107 @@
-
-<div>
-  <div><h1>Registrar Rol</h1></div>
-  <div>
-    <form [formGroup]="form" (submit)="aceptar()">
-      <mat-form-field *ngIf="edicion">
-        <mat-label>ID</mat-label>
-        <input matInput formControlName="codigo" />
-        <mat-error *ngIf="form.get('codigo')?.hasError('required')">
-          El código es obligatorio!!
-        </mat-error>
-      </mat-form-field>
-      <br />
-      <mat-form-field>
-        <mat-label>Rol</mat-label>
-        <mat-select formControlName="rol">
-          <mat-option *ngFor="let tipo of roles" [value]="tipo.value">
-            {{tipo.viewValue}}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="form.get('rol')?.hasError('required')">
-          El tipo es obligatorio!!
-        </mat-error>
-      </mat-form-field>
-      <br />
-
-      <mat-form-field>
-        <mat-label>Usuario</mat-label>
-        <mat-select formControlName="idUser">
-          <mat-option *ngFor="let user of users" [value]="user.id">
-            {{user.username}}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="form.get('idUser')?.hasError('required')">
-          El usuario es obligatorio!!
-        </mat-error>
-      </mat-form-field>
-      <br />
-
-      <button type="submit" mat-raised-button color="primary" [disabled]="!form.valid">
-        Registrar Role
-      </button>
-    </form>
+<div class="form-container">
+  <div class="form-header">
+    <div class="header-content">
+      <div class="icon-wrapper">
+        <mat-icon class="header-icon">manage_accounts</mat-icon>
+      </div>
+      <div class="header-text">
+        <h1>{{ edicion ? 'Editar Rol de Usuario' : 'Registrar Rol de Usuario' }}</h1>
+        <p class="header-subtitle">{{ edicion ? 'Actualiza la asignación de rol para este usuario.' : 'Asigna un nuevo rol a un usuario existente en el sistema.' }}</p>
+      </div>
+    </div>
   </div>
+
+  <mat-card class="form-card">
+    <mat-card-content>
+      <form [formGroup]="form" (submit)="aceptar()" class="role-form">
+
+        <div class="form-sections-container single-column">
+
+          <div class="column-container">
+            <div class="form-section">
+              <h3 class="section-title">
+                <mat-icon>person_add_alt_1</mat-icon>
+                Asignación de Rol
+              </h3>
+
+              <div class="form-row" *ngIf="edicion">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>ID de Rol Asignado</mat-label>
+                  <input matInput formControlName="codigo" readonly />
+                  <mat-icon matSuffix>vpn_key</mat-icon>
+                  <mat-hint>Este campo no es editable</mat-hint>
+                  <mat-error *ngIf="form.get('codigo')?.hasError('required')">
+                    El código es obligatorio
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Seleccionar Rol</mat-label>
+                  <mat-select formControlName="rol">
+                    <mat-option *ngFor="let tipo of roles" [value]="tipo.value">
+                      {{tipo.viewValue}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-icon matSuffix>assignment_ind</mat-icon>
+                  <mat-hint>Elige el tipo de rol a asignar (Ej: Administrador, Operador)</mat-hint>
+                  <mat-error *ngIf="form.get('rol')?.hasError('required')">
+                    El rol es obligatorio
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Seleccionar Usuario</mat-label>
+                  <mat-select formControlName="idUser">
+                    <mat-option *ngFor="let user of users" [value]="user.id">
+                      {{user.username}} (ID: {{user.id}})
+                    </mat-option>
+                  </mat-select>
+                  <mat-icon matSuffix>person</mat-icon>
+                  <mat-hint>Elige el usuario al que se le asignará el rol</mat-hint>
+                  <mat-error *ngIf="form.get('idUser')?.hasError('required')">
+                    El usuario es obligatorio
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="info-box">
+                <mat-icon class="info-icon">info</mat-icon>
+                <div class="info-content">
+                  <h4>Importancia de la Asignación de Roles</h4>
+                  <p>Asignar roles correctamente garantiza la seguridad y el control de acceso en el sistema, permitiendo que cada usuario tenga las permisos adecuados.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <div class="button-group">
+            <button type="button"
+                    mat-stroked-button
+                    color="warn"
+                    class="action-button cancel-button"
+                    (click)="cancelar()">
+              <mat-icon>cancel</mat-icon>
+              Cancelar
+            </button>
+
+            <button type="submit"
+                    mat-raised-button
+                    color="primary"
+                    class="action-button submit-button"
+                    [disabled]="!form.valid">
+              <mat-icon>{{ edicion ? 'save' : 'assignment' }}</mat-icon>
+              {{ edicion ? 'Actualizar Rol' : 'Registrar Rol' }}
+            </button>
+          </div>
+        </div>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
 </div>

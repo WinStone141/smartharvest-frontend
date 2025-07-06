@@ -13,38 +13,44 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-insertareditarsensor',
-  imports: [MatRadioModule,
-    MatInputModule,        
-    MatButtonModule,       
+  imports: [
+    MatRadioModule,
+    MatInputModule,
+    MatButtonModule,
     CommonModule,
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatFormFieldModule,
-    ReactiveFormsModule],
+    ReactiveFormsModule,
+    MatIconModule,
+    MatCardModule,
+  ],
   templateUrl: './insertareditarsensor.component.html',
-  styleUrl: './insertareditarsensor.component.css'
+  styleUrl: './insertareditarsensor.component.css',
 })
 export class InsertareditarsensorComponent {
   form: FormGroup = new FormGroup({});
-  sensor:Sensor = new Sensor()
+  sensor: Sensor = new Sensor();
 
-  id: number = 0
-  edicion: boolean = false
+  id: number = 0;
+  edicion: boolean = false;
 
-  parcels:Parcel[]=[]
-  crops:Crop[]=[]
+  parcels: Parcel[] = [];
+  crops: Crop[] = [];
 
-  tipos:{value:string;viewValue:string}[]=[
-    {value:"PH",viewValue:"Potencial de Hidrogeno"},
-    {value:"Humedad",viewValue:"Humedad"},
-    {value:"Humedad del suelo",viewValue:"Humedad del suelo"},
-    {value:"Luminosidad",viewValue:"Luminosidad"},
-    {value:"Temperatura",viewValue:"Temperatura"}
-  ]
+  tipos: { value: string; viewValue: string }[] = [
+    { value: 'PH', viewValue: 'Potencial de Hidrogeno' },
+    { value: 'Humedad', viewValue: 'Humedad' },
+    { value: 'Humedad del suelo', viewValue: 'Humedad del suelo' },
+    { value: 'Luminosidad', viewValue: 'Luminosidad' },
+    { value: 'Temperatura', viewValue: 'Temperatura' },
+  ];
 
   constructor(
     private sS: SensorService,
@@ -55,47 +61,54 @@ export class InsertareditarsensorComponent {
 
   ngOnInit(): void {
     this.route.params.subscribe((data: Params) => {
-      this.id = data['id']
-      this.edicion = data['id'] != null
+      this.id = data['id'];
+      this.edicion = data['id'] != null;
       //actualizar
-      this.init()
+      this.init();
     }),
-
-    this.form = this.formBuilder.group({
-      codigo: [''],
-      tiposensor: ['', Validators.required],
-      fechainstalacion: ['', Validators.required],
-      estado: ['', Validators.required],
-      ultimalectura: ['', Validators.required],
-      niveldebateria: ['', Validators.required, Validators.max(100), Validators.min(1)],
-      parcela: ['', Validators.required],
-      cultivo:['',Validators.required],
-      humedad:['',[Validators.required,Validators.max(100), Validators.min(1)]]
-    });
+      (this.form = this.formBuilder.group({
+        codigo: [''],
+        tiposensor: ['', Validators.required],
+        fechainstalacion: ['', Validators.required],
+        estado: ['', Validators.required],
+        ultimalectura: ['', Validators.required],
+        niveldebateria: [
+          '',
+          Validators.required,
+          Validators.max(100),
+          Validators.min(1),
+        ],
+        parcela: ['', Validators.required],
+        cultivo: ['', Validators.required],
+        humedad: [
+          '',
+          [Validators.required, Validators.max(100), Validators.min(1)],
+        ],
+      }));
 
     this.loadParcels();
     this.loadCrops();
   }
 
-  loadParcels():void {
+  loadParcels(): void {
     this.sS.getParcels().subscribe({
-      next:(data)=>{
+      next: (data) => {
         this.parcels = data;
       },
-      error:(error) => {
-        console.error('Error al cargar parcelas:',error);
-      }
+      error: (error) => {
+        console.error('Error al cargar parcelas:', error);
+      },
     });
   }
 
-  loadCrops():void {
+  loadCrops(): void {
     this.sS.getCrops().subscribe({
-      next:(data)=>{
+      next: (data) => {
         this.crops = data;
       },
-      error:(error) => {
-        console.error('Error al cargar cultivos:',error);
-      }
+      error: (error) => {
+        console.error('Error al cargar cultivos:', error);
+      },
     });
   }
 
@@ -110,7 +123,6 @@ export class InsertareditarsensorComponent {
       this.sensor.parcel.idParcel = this.form.value.parcela;
       this.sensor.crop.idCrop = this.form.value.cultivo;
       this.sensor.humidity = this.form.value.humedad;
-
 
       if (this.edicion) {
         //actualizar
@@ -133,7 +145,7 @@ export class InsertareditarsensorComponent {
 
   init() {
     if (this.edicion) {
-      this.sS.listId(this.id).subscribe(data => {
+      this.sS.listId(this.id).subscribe((data) => {
         this.form = new FormGroup({
           codigo: new FormControl(data.idSensor),
           tiposensor: new FormControl(data.sensorType),
@@ -144,8 +156,12 @@ export class InsertareditarsensorComponent {
           parcela: new FormControl(data.parcel.idParcel),
           cultivo: new FormControl(data.crop.idCrop),
           humedad: new FormControl(data.humidity),
-        })
-      })
+        });
+      });
     }
+  }
+
+  cancelar(): void {
+    this.router.navigate(['sensors']);
   }
 }

@@ -1,112 +1,177 @@
-<div>
-  <div><h1>Registrar Insumo</h1></div>
-  <div>
-    <form [formGroup]="form" (submit)="aceptar()">
-      <mat-form-field *ngIf="edicion">
-        <mat-label>ID</mat-label>
-        <input matInput formControlName="codigo" />
-        <mat-error *ngIf="form.get('codigo')?.hasError('required')">
-          El código es obligatorio!!
-        </mat-error>
-      </mat-form-field>
-      <br />
-
-
-      <!-- Campo Nombre -->
-      <mat-form-field>
-        <mat-label>Nombre</mat-label>
-        <input matInput formControlName="name" maxlength="70" />
-        <mat-error *ngIf="form.get('name')?.hasError('required')">
-          El nombre es obligatorio!!
-        </mat-error>
-        <mat-error *ngIf="form.get('name')?.hasError('maxlength')">
-          El nombre no puede exceder 70 caracteres
-        </mat-error>
-      </mat-form-field>
-      <br />
-
-      <!-- Campo Tipo -->
-      <mat-form-field>
-        <mat-label>Tipo</mat-label>
-        <mat-select formControlName="type">
-          <mat-option *ngFor="let tipo of tipos" [value]="tipo.value">
-            {{tipo.viewValue}}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="form.get('type')?.hasError('required')">
-          El tipo es obligatorio!!
-        </mat-error>
-      </mat-form-field>
-      <br />
-
-      <!-- Campo Cantidad -->
-      <mat-form-field>
-        <mat-label>Cantidad</mat-label>
-        <input matInput type="number" formControlName="amount" min="1" />
-        <mat-error *ngIf="form.get('amount')?.hasError('required')">
-          La cantidad es obligatoria!!
-        </mat-error>
-        <mat-error *ngIf="form.get('amount')?.hasError('min')">
-          La cantidad debe ser mayor a 0
-        </mat-error>
-      </mat-form-field>
-      <br />
-
-      <!-- Campo Unidad -->
-      <mat-form-field>
-        <mat-label>Unidad</mat-label>
-        <mat-select formControlName="unit">
-          <mat-option *ngFor="let unidad of unidades" [value]="unidad.value">
-            {{unidad.viewValue}}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="form.get('unit')?.hasError('required')">
-          La unidad es obligatoria!!
-        </mat-error>
-      </mat-form-field>
-      <br />
-
-      <!-- Campo Fecha de Registro -->
-      <mat-form-field>
-        <mat-label>Fecha de Registro</mat-label>
-        <input matInput [matDatepicker]="registrationPicker" formControlName="registrationDate">
-        <mat-datepicker-toggle matSuffix [for]="registrationPicker"></mat-datepicker-toggle>
-        <mat-datepicker #registrationPicker></mat-datepicker>
-        <mat-error *ngIf="form.get('registrationDate')?.hasError('required')">
-          La fecha de registro es obligatoria!!
-        </mat-error>
-      </mat-form-field>
-      <br />
-
-      <!-- Campo Fecha de Expiración -->
-      <mat-form-field>
-        <mat-label>Fecha de Expiración</mat-label>
-        <input matInput [matDatepicker]="expirationPicker" formControlName="expirationDate">
-        <mat-datepicker-toggle matSuffix [for]="expirationPicker"></mat-datepicker-toggle>
-        <mat-datepicker #expirationPicker></mat-datepicker>
-        <mat-error *ngIf="form.get('expirationDate')?.hasError('required')">
-          La fecha de expiración es obligatoria!!
-        </mat-error>
-      </mat-form-field>
-      <br />
-
-      <!-- CAMPO USUARIO - NUEVO -->
-      <mat-form-field>
-        <mat-label>Usuario</mat-label>
-        <mat-select formControlName="idUser">
-          <mat-option *ngFor="let user of users" [value]="user.id">
-            {{user.username}}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="form.get('idUser')?.hasError('required')">
-          El usuario es obligatorio!!
-        </mat-error>
-      </mat-form-field>
-      <br />
-
-      <button type="submit" mat-raised-button color="primary" [disabled]="!form.valid">
-        Registrar Input
-      </button>
-    </form>
+<div class="form-container">
+  <!-- Header Section -->
+  <div class="form-header">
+    <div class="header-content">
+      <div class="icon-wrapper">
+        <mat-icon class="header-icon">inventory_2</mat-icon>
+      </div>
+      <div class="header-text">
+        <h1>Registrar Insumo</h1>
+        <p class="header-subtitle">Gestiona el inventario de insumos agrícolas</p>
+      </div>
+    </div>
   </div>
+
+  <!-- Form Card -->
+  <mat-card class="form-card">
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="aceptar()" class="insumo-form">
+        
+        <!-- Form Sections Container -->
+        <div class="form-sections-container">
+          
+          <!-- Columna Izquierda: Información Básica -->
+          <div class="column-container">
+            <div class="form-section">
+              <h3 class="section-title">
+                <mat-icon>info</mat-icon>
+                Información Básica
+              </h3>
+              
+              <!-- ID Field (solo en edición) -->
+              <mat-form-field *ngIf="edicion" appearance="outline" class="full-width">
+                <mat-label>ID</mat-label>
+                <input matInput formControlName="codigo" readonly />
+                <mat-icon matSuffix>tag</mat-icon>
+                <mat-error *ngIf="form.get('codigo')?.hasError('required')">
+                  El código es obligatorio
+                </mat-error>
+              </mat-form-field>
+
+              <!-- Nombre Field -->
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Nombre del Insumo</mat-label>
+                <input matInput formControlName="name" maxlength="70" />
+                <mat-icon matSuffix>label</mat-icon>
+                <mat-hint>Máximo 70 caracteres</mat-hint>
+                <mat-error *ngIf="form.get('name')?.hasError('required')">
+                  El nombre es obligatorio
+                </mat-error>
+                <mat-error *ngIf="form.get('name')?.hasError('maxlength')">
+                  El nombre no puede exceder 70 caracteres
+                </mat-error>
+              </mat-form-field>
+
+              <!-- Tipo Field -->
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Tipo de Insumo</mat-label>
+                <mat-select formControlName="type">
+                  <mat-option *ngFor="let tipo of tipos" [value]="tipo.value">
+                    {{tipo.viewValue}}
+                  </mat-option>
+                </mat-select>
+                <mat-icon matSuffix>category</mat-icon>
+                <mat-error *ngIf="form.get('type')?.hasError('required')">
+                  El tipo es obligatorio
+                </mat-error>
+              </mat-form-field>
+
+              <!-- Usuario Field -->
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Usuario Responsable</mat-label>
+                <mat-select formControlName="idUser">
+                  <mat-option *ngFor="let user of users" [value]="user.id">
+                    {{user.username}}
+                  </mat-option>
+                </mat-select>
+                <mat-icon matSuffix>person</mat-icon>
+                <mat-error *ngIf="form.get('idUser')?.hasError('required')">
+                  El usuario es obligatorio
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <!-- Columna Derecha: Cantidad y Fechas -->
+          <div class="column-container">
+            <div class="form-section">
+              <h3 class="section-title">
+                <mat-icon>inventory</mat-icon>
+                Cantidad y Fechas
+              </h3>
+
+              <!-- Cantidad y Unidad en fila -->
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="half-width">
+                  <mat-label>Cantidad</mat-label>
+                  <input matInput type="number" formControlName="amount" min="1" />
+                  <mat-icon matSuffix>numbers</mat-icon>
+                  <mat-error *ngIf="form.get('amount')?.hasError('required')">
+                    La cantidad es obligatoria
+                  </mat-error>
+                  <mat-error *ngIf="form.get('amount')?.hasError('min')">
+                    La cantidad debe ser mayor a 0
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="half-width">
+                  <mat-label>Unidad</mat-label>
+                  <mat-select formControlName="unit">
+                    <mat-option *ngFor="let unidad of unidades" [value]="unidad.value">
+                      {{unidad.viewValue}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-icon matSuffix>straighten</mat-icon>
+                  <mat-error *ngIf="form.get('unit')?.hasError('required')">
+                    La unidad es obligatoria
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <!-- Fecha de Registro -->
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Fecha de Registro</mat-label>
+                <input matInput [matDatepicker]="registrationPicker" formControlName="registrationDate">
+                <mat-datepicker-toggle matSuffix [for]="registrationPicker"></mat-datepicker-toggle>
+                <mat-datepicker #registrationPicker></mat-datepicker>
+                <mat-error *ngIf="form.get('registrationDate')?.hasError('required')">
+                  La fecha de registro es obligatoria
+                </mat-error>
+              </mat-form-field>
+
+              <!-- Fecha de Expiración -->
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Fecha de Expiración</mat-label>
+                <input matInput [matDatepicker]="expirationPicker" formControlName="expirationDate">
+                <mat-datepicker-toggle matSuffix [for]="expirationPicker"></mat-datepicker-toggle>
+                <mat-datepicker #expirationPicker></mat-datepicker>
+                <mat-error *ngIf="form.get('expirationDate')?.hasError('required')">
+                  La fecha de expiración es obligatoria
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <!-- Info Box -->
+        <div class="info-box">
+          <mat-icon class="info-icon">info</mat-icon>
+          <div class="info-content">
+            <h4>Información Importante</h4>
+            <p>Asegúrate de verificar las fechas de registro y expiración para mantener un control adecuado del inventario. Los insumos próximos a vencer aparecerán en las alertas del sistema.</p>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="form-actions">
+          <div class="button-group">
+            <button type="submit" 
+                    mat-raised-button 
+                    class="action-button submit-button"
+                    [disabled]="!form.valid">
+              <mat-icon>save</mat-icon>
+              Registrar Insumo
+            </button>
+            <button type="button" 
+                    mat-stroked-button 
+                    class="action-button cancel-button"
+                    (click)="cancelar()">
+              <mat-icon>cancel</mat-icon>
+              Cancelar
+            </button>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
 </div>

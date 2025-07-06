@@ -12,36 +12,42 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Crop } from '../../../models/crop';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-insertareditaragriculturalproduct',
-  imports: [ReactiveFormsModule,
+  imports: [
+    ReactiveFormsModule,
     MatInputModule,
-    MatFormFieldModule, 
+    MatFormFieldModule,
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatButtonModule,
-    CommonModule],
+    CommonModule,
+    MatIconModule,
+    MatCardModule,
+  ],
   templateUrl: './insertareditaragriculturalproduct.component.html',
-  styleUrl: './insertareditaragriculturalproduct.component.css'
+  styleUrl: './insertareditaragriculturalproduct.component.css',
 })
 export class InsertareditaragriculturalproductComponent {
   form: FormGroup = new FormGroup({});
-  agriculturalproduct:AgriculturalProduct = new AgriculturalProduct()
+  agriculturalproduct: AgriculturalProduct = new AgriculturalProduct();
 
-  id: number = 0
-  edicion: boolean = false
+  id: number = 0;
+  edicion: boolean = false;
 
-  cultivos:Crop[]=[]
+  cultivos: Crop[] = [];
 
-  udemedida:{value:string;viewValue:string}[]=[
-    {value:"toneladas",viewValue:"Toneladas"},
-    {value:"kg",viewValue:"Kilogramos"},
-    {value:"cajas",viewValue:"Cajas"},
-    {value:"sacos",viewValue:"Sacos"},
-    {value:"libras",viewValue:"Libras"},
-  ]
+  udemedida: { value: string; viewValue: string }[] = [
+    { value: 'toneladas', viewValue: 'Toneladas' },
+    { value: 'kg', viewValue: 'Kilogramos' },
+    { value: 'cajas', viewValue: 'Cajas' },
+    { value: 'sacos', viewValue: 'Sacos' },
+    { value: 'libras', viewValue: 'Libras' },
+  ];
 
   constructor(
     private aS: AgriculturalproductService,
@@ -52,32 +58,41 @@ export class InsertareditaragriculturalproductComponent {
 
   ngOnInit(): void {
     this.route.params.subscribe((data: Params) => {
-      this.id = data['id']
-      this.edicion = data['id'] != null
+      this.id = data['id'];
+      this.edicion = data['id'] != null;
       //actualizar
-      this.init()
+      this.init();
     }),
-
-    this.form = this.formBuilder.group({
-      codigo: [''],
-      nombre: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(3)]],
-      cantidad: ['', [Validators.required, Validators.max(1000), Validators.min(1)]],
-      unidaddemedida: ['', Validators.required],
-      fechadecosecha: ['', Validators.required],
-      idCultivo: ['', Validators.required],
-    });
+      (this.form = this.formBuilder.group({
+        codigo: [''],
+        nombre: [
+          '',
+          [
+            Validators.required,
+            Validators.maxLength(50),
+            Validators.minLength(3),
+          ],
+        ],
+        cantidad: [
+          '',
+          [Validators.required, Validators.max(1000), Validators.min(1)],
+        ],
+        unidaddemedida: ['', Validators.required],
+        fechadecosecha: ['', Validators.required],
+        idCultivo: ['', Validators.required],
+      }));
 
     this.loadCrops();
   }
 
-  loadCrops():void {
+  loadCrops(): void {
     this.aS.getCrops().subscribe({
-      next:(data)=>{
+      next: (data) => {
         this.cultivos = data;
       },
-      error:(error) => {
-        console.error('Error al cargar cultivos:',error);
-      }
+      error: (error) => {
+        console.error('Error al cargar cultivos:', error);
+      },
     });
   }
 
@@ -89,7 +104,6 @@ export class InsertareditaragriculturalproductComponent {
       this.agriculturalproduct.unitMeasure = this.form.value.unidaddemedida;
       this.agriculturalproduct.harvestDate = this.form.value.fechadecosecha;
       this.agriculturalproduct.crop.idCrop = this.form.value.idCultivo;
-
 
       if (this.edicion) {
         //actualizar
@@ -112,7 +126,7 @@ export class InsertareditaragriculturalproductComponent {
 
   init() {
     if (this.edicion) {
-      this.aS.listId(this.id).subscribe(data => {
+      this.aS.listId(this.id).subscribe((data) => {
         this.form = new FormGroup({
           codigo: new FormControl(data.idProduct),
           nombre: new FormControl(data.name),
@@ -120,8 +134,12 @@ export class InsertareditaragriculturalproductComponent {
           unidaddemedida: new FormControl(data.unitMeasure),
           fechadecosecha: new FormControl(data.harvestDate),
           idCultivo: new FormControl(data.crop.idCrop),
-        })
-      })
+        });
+      });
     }
+  }
+
+  cancelar(): void {
+    this.router.navigate(['agriculturalproducts']);
   }
 }

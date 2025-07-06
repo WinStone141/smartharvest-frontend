@@ -1,91 +1,197 @@
-<div>
-  <div><h1>Registrar recomendacion</h1></div>
-  <div>
-    <form [formGroup]="form" (submit)="aceptar()">
-      <mat-form-field *ngIf="edicion">
-        <mat-label>ID</mat-label>
-        <input matInput formControlName="codigo" />
-        <mat-error *ngIf="form.get('codigo')?.hasError('required')">
-          El código es obligatorio!!
-        </mat-error>
-      </mat-form-field>
-      <br />
-
-      <!-- Revisar -->
-      <mat-form-field>
-        <mat-label>Tipo</mat-label>
-        <mat-select formControlName="tipo">
-          <mat-option *ngFor="let tipo of tipos" [value]="tipo.value">
-            {{tipo.viewValue}}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="form.get('tipo')?.hasError('required')">
-          El tipo es obligatorio!!
-        </mat-error>
-      </mat-form-field>
-
-      <br />
-      <mat-form-field>
-        <mat-label>Descripcion</mat-label>
-        <input matInput formControlName="descripcion" maxlength="200" />
-        <mat-error *ngIf="form.get('descripcion')?.hasError('required')">
-          La descripcion es obligatoria
-        </mat-error>
-        <mat-error *ngIf="form.get('descripcion')?.hasError('maxlength')">
-          La descripcion no puede exceder 200 caracteres
-        </mat-error>
-      </mat-form-field>
-      <br />
-
-      <mat-form-field>
-        <mat-label>Fecha de emision</mat-label>
-        <input matInput [matDatepicker]="registrationPicker" formControlName="fechaEmision">
-        <mat-datepicker-toggle matSuffix [for]="registrationPicker"></mat-datepicker-toggle>
-        <mat-datepicker #registrationPicker></mat-datepicker>
-        <mat-error *ngIf="form.get('fechaEmision')?.hasError('required')">
-          La fecha de emision es obligatoria!!
-        </mat-error>
-      </mat-form-field>
-      <br />
-
-      <mat-form-field>
-        <mat-label>Fuente</mat-label>
-        <input matInput formControlName="fuente" maxlength="200" />
-        <mat-error *ngIf="form.get('fuente')?.hasError('required')">
-          La fuente es obligatoria
-        </mat-error>
-      </mat-form-field>
-      <br />
-      <!-- CAMPO USUARIO -->
-      <mat-form-field>
-        <mat-label>Usuario</mat-label>
-        <mat-select formControlName="idUser">
-          <mat-option *ngFor="let user of users" [value]="user.id">
-            {{user.username}}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="form.get('idUser')?.hasError('required')">
-          El usuario es obligatorio!!
-        </mat-error>
-      </mat-form-field>
-      <br />
-      <!-- CAMPO CROP -->
-      <mat-form-field>
-        <mat-label>Cultivo</mat-label>
-        <mat-select formControlName="idCrop">
-          <mat-option *ngFor="let crop of crops" [value]="crop.idCrop">
-             {{crop.idCrop}}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="form.get('idCrop')?.hasError('required')">
-          Debe seleccionar un cultivo
-        </mat-error>
-      </mat-form-field>
-      <br />
-
-      <button type="submit" mat-raised-button color="primary" [disabled]="!form.valid">
-        Registrar recomendacion
-      </button>
-    </form>
+<div class="form-container">
+  <!-- Header Section -->
+  <div class="form-header">
+    <div class="header-content">
+      <div class="icon-wrapper">
+        <mat-icon class="header-icon">lightbulb</mat-icon>
+      </div>
+      <div class="header-text">
+        <h1>{{ edicion ? 'Editar Recomendación' : 'Registrar Recomendación' }}</h1>
+        <p class="header-subtitle">{{ edicion ? 'Actualiza la información de la recomendación' : 'Complete todos los campos para registrar una nueva recomendación' }}</p>
+      </div>
+    </div>
   </div>
+
+  <!-- Form Card -->
+  <mat-card class="form-card">
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="aceptar()" class="recommendation-form">
+        
+        <!-- Two Columns Container -->
+        <div class="form-sections-container">
+          
+          <!-- COLUMNA 1: Identificación e Información Básica -->
+          <div class="column-container">
+            <!-- ID Field (Only in edit mode) -->
+            <div class="form-section" *ngIf="edicion">
+              <h3 class="section-title">
+                <mat-icon>fingerprint</mat-icon>
+                Identificación
+              </h3>
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>ID de Recomendación</mat-label>
+                  <input matInput formControlName="codigo" readonly />
+                  <mat-icon matSuffix>badge</mat-icon>
+                  <mat-hint>Este campo no es editable</mat-hint>
+                  <mat-error *ngIf="form.get('codigo')?.hasError('required')">
+                    El código es obligatorio
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <!-- Basic Information Section -->
+            <div class="form-section">
+              <h3 class="section-title">
+                <mat-icon>info</mat-icon>
+                Información de la Recomendación
+              </h3>
+              
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Tipo de Recomendación</mat-label>
+                  <mat-select formControlName="tipo">
+                    <mat-option *ngFor="let tipo of tipos" [value]="tipo.value">
+                      {{tipo.viewValue}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-icon matSuffix>category</mat-icon>
+                  <mat-hint>Selecciona el tipo de recomendación</mat-hint>
+                  <mat-error *ngIf="form.get('tipo')?.hasError('required')">
+                    El tipo es obligatorio
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Descripción</mat-label>
+                  <textarea matInput 
+                            formControlName="descripcion" 
+                            maxlength="200" 
+                            rows="4"
+                            placeholder="Describe la recomendación en detalle"></textarea>
+                  <mat-icon matSuffix>description</mat-icon>
+                  <mat-hint>Máximo 200 caracteres</mat-hint>
+                  <mat-error *ngIf="form.get('descripcion')?.hasError('required')">
+                    La descripción es obligatoria
+                  </mat-error>
+                  <mat-error *ngIf="form.get('descripcion')?.hasError('maxlength')">
+                    La descripción no puede exceder 200 caracteres
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Fuente</mat-label>
+                  <input matInput 
+                         formControlName="fuente" 
+                         maxlength="200" 
+                         placeholder="Ej: Ingeniero Agrónomo Juan Pérez" />
+                  <mat-icon matSuffix>source</mat-icon>
+                  <mat-hint>Fuente de la recomendación</mat-hint>
+                  <mat-error *ngIf="form.get('fuente')?.hasError('required')">
+                    La fuente es obligatoria
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <!-- COLUMNA 2: Fechas y Asignaciones -->
+          <div class="column-container">
+            <div class="form-section">
+              <h3 class="section-title">
+                <mat-icon>assignment</mat-icon>
+                Asignación y Fechas
+              </h3>
+              
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Fecha de Emisión</mat-label>
+                  <input matInput 
+                         [matDatepicker]="registrationPicker" 
+                         formControlName="fechaEmision"
+                         placeholder="Selecciona la fecha">
+                  <mat-datepicker-toggle matSuffix [for]="registrationPicker"></mat-datepicker-toggle>
+                  <mat-datepicker #registrationPicker></mat-datepicker>
+                  <mat-hint>Fecha cuando se emitió la recomendación</mat-hint>
+                  <mat-error *ngIf="form.get('fechaEmision')?.hasError('required')">
+                    La fecha de emisión es obligatoria
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Usuario</mat-label>
+                  <mat-select formControlName="idUser">
+                    <mat-option *ngFor="let user of users" [value]="user.id">
+                      {{user.username}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-icon matSuffix>person</mat-icon>
+                  <mat-hint>Usuario destinatario de la recomendación</mat-hint>
+                  <mat-error *ngIf="form.get('idUser')?.hasError('required')">
+                    El usuario es obligatorio
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Cultivo</mat-label>
+                  <mat-select formControlName="idCrop">
+                    <mat-option *ngFor="let crop of crops" [value]="crop.idCrop">
+                      {{crop.idCrop}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-icon matSuffix>eco</mat-icon>
+                  <mat-hint>Cultivo asociado a la recomendación</mat-hint>
+                  <mat-error *ngIf="form.get('idCrop')?.hasError('required')">
+                    Debe seleccionar un cultivo
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <!-- Info Box -->
+              <div class="info-box">
+                <mat-icon class="info-icon">tips_and_updates</mat-icon>
+                <div class="info-content">
+                  <h4>Información de Recomendación</h4>
+                  <p>Las recomendaciones ayudan a los agricultores a mejorar sus cultivos. Asegúrate de proporcionar información precisa y útil.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons (Centered below the two columns) -->
+        <div class="form-actions">
+          <div class="button-group">
+            <button type="button" 
+                    mat-stroked-button 
+                    color="warn" 
+                    class="action-button cancel-button"
+                    (click)="cancelar()">
+              <mat-icon>cancel</mat-icon>
+              Cancelar
+            </button>
+            
+            <button type="submit" 
+                    mat-raised-button 
+                    color="primary" 
+                    class="action-button submit-button"
+                    [disabled]="!form.valid">
+              <mat-icon>{{ edicion ? 'save' : 'lightbulb' }}</mat-icon>
+              {{ edicion ? 'Actualizar Recomendación' : 'Registrar Recomendación' }}
+            </button>
+          </div>
+        </div>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
 </div>

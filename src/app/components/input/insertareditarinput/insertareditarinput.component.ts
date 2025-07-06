@@ -11,45 +11,50 @@ import { CommonModule } from '@angular/common';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-insertareditarinput',
-  imports: [ReactiveFormsModule,
+  imports: [
+    ReactiveFormsModule,
     MatInputModule,
-    MatFormFieldModule, 
+    MatFormFieldModule,
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatButtonModule,
-    CommonModule
+    CommonModule,
+    MatIconModule,
+    MatCardModule,
   ],
   templateUrl: './insertareditarinput.component.html',
-  styleUrl: './insertareditarinput.component.css'
+  styleUrl: './insertareditarinput.component.css',
 })
-export class InsertareditarinputComponent implements OnInit{
+export class InsertareditarinputComponent implements OnInit {
   form: FormGroup = new FormGroup({});
-  input:Inputs = new Inputs()
+  input: Inputs = new Inputs();
 
-  id: number = 0
-  edicion: boolean = false
+  id: number = 0;
+  edicion: boolean = false;
 
-  users:Users[]=[]
+  users: Users[] = [];
 
-  tipos:{value:string;viewValue:string}[]=[
-    {value:"Fertilizante",viewValue:"Fertilizante"},
-    {value:"Semilla",viewValue:"Semilla"},
-    {value:"Pesticida",viewValue:"Pesticida"},
-    {value:"Abono",viewValue:"Abono"},
-    {value:"Control Biológico",viewValue:"Control Biológico"}
-  ]
+  tipos: { value: string; viewValue: string }[] = [
+    { value: 'Fertilizante', viewValue: 'Fertilizante' },
+    { value: 'Semilla', viewValue: 'Semilla' },
+    { value: 'Pesticida', viewValue: 'Pesticida' },
+    { value: 'Abono', viewValue: 'Abono' },
+    { value: 'Control Biológico', viewValue: 'Control Biológico' },
+  ];
 
-  unidades:{value:string;viewValue:string}[]=[
-    {value:"unidad",viewValue:"Unidad"},
-    {value:"bolsa",viewValue:"Bolsa"},
-    {value:"saco",viewValue:"Saco"},
-    {value:"kg",viewValue:"Kilogramo"},
-    {value:"L",viewValue:"Litro"}
-  ]
+  unidades: { value: string; viewValue: string }[] = [
+    { value: 'unidad', viewValue: 'Unidad' },
+    { value: 'bolsa', viewValue: 'Bolsa' },
+    { value: 'saco', viewValue: 'Saco' },
+    { value: 'kg', viewValue: 'Kilogramo' },
+    { value: 'L', viewValue: 'Litro' },
+  ];
 
   constructor(
     private iS: InputService,
@@ -60,34 +65,33 @@ export class InsertareditarinputComponent implements OnInit{
 
   ngOnInit(): void {
     this.route.params.subscribe((data: Params) => {
-      this.id = data['id']
-      this.edicion = data['id'] != null
+      this.id = data['id'];
+      this.edicion = data['id'] != null;
       //actualizar
-      this.init()
+      this.init();
     }),
-
-    this.form = this.formBuilder.group({
-      codigo: [''],
-      name: ['', [Validators.required, Validators.maxLength(70)]],
-      type: ['', Validators.required],
-      amount: ['', Validators.required],
-      unit: ['', [Validators.required, Validators.min(1)]],
-      registrationDate: ['', Validators.required],
-      expirationDate: ['', Validators.required],
-      idUser:['',Validators.required],
-    });
+      (this.form = this.formBuilder.group({
+        codigo: [''],
+        name: ['', [Validators.required, Validators.maxLength(70)]],
+        type: ['', Validators.required],
+        amount: ['', Validators.required],
+        unit: ['', [Validators.required, Validators.min(1)]],
+        registrationDate: ['', Validators.required],
+        expirationDate: ['', Validators.required],
+        idUser: ['', Validators.required],
+      }));
 
     this.loadUsers();
   }
 
-  loadUsers():void {
+  loadUsers(): void {
     this.iS.getUsers().subscribe({
-      next:(data)=>{
+      next: (data) => {
         this.users = data;
       },
-      error:(error) => {
-        console.error('Error al cargar usuarios:',error);
-      }
+      error: (error) => {
+        console.error('Error al cargar usuarios:', error);
+      },
     });
   }
 
@@ -101,7 +105,6 @@ export class InsertareditarinputComponent implements OnInit{
       this.input.registrationDate = this.form.value.registrationDate;
       this.input.expirationDate = this.form.value.expirationDate;
       this.input.users.id = this.form.value.idUser;
-
 
       if (this.edicion) {
         //actualizar
@@ -124,7 +127,7 @@ export class InsertareditarinputComponent implements OnInit{
 
   init() {
     if (this.edicion) {
-      this.iS.listId(this.id).subscribe(data => {
+      this.iS.listId(this.id).subscribe((data) => {
         this.form = new FormGroup({
           codigo: new FormControl(data.idInput),
           name: new FormControl(data.name),
@@ -134,8 +137,12 @@ export class InsertareditarinputComponent implements OnInit{
           registrationDate: new FormControl(data.registrationDate),
           expirationDate: new FormControl(data.expirationDate),
           idUser: new FormControl(data.users.id),
-        })
-      })
+        });
+      });
     }
+  }
+
+  cancelar(): void {
+    this.router.navigate(['inputs']);
   }
 }
