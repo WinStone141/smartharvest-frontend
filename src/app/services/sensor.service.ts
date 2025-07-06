@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Sensor } from '../models/sensor';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Parcel } from '../models/parcel';
 import { Crop } from '../models/crop';
+import { CountMaintenanceSensor } from '../models/countmaintenancesensor';
+import { Typesensoractive } from '../models/typesensoractive';
 
 const base_url = environment.base;
 @Injectable({
@@ -35,6 +37,14 @@ export class SensorService {
   getCrops() {
     return this.http.get<Crop[]>(`${base_url}/crops`);
   }
+  getMaintenanceCountbySensorType(): Observable<CountMaintenanceSensor[]> {
+    return this.http.get<CountMaintenanceSensor[]>(`${this.url}/countmaintenancesensor`);
+  }
+
+  getActiveSensorbySensorType(): Observable<Typesensoractive[]> {
+    return this.http.get<Typesensoractive[]>(`${this.url}/SensorsWithMaintenanceByType`);
+  }
+
   listId(id: number) {
     return this.http.get<Sensor>(`${this.url}/${id}`);
   }

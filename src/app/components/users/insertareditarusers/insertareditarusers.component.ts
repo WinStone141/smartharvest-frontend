@@ -85,7 +85,7 @@ export class InsertareditarusersComponent implements OnInit {
           });
         });
       }
-      this.router.navigate(['roles/nuevo']);
+      this.router.navigate(['roles/all']);
     }
   }
 

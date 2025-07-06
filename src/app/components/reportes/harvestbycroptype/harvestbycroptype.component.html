@@ -1,0 +1,24 @@
+<!-- harvest-by-crop-type.component.html -->
+<div class="title-container">
+  <h1 style="text-align: center;">Cosechas por tipo de cultivo</h1>
+
+  <form [formGroup]="rangeForm" (ngSubmit)="onSubmit()" style="text-align: center; margin-bottom: 1rem;">
+    <label>
+      Desde: <input type="date" formControlName="startDate">
+    </label>
+    <label style="margin-left: 1rem;">
+      Hasta: <input type="date" formControlName="endDate">
+    </label>
+    <button type="submit" style="margin-left: 1rem;">Consultar</button>
+  </form>
+
+  <div style="text-align: center" class="chart-container">
+    <canvas baseChart
+      [datasets]="barChartData"
+      [labels]="barChartLabels"
+      [options]="barChartOptions"
+      [legend]="barChartLegend"
+      [type]="barChartType">
+    </canvas>
+  </div>
+</div>

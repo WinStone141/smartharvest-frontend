@@ -1,70 +1,155 @@
-<div>
-  <div><h1>Registrar Mantenimiento</h1></div>
-  <div>
-    <form [formGroup]="form" (submit)="aceptar()">
-      <mat-form-field *ngIf="edicion">
-        <mat-label>ID</mat-label>
-        <input matInput formControlName="codigo" />
-        <mat-error *ngIf="form.get('codigo')?.hasError('required')">
-          El código es obligatorio!!
-        </mat-error>
-      </mat-form-field>
-      <br />
-
-      <!-- Campo Fecha de Instalación -->
-      <mat-form-field>
-        <mat-label>Fecha de Instalación</mat-label>
-        <input matInput [matDatepicker]="registrationPicker" formControlName="fechaInstalacion">
-        <mat-datepicker-toggle matSuffix [for]="registrationPicker"></mat-datepicker-toggle>
-        <mat-datepicker #registrationPicker></mat-datepicker>
-        <mat-error *ngIf="form.get('fechaInstalacion')?.hasError('required')">
-          La fecha de registro es obligatoria!!
-        </mat-error>
-      </mat-form-field>
-      <br />
-      <!-- Campo tipoMantenimiento -->
-      <mat-form-field>
-        <mat-label>Tipo</mat-label>
-        <mat-select formControlName="tipoMantenimiento">
-          <mat-option *ngFor="let tipo of tipos" [value]="tipo.value">
-            {{tipo.viewValue}}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="form.get('tipoMantenimiento')?.hasError('required')">
-          El tipo es obligatorio!!
-        </mat-error>
-      </mat-form-field>
-      <br />
-      <!-- Campo descripcion -->
-      <mat-form-field>
-        <mat-label>Descripción</mat-label>
-        <input matInput formControlName="descripcion" maxlength="200" />
-        <mat-error *ngIf="form.get('descripcion')?.hasError('required')">
-          El nombre es obligatorio!!
-        </mat-error>
-        <mat-error *ngIf="form.get('descripcion')?.hasError('maxlength')">
-          La descripcion no puede exceder 200 caracteres
-        </mat-error>
-      </mat-form-field>
-      <br />
-
-      <!-- CAMPO SENSOR -->
-      <mat-form-field>
-        <mat-label>Sensor</mat-label>
-        <mat-select formControlName="sensor">
-          <mat-option *ngFor="let sensor of sensors" [value]="sensor.idSensor">
-            {{sensor.idSensor}}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="form.get('sensor')?.hasError('required')">
-          El sensor es obligatorio!!
-        </mat-error>
-      </mat-form-field>
-      <br />
-
-      <button type="submit" mat-raised-button color="primary" [disabled]="!form.valid">
-        Registrar mantenimiento
-      </button>
-    </form>
+<div class="form-container">
+  <div class="form-header">
+    <div class="header-content">
+      <div class="icon-wrapper">
+        <mat-icon class="header-icon">build</mat-icon>
+      </div>
+      <div class="header-text">
+        <h1>{{ edicion ? 'Editar Mantenimiento' : 'Registrar Mantenimiento' }}</h1>
+        <p class="header-subtitle">{{ edicion ? 'Actualiza los detalles del mantenimiento existente' : 'Complete todos los campos para registrar un nuevo mantenimiento' }}</p>
+      </div>
+    </div>
   </div>
+
+  <mat-card class="form-card">
+    <mat-card-content>
+      <form [formGroup]="form" (submit)="aceptar()" class="maintenance-form">
+
+        <div class="form-sections-container">
+
+          <div class="column-container">
+            <div class="form-section" *ngIf="edicion">
+              <h3 class="section-title">
+                <mat-icon>fingerprint</mat-icon>
+                Identificación del Mantenimiento
+              </h3>
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>ID de Mantenimiento</mat-label>
+                  <input matInput formControlName="codigo" readonly />
+                  <mat-icon matSuffix>assignment_ind</mat-icon>
+                  <mat-hint>Este campo no es editable</mat-hint>
+                  <mat-error *ngIf="form.get('codigo')?.hasError('required')">
+                    El código es obligatorio
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3 class="section-title">
+                <mat-icon>settings</mat-icon>
+                Detalles del Mantenimiento
+              </h3>
+
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Fecha de Mantenimiento</mat-label>
+                  <input matInput [matDatepicker]="registrationPicker" formControlName="fechaInstalacion" placeholder="Selecciona la fecha del mantenimiento">
+                  <mat-datepicker-toggle matSuffix [for]="registrationPicker"></mat-datepicker-toggle>
+                  <mat-datepicker #registrationPicker></mat-datepicker>
+                  <mat-icon matSuffix>event</mat-icon>
+                  <mat-hint>Fecha en que se realizó el mantenimiento</mat-hint>
+                  <mat-error *ngIf="form.get('fechaInstalacion')?.hasError('required')">
+                    La fecha de mantenimiento es obligatoria
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Tipo de Mantenimiento</mat-label>
+                  <mat-select formControlName="tipoMantenimiento">
+                    <mat-option *ngFor="let tipo of tipos" [value]="tipo.value">
+                      {{tipo.viewValue}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-icon matSuffix>category</mat-icon>
+                  <mat-hint>Selecciona el tipo de servicio realizado</mat-hint>
+                  <mat-error *ngIf="form.get('tipoMantenimiento')?.hasError('required')">
+                    El tipo de mantenimiento es obligatorio
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div class="column-container">
+            <div class="form-section">
+              <h3 class="section-title">
+                <mat-icon>description</mat-icon>
+                Descripción y Recurso
+              </h3>
+
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Descripción del Mantenimiento</mat-label>
+                  <textarea matInput
+                            formControlName="descripcion"
+                            maxlength="200"
+                            rows="4"
+                            placeholder="Describe el trabajo realizado"></textarea>
+                  <mat-icon matSuffix>notes</mat-icon>
+                  <mat-hint>Detalles sobre las acciones tomadas (máx. 200 caracteres)</mat-hint>
+                  <mat-error *ngIf="form.get('descripcion')?.hasError('required')">
+                    La descripción es obligatoria
+                  </mat-error>
+                  <mat-error *ngIf="form.get('descripcion')?.hasError('maxlength')">
+                    La descripción no puede exceder 200 caracteres
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Sensor Asociado</mat-label>
+                  <mat-select formControlName="sensor">
+                    <mat-option *ngFor="let sensor of sensors" [value]="sensor.idSensor">
+                      Sensor ID: {{sensor.idSensor}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-icon matSuffix>sensors</mat-icon>
+                  <mat-hint>Selecciona el sensor al que se le aplicó el mantenimiento</mat-hint>
+                  <mat-error *ngIf="form.get('sensor')?.hasError('required')">
+                    El sensor es obligatorio
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="info-box">
+                <mat-icon class="info-icon">tips_and_updates</mat-icon>
+                <div class="info-content">
+                  <h4>Importancia del Mantenimiento</h4>
+                  <p>Registrar el mantenimiento de tus equipos es vital para asegurar su correcto funcionamiento y prolongar su vida útil. Sé detallado en la descripción.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <div class="button-group">
+            <button type="button"
+                    mat-stroked-button
+                    color="warn"
+                    class="action-button cancel-button"
+                    (click)="cancelar()">
+              <mat-icon>cancel</mat-icon>
+              Cancelar
+            </button>
+
+            <button type="submit"
+                    mat-raised-button
+                    color="primary"
+                    class="action-button submit-button"
+                    [disabled]="!form.valid">
+              <mat-icon>{{ edicion ? 'save' : 'build' }}</mat-icon>
+              {{ edicion ? 'Actualizar Mantenimiento' : 'Registrar Mantenimiento' }}
+            </button>
+          </div>
+        </div>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
 </div>

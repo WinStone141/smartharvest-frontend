@@ -1,117 +1,212 @@
-<div>
-  <div><h1>Registro de Sensores</h1></div>
-  <div>
-    <form [formGroup]="form" (submit)="aceptar()">
-      <mat-form-field *ngIf="edicion">
-        <mat-label>ID</mat-label>
-        <input matInput formControlName="codigo" readonly/>
-        <mat-error *ngIf="form.get('codigo')?.hasError('required')">
-          El código es obligatorio!!
-        </mat-error>
-      </mat-form-field>
-      <br />
-      <mat-form-field>
-        <mat-label>Tipo</mat-label>
-        <mat-select formControlName="tiposensor">
-          <mat-option *ngFor="let tipo of tipos" [value]="tipo.value">
-            {{tipo.viewValue}}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="form.get('tiposensor')?.hasError('required')">
-          El tipo es obligatorio!!
-        </mat-error>
-      </mat-form-field>
-      <br />
-      <mat-form-field>
-        <mat-label>Fecha de Instalación</mat-label>
-        <input matInput [matDatepicker]="finstalacionPicker" formControlName="fechainstalacion">
-        <mat-datepicker-toggle matSuffix [for]="finstalacionPicker"></mat-datepicker-toggle>
-        <mat-datepicker #finstalacionPicker></mat-datepicker>
-        <mat-error *ngIf="form.get('fechainstalacion')?.hasError('required')">
-          La fecha de instalación es obligatoria!!
-        </mat-error>
-      </mat-form-field>
-      <br />
-      
-      <div>
-        <label>Estado</label>
-        <mat-radio-group formControlName="estado">
-          <mat-radio-button [value]="true">Activo</mat-radio-button>
-          <mat-radio-button [value]="false">Inactivo</mat-radio-button>
-        </mat-radio-group>
+<div class="form-container">
+  <div class="form-header">
+    <div class="header-content">
+      <div class="icon-wrapper">
+        <mat-icon class="header-icon">sensors</mat-icon>
       </div>
-      <br />
-
-      <mat-form-field>
-        <mat-label>Ultima lectura</mat-label>
-        <input matInput [matDatepicker]="ulecturaPicker" formControlName="ultimalectura">
-        <mat-datepicker-toggle matSuffix [for]="ulecturaPicker"></mat-datepicker-toggle>
-        <mat-datepicker #ulecturaPicker></mat-datepicker>
-        <mat-error *ngIf="form.get('ultimalectura')?.hasError('required')">
-          La fecha de ultima lectura es obligatoria!!
-        </mat-error>
-      </mat-form-field>
-      <br/>
-
-      <mat-form-field>
-        <mat-label>Nivel de batería</mat-label>
-        <input matInput formControlName="niveldebateria"/>
-        <mat-error *ngIf="form.get('niveldebateria')?.hasError('required')">
-          El tipo de sensor es obligatorio!!
-        </mat-error>
-        <mat-error *ngIf="form.get('niveldebateria')?.hasError('max')">
-          El nivel de batería no puede ser mayor a 100
-        </mat-error>
-        <mat-error *ngIf="form.get('niveldebateria')?.hasError('min')">
-          El nivel de batería no puede ser menor a 100
-        </mat-error>
-      </mat-form-field>
-      <br/>
-
-      <mat-form-field>
-        <mat-label>Nivel de Humedad</mat-label>
-        <input matInput formControlName="humedad"/>
-        <mat-error *ngIf="form.get('humedad')?.hasError('required')">
-          El nivel de humedad es obligatorio!!
-        </mat-error>
-        <mat-error *ngIf="form.get('humedad')?.hasError('max')">
-          El nivel de humedad no puede ser mayor a 100
-        </mat-error>
-        <mat-error *ngIf="form.get('humedad')?.hasError('min')">
-          El nivel de humedad no puede ser menor a 100
-        </mat-error>
-      </mat-form-field>
-      <br/>
-
-      <mat-form-field>
-        <mat-label>Parcela</mat-label>
-        <mat-select formControlName="parcela">
-          <mat-option *ngFor="let parcel of parcels" [value]="parcel.idParcel">
-            {{parcel.name}}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="form.get('parcela')?.hasError('required')">
-          Debe seleccionar una parcela
-        </mat-error>
-      </mat-form-field>
-      <br />
-
-      <mat-form-field>
-        <mat-label>Cultivo</mat-label>
-        <mat-select formControlName="cultivo">
-          <mat-option *ngFor="let crop of crops" [value]="crop.idCrop">
-             {{crop.typeCrop}} ID:{{crop.idCrop}}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="form.get('cultivo')?.hasError('required')">
-          Debe seleccionar un cultivo
-        </mat-error>
-      </mat-form-field>
-      <br />
-
-      <button type="submit" mat-raised-button color="primary" [disabled]="!form.valid">
-        Registrar Sensor
-      </button>
-    </form>
+      <div class="header-text">
+        <h1>{{ edicion ? 'Editar Sensor' : 'Registro de Sensores' }}</h1>
+        <p class="header-subtitle">{{ edicion ? 'Actualiza la información del sensor existente' : 'Complete todos los campos para registrar un nuevo sensor' }}</p>
+      </div>
+    </div>
   </div>
+
+  <mat-card class="form-card">
+    <mat-card-content>
+      <form [formGroup]="form" (submit)="aceptar()" class="sensor-form">
+
+        <div class="form-sections-container">
+
+          <div class="column-container">
+            <div class="form-section" *ngIf="edicion">
+              <h3 class="section-title">
+                <mat-icon>fingerprint</mat-icon>
+                Identificación del Sensor
+              </h3>
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>ID del Sensor</mat-label>
+                  <input matInput formControlName="codigo" readonly />
+                  <mat-icon matSuffix>vpn_key</mat-icon>
+                  <mat-hint>Este campo no es editable</mat-hint>
+                  <mat-error *ngIf="form.get('codigo')?.hasError('required')">
+                    El código es obligatorio
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3 class="section-title">
+                <mat-icon>info</mat-icon>
+                Información Básica del Sensor
+              </h3>
+
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Tipo de Sensor</mat-label>
+                  <mat-select formControlName="tiposensor">
+                    <mat-option *ngFor="let tipo of tipos" [value]="tipo.value">
+                      {{tipo.viewValue}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-icon matSuffix>category</mat-icon>
+                  <mat-hint>Selecciona el tipo de sensor</mat-hint>
+                  <mat-error *ngIf="form.get('tiposensor')?.hasError('required')">
+                    El tipo es obligatorio
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Fecha de Instalación</mat-label>
+                  <input matInput [matDatepicker]="finstalacionPicker" formControlName="fechainstalacion" placeholder="Selecciona la fecha de instalación">
+                  <mat-datepicker-toggle matSuffix [for]="finstalacionPicker"></mat-datepicker-toggle>
+                  <mat-datepicker #finstalacionPicker></mat-datepicker>
+                  <mat-icon matSuffix>event</mat-icon>
+                  <mat-hint>Fecha cuando el sensor fue instalado</mat-hint>
+                  <mat-error *ngIf="form.get('fechainstalacion')?.hasError('required')">
+                    La fecha de instalación es obligatoria
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="form-row">
+                <div class="radio-group-container">
+                  <label class="radio-group-label">Estado del Sensor</label>
+                  <mat-radio-group formControlName="estado" class="custom-radio-group">
+                    <mat-radio-button [value]="true">Activo</mat-radio-button>
+                    <mat-radio-button [value]="false">Inactivo</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="column-container">
+            <div class="form-section">
+              <h3 class="section-title">
+                <mat-icon>receipt</mat-icon>
+                Lecturas y Ubicación
+              </h3>
+
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Última Lectura</mat-label>
+                  <input matInput [matDatepicker]="ulecturaPicker" formControlName="ultimalectura" placeholder="Selecciona la fecha de última lectura">
+                  <mat-datepicker-toggle matSuffix [for]="ulecturaPicker"></mat-datepicker-toggle>
+                  <mat-datepicker #ulecturaPicker></mat-datepicker>
+                  <mat-icon matSuffix>history</mat-icon>
+                  <mat-hint>Fecha de la última lectura registrada</mat-hint>
+                  <mat-error *ngIf="form.get('ultimalectura')?.hasError('required')">
+                    La fecha de última lectura es obligatoria
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Nivel de Batería (%)</mat-label>
+                  <input matInput type="number" formControlName="niveldebateria" placeholder="Ingrese el nivel de batería" />
+                  <mat-icon matSuffix>battery_charging_full</mat-icon>
+                  <mat-hint>Valor entre 0 y 100</mat-hint>
+                  <mat-error *ngIf="form.get('niveldebateria')?.hasError('required')">
+                    El nivel de batería es obligatorio
+                  </mat-error>
+                  <mat-error *ngIf="form.get('niveldebateria')?.hasError('max')">
+                    El nivel de batería no puede ser mayor a 100
+                  </mat-error>
+                  <mat-error *ngIf="form.get('niveldebateria')?.hasError('min')">
+                    El nivel de batería no puede ser menor a 0
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Nivel de Humedad (%)</mat-label>
+                  <input matInput type="number" formControlName="humedad" placeholder="Ingrese el nivel de humedad" />
+                  <mat-icon matSuffix>water_drop</mat-icon>
+                  <mat-hint>Valor entre 0 y 100</mat-hint>
+                  <mat-error *ngIf="form.get('humedad')?.hasError('required')">
+                    El nivel de humedad es obligatorio
+                  </mat-error>
+                  <mat-error *ngIf="form.get('humedad')?.hasError('max')">
+                    El nivel de humedad no puede ser mayor a 100
+                  </mat-error>
+                  <mat-error *ngIf="form.get('humedad')?.hasError('min')">
+                    El nivel de humedad no puede ser menor a 0
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Parcela</mat-label>
+                  <mat-select formControlName="parcela">
+                    <mat-option *ngFor="let parcel of parcels" [value]="parcel.idParcel">
+                      {{parcel.name}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-icon matSuffix>landscape</mat-icon>
+                  <mat-hint>Parcela donde está instalado el sensor</mat-hint>
+                  <mat-error *ngIf="form.get('parcela')?.hasError('required')">
+                    Debe seleccionar una parcela
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Cultivo</mat-label>
+                  <mat-select formControlName="cultivo">
+                    <mat-option *ngFor="let crop of crops" [value]="crop.idCrop">
+                      {{crop.typeCrop}} ID:{{crop.idCrop}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-icon matSuffix>eco</mat-icon>
+                  <mat-hint>Cultivo asociado al sensor</mat-hint>
+                  <mat-error *ngIf="form.get('cultivo')?.hasError('required')">
+                    Debe seleccionar un cultivo
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="info-box">
+                <mat-icon class="info-icon">tips_and_updates</mat-icon>
+                <div class="info-content">
+                  <h4>Información de Sensores</h4>
+                  <p>Asegúrate de registrar los datos del sensor con precisión para un monitoreo efectivo de tus cultivos. Los niveles de batería y humedad deben ser del 0 al 100.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <div class="button-group">
+            <button type="button"
+                    mat-stroked-button
+                    color="warn"
+                    class="action-button cancel-button"
+                    (click)="cancelar()">
+              <mat-icon>cancel</mat-icon>
+              Cancelar
+            </button>
+
+            <button type="submit"
+                    mat-raised-button
+                    color="primary"
+                    class="action-button submit-button"
+                    [disabled]="!form.valid">
+              <mat-icon>{{ edicion ? 'save' : 'add_circle' }}</mat-icon>
+              {{ edicion ? 'Actualizar Sensor' : 'Registrar Sensor' }}
+            </button>
+          </div>
+        </div>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
 </div>

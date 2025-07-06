@@ -12,6 +12,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpHeaders } from '@angular/common/http';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-insertareditarmaintenance',
@@ -19,15 +21,17 @@ import { HttpHeaders } from '@angular/common/http';
   imports: [
     ReactiveFormsModule,
     MatInputModule,
-    MatFormFieldModule, 
+    MatFormFieldModule,
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatButtonModule,
-    CommonModule
+    CommonModule,
+    MatIconModule,
+    MatCardModule,
   ],
   templateUrl: './insertareditarmaintenance.component.html',
-  styleUrl: './insertareditarmaintenance.component.css'
+  styleUrl: './insertareditarmaintenance.component.css',
 })
 export class InsertareditarmaintenanceComponent implements OnInit {
   form: FormGroup = new FormGroup({});
@@ -36,13 +40,13 @@ export class InsertareditarmaintenanceComponent implements OnInit {
   edicion: boolean = false;
   sensors: Sensor[] = [];
 
-  tipos:{value:string;viewValue:string}[]=[
-    {value:"Preventivo",viewValue:"Preventivo"},
-    {value:"Correctivo",viewValue:"Correctivo"},
-    {value:"Predictivo",viewValue:"Predictivo"},
-    {value:"Rutinario",viewValue:"Rutinario"},
-    {value:"Emergencia",viewValue:"Emergencia"}
-  ]
+  tipos: { value: string; viewValue: string }[] = [
+    { value: 'Preventivo', viewValue: 'Preventivo' },
+    { value: 'Correctivo', viewValue: 'Correctivo' },
+    { value: 'Predictivo', viewValue: 'Predictivo' },
+    { value: 'Rutinario', viewValue: 'Rutinario' },
+    { value: 'Emergencia', viewValue: 'Emergencia' },
+  ];
 
   constructor(
     private mS: MaintenanceService,
@@ -53,28 +57,27 @@ export class InsertareditarmaintenanceComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((data: Params) => {
-      this.id = data['id']
-      this.edicion = data['id'] != null
+      this.id = data['id'];
+      this.edicion = data['id'] != null;
       //actualizar
-      this.init()
+      this.init();
     }),
-
-    this.form = this.formBuilder.group({
-      codigo: [''],
-      fechaInstalacion: ['', Validators.required],
-      tipoMantenimiento: ['', Validators.required],
-      descripcion: ['', [Validators.required, Validators.maxLength(200)]],
-      sensor:['',Validators.required],
-    });
+      (this.form = this.formBuilder.group({
+        codigo: [''],
+        fechaInstalacion: ['', Validators.required],
+        tipoMantenimiento: ['', Validators.required],
+        descripcion: ['', [Validators.required, Validators.maxLength(200)]],
+        sensor: ['', Validators.required],
+      }));
 
     this.loadSensors();
   }
 
   loadSensors(): void {
     this.mS.getSensors().subscribe({
-      next:(data)=>{
+      next: (data) => {
         this.sensors = data;
-      }
+      },
     });
   }
 
@@ -103,19 +106,23 @@ export class InsertareditarmaintenanceComponent implements OnInit {
       }
       this.router.navigate(['maintenances']);
     }
-  }  
+  }
 
   init() {
     if (this.edicion) {
-      this.mS.listId(this.id).subscribe(data => {
+      this.mS.listId(this.id).subscribe((data) => {
         this.form = new FormGroup({
           codigo: new FormControl(data.idMaintenance),
           fechaInstalacion: new FormControl(data.installationDate),
           tipoMantenimiento: new FormControl(data.tipoMantenimiento),
           descripcion: new FormControl(data.description),
           sensor: new FormControl(data.sensor.idSensor),
-        })
-      })
+        });
+      });
     }
+  }
+
+  cancelar(): void {
+    this.router.navigate(['maintenances']);
   }
 }

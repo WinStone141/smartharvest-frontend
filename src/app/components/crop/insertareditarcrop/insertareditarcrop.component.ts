@@ -11,6 +11,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-insertareditarcrop',
@@ -21,7 +23,7 @@ import { CommonModule } from '@angular/common';
     MatDatepickerModule,
     MatNativeDateModule,
     MatButtonModule,
-    CommonModule],
+    CommonModule, MatIconModule, MatCardModule],
   templateUrl: './insertareditarcrop.component.html',
   styleUrl: './insertareditarcrop.component.css'
 })
@@ -135,5 +137,9 @@ export class InsertareditarcropComponent {
         })
       })
     }
+  }
+
+  cancelar(): void {
+    this.router.navigate(['crops']);
   }
 }

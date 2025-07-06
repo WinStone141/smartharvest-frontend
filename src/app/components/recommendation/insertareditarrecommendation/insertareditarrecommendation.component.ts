@@ -12,36 +12,41 @@ import { Users } from '../../../models/users';
 import { Crop } from '../../../models/crop';
 import { RecommendationService } from '../../../services/recommendation.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-insertareditarrecommendation',
-  imports: [ReactiveFormsModule,
+  imports: [
+    ReactiveFormsModule,
     MatInputModule,
-    MatFormFieldModule, 
+    MatFormFieldModule,
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatButtonModule,
-    CommonModule
+    CommonModule,
+    MatIconModule,
+    MatCardModule,
   ],
   templateUrl: './insertareditarrecommendation.component.html',
-  styleUrl: './insertareditarrecommendation.component.css'
+  styleUrl: './insertareditarrecommendation.component.css',
 })
-export class InsertareditarrecommendationComponent implements OnInit{
+export class InsertareditarrecommendationComponent implements OnInit {
   form: FormGroup = new FormGroup({});
-  recommendation:Recommendation = new Recommendation()
-  id: number = 0
-  edicion: boolean = false
-  crops:Crop[]=[]
-  users:Users[]=[]
+  recommendation: Recommendation = new Recommendation();
+  id: number = 0;
+  edicion: boolean = false;
+  crops: Crop[] = [];
+  users: Users[] = [];
 
-  tipos:{value:string;viewValue:string}[]=[
-    {value:"Fertilización",viewValue:"Fertilización"},
-    {value:"Riego",viewValue:"Riego"},
-    {value:"Control de Plagas",viewValue:"Control de Plagas"},
-    {value:"Poda",viewValue:"Poda"},
-    {value:"Cosecha",viewValue:"Cosecha"}
-  ]
+  tipos: { value: string; viewValue: string }[] = [
+    { value: 'Fertilización', viewValue: 'Fertilización' },
+    { value: 'Riego', viewValue: 'Riego' },
+    { value: 'Control de Plagas', viewValue: 'Control de Plagas' },
+    { value: 'Poda', viewValue: 'Poda' },
+    { value: 'Cosecha', viewValue: 'Cosecha' },
+  ];
 
   constructor(
     private rS: RecommendationService,
@@ -52,21 +57,20 @@ export class InsertareditarrecommendationComponent implements OnInit{
 
   ngOnInit(): void {
     this.route.params.subscribe((data: Params) => {
-      this.id = data['id']
-      this.edicion = data['id'] != null
+      this.id = data['id'];
+      this.edicion = data['id'] != null;
       //actualizar
-      this.init()
+      this.init();
     }),
-
-    this.form = this.formBuilder.group({
-      codigo: [''],
-      tipo: ['', Validators.required],
-      descripcion: ['', [Validators.required, Validators.maxLength(200)]],
-      fechaEmision: ['', Validators.required],
-      fuente: ['', Validators.required],
-      idUser:['',Validators.required],
-      idCrop:['',Validators.required],
-    });
+      (this.form = this.formBuilder.group({
+        codigo: [''],
+        tipo: ['', Validators.required],
+        descripcion: ['', [Validators.required, Validators.maxLength(200)]],
+        fechaEmision: ['', Validators.required],
+        fuente: ['', Validators.required],
+        idUser: ['', Validators.required],
+        idCrop: ['', Validators.required],
+      }));
 
     this.loadCrops();
     this.loadUsers();
@@ -74,21 +78,21 @@ export class InsertareditarrecommendationComponent implements OnInit{
 
   loadCrops(): void {
     this.rS.getCrops().subscribe({
-      next:(data)=>{
+      next: (data) => {
         this.crops = data;
-      }
+      },
     });
   }
   loadUsers(): void {
     this.rS.getUsers().subscribe({
-      next:(data)=>{
+      next: (data) => {
         this.users = data;
-      }
+      },
     });
   }
 
   aceptar() {
-    if (this.form.valid){
+    if (this.form.valid) {
       this.recommendation.idRecommendation = this.form.value.codigo;
       this.recommendation.type = this.form.value.tipo;
       this.recommendation.description = this.form.value.descripcion;
@@ -118,18 +122,21 @@ export class InsertareditarrecommendationComponent implements OnInit{
 
   init() {
     if (this.edicion) {
-      this.rS.listId(this.id).subscribe(data => {
+      this.rS.listId(this.id).subscribe((data) => {
         this.form = new FormGroup({
           codigo: new FormControl(data.idRecommendation),
-          tipo: new FormControl(data.type),    
+          tipo: new FormControl(data.type),
           descripcion: new FormControl(data.description),
           fechaEmision: new FormControl(data.issueDate),
           fuente: new FormControl(data.source),
           idUser: new FormControl(data.users.id),
           idCrop: new FormControl(data.crop.idCrop),
-        })
-      })
+        });
+      });
     }
   }
 
+  cancelar(): void {
+    this.router.navigate(['recommendations']);
+  }
 }
