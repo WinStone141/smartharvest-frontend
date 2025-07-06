@@ -1,109 +1,178 @@
-<div>
-  <div><h1>Registrar Parcela</h1></div>
-  <div>
-    <form [formGroup]="form" (submit)="aceptar()">
-      <mat-form-field *ngIf="edicion">
-        <mat-label>ID</mat-label>
-        <input matInput formControlName="codigo" />
-        <mat-error *ngIf="form.get('codigo')?.hasError('required')">
-          El código es obligatorio!!
-        </mat-error>
-      </mat-form-field>
-      <br />
-         <mat-form-field appearance="outline">
-        <mat-label>Nombre de la Parcela</mat-label>
-        <input matInput formControlName="name" maxlength="70" />
-        <mat-error *ngIf="form.get('name')?.hasError('required')">
-          El nombre es obligatorio
-        </mat-error>
-        <mat-error *ngIf="form.get('name')?.hasError('minlength')">
-          El nombre debe tener al menos 2 caracteres
-        </mat-error>
-        <mat-error *ngIf="form.get('name')?.hasError('maxlength')">
-          El nombre no puede exceder 70 caracteres
-        </mat-error>
-      </mat-form-field>
-      <br />
-
-      <!-- Campo Ubicación -->
-      <mat-form-field appearance="outline">
-        <mat-label>Ubicación</mat-label>
-        <input matInput formControlName="location" maxlength="200" />
-        <mat-error *ngIf="form.get('location')?.hasError('required')">
-          La ubicación es obligatoria
-        </mat-error>
-        <mat-error *ngIf="form.get('location')?.hasError('minlength')">
-          La ubicación debe tener al menos 3 caracteres
-        </mat-error>
-        <mat-error *ngIf="form.get('location')?.hasError('maxlength')">
-          La ubicación no puede exceder 200 caracteres
-        </mat-error>
-      </mat-form-field>
-      <br />
-
-      <!-- Campo Tamaño -->
-      <mat-form-field appearance="outline">
-        <mat-label>Tamaño (m²)</mat-label>
-        <input matInput type="number" formControlName="sizem2" step="0.01" min="1" max="999999" />
-        <mat-error *ngIf="form.get('sizem2')?.hasError('required')">
-          El tamaño es obligatorio
-        </mat-error>
-        <mat-error *ngIf="form.get('sizem2')?.hasError('min')">
-          El tamaño debe ser mayor a 0
-        </mat-error>
-        <mat-error *ngIf="form.get('sizem2')?.hasError('max')">
-          El tamaño no puede exceder 999,999 m²
-        </mat-error>
-        <mat-error *ngIf="form.get('sizem2')?.hasError('pattern')">
-          Use formato numérico válido (máximo 2 decimales)
-        </mat-error>
-      </mat-form-field>
-      <br />
-
-      <!-- Campo Tipo de Suelo -->
-      <mat-form-field appearance="outline">
-        <mat-label>Tipo de Suelo</mat-label>
-        <mat-select formControlName="groundType">
-          <mat-option *ngFor="let tipo of tipos" [value]="tipo.value">
-            {{tipo.viewValue}}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="form.get('groundType')?.hasError('required')">
-          El tipo de suelo es obligatorio
-        </mat-error>
-      </mat-form-field>
-      <br />
-
-      <!-- Campo Fecha de Registro -->
-      <mat-form-field appearance="outline">
-        <mat-label>Fecha de Registro</mat-label>
-        <input matInput [matDatepicker]="registrationPicker" formControlName="registrationDate">
-        <mat-datepicker-toggle matSuffix [for]="registrationPicker"></mat-datepicker-toggle>
-        <mat-datepicker #registrationPicker></mat-datepicker>
-        <mat-error *ngIf="form.get('registrationDate')?.hasError('required')">
-          La fecha de registro es obligatoria
-        </mat-error>
-      </mat-form-field>
-      <br />
-
-      <!-- Campo Usuario -->
-      <mat-form-field appearance="outline">
-        <mat-label>Usuario Propietario</mat-label>
-        <mat-select formControlName="idUser">
-          <mat-option *ngFor="let user of users" [value]="user.id">
-            {{user.username}}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="form.get('idUser')?.hasError('required')">
-          Debe seleccionar un usuario
-        </mat-error>
-      </mat-form-field>
-      <br />
-
-      <button type="submit" mat-raised-button color="primary" [disabled]="!form.valid">
-        Registrar Parcela
-      </button>
-
-    </form>      
+<div class="form-container">
+  <!-- Header Section -->
+  <div class="form-header">
+    <div class="header-content">
+      <div class="icon-wrapper">
+        <mat-icon class="header-icon">landscape</mat-icon>
+      </div>
+      <div class="header-text">
+        <h1>Registrar Parcela</h1>
+        <p class="header-subtitle">Gestiona las parcelas de tu propiedad agrícola</p>
+      </div>
+    </div>
   </div>
+
+  <!-- Form Card -->
+  <mat-card class="form-card">
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="aceptar()" class="parcela-form">
+        
+        <!-- Form Sections Container -->
+        <div class="form-sections-container">
+          
+          <!-- Columna Izquierda: Información Básica -->
+          <div class="column-container">
+            <div class="form-section">
+              <h3 class="section-title">
+                <mat-icon>info</mat-icon>
+                Información Básica
+              </h3>
+              
+              <!-- ID Field (solo en edición) -->
+              <mat-form-field *ngIf="edicion" appearance="outline" class="full-width">
+                <mat-label>ID</mat-label>
+                <input matInput formControlName="codigo" readonly />
+                <mat-icon matSuffix>tag</mat-icon>
+                <mat-error *ngIf="form.get('codigo')?.hasError('required')">
+                  El código es obligatorio
+                </mat-error>
+              </mat-form-field>
+
+              <!-- Nombre Field -->
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Nombre de la Parcela</mat-label>
+                <input matInput formControlName="name" maxlength="70" />
+                <mat-icon matSuffix>label</mat-icon>
+                <mat-hint>Máximo 70 caracteres</mat-hint>
+                <mat-error *ngIf="form.get('name')?.hasError('required')">
+                  El nombre es obligatorio
+                </mat-error>
+                <mat-error *ngIf="form.get('name')?.hasError('minlength')">
+                  El nombre debe tener al menos 2 caracteres
+                </mat-error>
+                <mat-error *ngIf="form.get('name')?.hasError('maxlength')">
+                  El nombre no puede exceder 70 caracteres
+                </mat-error>
+              </mat-form-field>
+
+              <!-- Ubicación Field -->
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Ubicación</mat-label>
+                <input matInput formControlName="location" maxlength="200" />
+                <mat-icon matSuffix>place</mat-icon>
+                <mat-hint>Máximo 200 caracteres</mat-hint>
+                <mat-error *ngIf="form.get('location')?.hasError('required')">
+                  La ubicación es obligatoria
+                </mat-error>
+                <mat-error *ngIf="form.get('location')?.hasError('minlength')">
+                  La ubicación debe tener al menos 3 caracteres
+                </mat-error>
+                <mat-error *ngIf="form.get('location')?.hasError('maxlength')">
+                  La ubicación no puede exceder 200 caracteres
+                </mat-error>
+              </mat-form-field>
+
+              <!-- Usuario Field -->
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Usuario Propietario</mat-label>
+                <mat-select formControlName="idUser">
+                  <mat-option *ngFor="let user of users" [value]="user.id">
+                    {{user.username}}
+                  </mat-option>
+                </mat-select>
+                <mat-icon matSuffix>person</mat-icon>
+                <mat-error *ngIf="form.get('idUser')?.hasError('required')">
+                  Debe seleccionar un usuario
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <!-- Columna Derecha: Especificaciones -->
+          <div class="column-container">
+            <div class="form-section">
+              <h3 class="section-title">
+                <mat-icon>straighten</mat-icon>
+                Especificaciones
+              </h3>
+
+              <!-- Tamaño Field -->
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Tamaño (m²)</mat-label>
+                <input matInput type="number" formControlName="sizem2" step="0.01" min="1" max="999999" />
+                <mat-icon matSuffix>square_foot</mat-icon>
+                <mat-hint>Formato numérico válido (máximo 2 decimales)</mat-hint>
+                <mat-error *ngIf="form.get('sizem2')?.hasError('required')">
+                  El tamaño es obligatorio
+                </mat-error>
+                <mat-error *ngIf="form.get('sizem2')?.hasError('min')">
+                  El tamaño debe ser mayor a 0
+                </mat-error>
+                <mat-error *ngIf="form.get('sizem2')?.hasError('max')">
+                  El tamaño no puede exceder 999,999 m²
+                </mat-error>
+                <mat-error *ngIf="form.get('sizem2')?.hasError('pattern')">
+                  Use formato numérico válido (máximo 2 decimales)
+                </mat-error>
+              </mat-form-field>
+
+              <!-- Tipo de Suelo Field -->
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Tipo de Suelo</mat-label>
+                <mat-select formControlName="groundType">
+                  <mat-option *ngFor="let tipo of tipos" [value]="tipo.value">
+                    {{tipo.viewValue}}
+                  </mat-option>
+                </mat-select>
+                <mat-icon matSuffix>terrain</mat-icon>
+                <mat-error *ngIf="form.get('groundType')?.hasError('required')">
+                  El tipo de suelo es obligatorio
+                </mat-error>
+              </mat-form-field>
+
+              <!-- Fecha de Registro -->
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Fecha de Registro</mat-label>
+                <input matInput [matDatepicker]="registrationPicker" formControlName="registrationDate">
+                <mat-datepicker-toggle matSuffix [for]="registrationPicker"></mat-datepicker-toggle>
+                <mat-datepicker #registrationPicker></mat-datepicker>
+                <mat-error *ngIf="form.get('registrationDate')?.hasError('required')">
+                  La fecha de registro es obligatoria
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <!-- Info Box -->
+        <div class="info-box">
+          <mat-icon class="info-icon">info</mat-icon>
+          <div class="info-content">
+            <h4>Información Importante</h4>
+            <p>Asegúrate de proporcionar información precisa sobre la ubicación y características de la parcela. Estos datos son fundamentales para el manejo eficiente de tus cultivos y la planificación agrícola.</p>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="form-actions">
+          <div class="button-group">
+            <button type="submit" 
+                    mat-raised-button 
+                    class="action-button submit-button"
+                    [disabled]="!form.valid">
+              <mat-icon>save</mat-icon>
+              Registrar Parcela
+            </button>
+            <button type="button" 
+                    mat-stroked-button 
+                    class="action-button cancel-button"
+                    (click)="cancelar()">
+              <mat-icon>cancel</mat-icon>
+              Cancelar
+            </button>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
 </div>

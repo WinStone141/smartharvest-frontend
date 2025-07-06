@@ -11,36 +11,42 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-insertareditarparcel',
-  imports: [ReactiveFormsModule,
+  imports: [
+    ReactiveFormsModule,
     MatInputModule,
     MatFormFieldModule,
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatButtonModule,
-    CommonModule],
+    CommonModule,
+    MatIconModule,
+    MatCardModule,
+  ],
   templateUrl: './insertareditarparcel.component.html',
-  styleUrl: './insertareditarparcel.component.css'
+  styleUrl: './insertareditarparcel.component.css',
 })
 export class InsertareditarparcelComponent implements OnInit {
   form: FormGroup = new FormGroup({});
-  parcel:Parcel = new Parcel()
+  parcel: Parcel = new Parcel();
 
-  id: number = 0
-  edicion: boolean = false
-  
-  users:Users[]=[]
+  id: number = 0;
+  edicion: boolean = false;
 
-  tipos:{value:string;viewValue:string}[]=[
-    {value:"Arenoso",viewValue:"Arenoso"},
-    {value:"Pedregoso",viewValue:"Pedregoso"},
-    {value:"Arcilloso",viewValue:"Arcilloso"},
-    {value:"Orgánico",viewValue:"Orgánico"},
-    {value:"Franco",viewValue:"Franco"}
-  ]
+  users: Users[] = [];
+
+  tipos: { value: string; viewValue: string }[] = [
+    { value: 'Arenoso', viewValue: 'Arenoso' },
+    { value: 'Pedregoso', viewValue: 'Pedregoso' },
+    { value: 'Arcilloso', viewValue: 'Arcilloso' },
+    { value: 'Orgánico', viewValue: 'Orgánico' },
+    { value: 'Franco', viewValue: 'Franco' },
+  ];
 
   constructor(
     private iS: ParcelService,
@@ -49,48 +55,56 @@ export class InsertareditarparcelComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
 
-    ngOnInit(): void {
-      this.route.params.subscribe((data: Params) => {
-      this.id = data['id']
-      this.edicion = data['id'] != null
+  ngOnInit(): void {
+    this.route.params.subscribe((data: Params) => {
+      this.id = data['id'];
+      this.edicion = data['id'] != null;
       //actualizar
-      this.init()
+      this.init();
     }),
-
-    this.form = this.formBuilder.group({
-      codigo: [''],
-      name: ['', [
-        Validators.required, 
-        Validators.maxLength(70),
-        Validators.minLength(2)
-      ]],
-      location: ['', [
-        Validators.required,
-        Validators.maxLength(200),
-        Validators.minLength(3)
-      ]],
-      sizem2: ['', [
-        Validators.required,
-        Validators.min(1),
-        Validators.max(999999),
-        Validators.pattern(/^\d+(\.\d{1,2})?$/) // Permite decimales con máximo 2 decimales
-      ]],
-      groundType: ['', Validators.required],
-      registrationDate: ['', Validators.required],
-      idUser: ['', Validators.required],
-    });
+      (this.form = this.formBuilder.group({
+        codigo: [''],
+        name: [
+          '',
+          [
+            Validators.required,
+            Validators.maxLength(70),
+            Validators.minLength(2),
+          ],
+        ],
+        location: [
+          '',
+          [
+            Validators.required,
+            Validators.maxLength(200),
+            Validators.minLength(3),
+          ],
+        ],
+        sizem2: [
+          '',
+          [
+            Validators.required,
+            Validators.min(1),
+            Validators.max(999999),
+            Validators.pattern(/^\d+(\.\d{1,2})?$/), // Permite decimales con máximo 2 decimales
+          ],
+        ],
+        groundType: ['', Validators.required],
+        registrationDate: ['', Validators.required],
+        idUser: ['', Validators.required],
+      }));
 
     this.loadUsers();
   }
 
-  loadUsers():void {
+  loadUsers(): void {
     this.iS.getUsers().subscribe({
-      next:(data)=>{
+      next: (data) => {
         this.users = data;
       },
-      error:(error) => {
-        console.error('Error al cargar usuarios:',error);
-      }
+      error: (error) => {
+        console.error('Error al cargar usuarios:', error);
+      },
     });
   }
 
@@ -103,7 +117,6 @@ export class InsertareditarparcelComponent implements OnInit {
       this.parcel.groundType = this.form.value.groundType;
       this.parcel.registrationDate = this.form.value.registrationDate;
       this.parcel.users.id = this.form.value.idUser;
-
 
       if (this.edicion) {
         //actualizar
@@ -126,7 +139,7 @@ export class InsertareditarparcelComponent implements OnInit {
 
   init() {
     if (this.edicion) {
-      this.iS.listId(this.id).subscribe(data => {
+      this.iS.listId(this.id).subscribe((data) => {
         this.form = new FormGroup({
           codigo: new FormControl(data.idParcel),
           name: new FormControl(data.name),
@@ -135,17 +148,21 @@ export class InsertareditarparcelComponent implements OnInit {
           groundType: new FormControl(data.groundType),
           registrationDate: new FormControl(data.registrationDate),
           idUser: new FormControl(data.users.id),
-        })
-      })
+        });
+      });
       this.loadUsers();
     }
   }
 
   eliminar(id: number) {
-    this.iS.deleteA(id).subscribe(data => {
-      this.iS.list().subscribe(data => {
-        this.iS.setList(data)
-      })
-    })
+    this.iS.deleteA(id).subscribe((data) => {
+      this.iS.list().subscribe((data) => {
+        this.iS.setList(data);
+      });
+    });
+  }
+
+  cancelar(): void {
+    this.router.navigate(['parcels']);
   }
 }
