@@ -1,14 +1,30 @@
+<div class="body">
+
+<div class="background-overlay"></div>
 <div class="ia-container">
-  <h2>Asistente Agrícola Inteligente</h2>
+  <div class="header-pag">
+    <div class="header-content">
+      <div class="icon-wrapper">
+        <mat-icon class="header-icon">psychology</mat-icon>
+      </div>
+      <h1 class="ia-title">Asistente Agrícola Inteligente</h1>
+      <p class="ia-subtitle">Solo responde recomendaciones y predicciones meteorológicas</p>
+  </div>
 
-  <textarea [(ngModel)]="pregunta" rows="4" placeholder="Ej. ¿Qué puedo sembrar en la costa en invierno?"></textarea>
+  <div class="ia-input-section">
+    <textarea [(ngModel)]="pregunta" rows="4" placeholder="Ej. ¿Qué puedo sembrar en la costa en invierno?"></textarea>
 
-  <button (click)="preguntarIA()" [disabled]="cargando || !pregunta">
-    {{ cargando ? 'Consultando...' : 'Consultar IA' }}
-  </button>
+    <button (click)="preguntarIA()" [disabled]="cargando || !pregunta">
+      <mat-icon *ngIf="!cargando">smart_toy</mat-icon>
+      <mat-icon *ngIf="cargando" class="loading-icon">autorenew</mat-icon>
+      {{ cargando ? 'Consultando...' : 'Consultar IA' }}
+    </button>
+  </div>
 
-  <div class="respuesta" *ngIf="respuesta">
-    <h3>Respuesta:</h3>
+  <div class="ia-response" *ngIf="respuesta">
+    <h3><mat-icon>insights</mat-icon> Respuesta:</h3>
     <p>{{ respuesta }}</p>
   </div>
+</div>
+</div>
 </div>
