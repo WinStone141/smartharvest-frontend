@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { CompanyComponent } from './components/company/company.component';
 import { LocalmarketComponent } from './components/localmarket/localmarket.component';
 import { MenuComponent } from './components/menu/menu.component';
@@ -22,5 +22,6 @@ export class AppComponent {
     this.loginService.getLoginStatus().subscribe((status) => {
       this.estaLogueado = status;
     });
-  }
+    }
+
 }
