@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { IaOpenrouterService } from '../../services/ia-openrouter.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgModel } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-ia',
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule,FormsModule, MatIconModule],
   templateUrl: './ia.component.html',
   styleUrl: './ia.component.css'
 })
