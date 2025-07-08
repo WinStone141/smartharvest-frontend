@@ -4,8 +4,7 @@ import { JwtRequest } from '../models/jwtRequest';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-
-
+const base_url = environment.base
 @Injectable({
   providedIn: 'root',
 })

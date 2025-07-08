@@ -34,7 +34,7 @@
         </mat-error>
       </mat-form-field>
 
-      <div class="radio-group">
+      <div class="radio-group" *ngIf="edicion">
         <label>Estado</label>
         <mat-radio-group formControlName="enabled">
           <mat-radio-button [value]="true">Activo</mat-radio-button>
@@ -55,7 +55,7 @@
           type="button"
           mat-raised-button
           class="custom-button cancelar"
-          routerLink="/inicio"
+          routerLink="/users"
         >
           Cancelar
         </button>

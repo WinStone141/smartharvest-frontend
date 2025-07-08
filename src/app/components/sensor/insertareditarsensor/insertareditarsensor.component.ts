@@ -74,9 +74,9 @@ export class InsertareditarsensorComponent {
         ultimalectura: ['', Validators.required],
         niveldebateria: [
           '',
-          Validators.required,
+          [Validators.required,
           Validators.max(100),
-          Validators.min(1),
+          Validators.min(1),]
         ],
         parcela: ['', Validators.required],
         cultivo: ['', Validators.required],

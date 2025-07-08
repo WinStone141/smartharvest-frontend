@@ -6,7 +6,6 @@ import { HttpClient } from '@angular/common/http';
 import { Parcel } from '../models/parcel';
 import { CropsNeedingAttention } from '../models/crops-needing-attention.model';
 import { CropByState } from '../models/cropbystate';
-import { TopCropsByMaintenance } from '../models/topcropsbymaintenance';
 import { HarvestByCropType } from '../models/harvestbycroptype';
 const base_url = environment.base
 

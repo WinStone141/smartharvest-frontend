@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core'; // Agregar OnInit
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { UsersForRegister } from '../../../models/usersforregister';
 import { UsersService } from '../../../services/users.service';
 import { ActivatedRoute, Params, Router, RouterLink } from '@angular/router';
@@ -14,23 +20,24 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   selector: 'app-insertareditarusers',
   imports: [
     MatRadioModule,
-    MatInputModule,        
-    MatButtonModule,       
+    MatInputModule,
+    MatButtonModule,
     CommonModule,
     MatSelectModule,
     MatFormFieldModule,
-    ReactiveFormsModule, RouterLink
+    ReactiveFormsModule,
+    RouterLink,
   ],
   templateUrl: './insertareditarusers.component.html',
-  styleUrl: './insertareditarusers.component.css'
+  styleUrl: './insertareditarusers.component.css',
 })
 export class InsertareditarusersComponent implements OnInit {
   form: FormGroup = new FormGroup({});
   user: UsersForRegister = new UsersForRegister();
   estado: boolean = true;
 
-  id: number = 0
-  edicion: boolean = false
+  id: number = 0;
+  edicion: boolean = false;
 
   constructor(
     private uS: UsersService,
@@ -41,25 +48,17 @@ export class InsertareditarusersComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((data: Params) => {
-      this.id = data['id']
-      this.edicion = data['id'] != null
+      this.id = data['id'];
+      this.edicion = data['id'] != null;
       //actualizar
-      this.init()
+      this.init();
     }),
-
-
-    this.form = this.formBuilder.group({
-      codigo: [''],
-      username: ['', [
-        Validators.required,
-        Validators.maxLength(30)
-      ]],
-      password: ['', [
-        Validators.required,
-        Validators.minLength(6)
-      ]],
-      enabled: [true, Validators.required]
-    });
+      (this.form = this.formBuilder.group({
+        codigo: [''],
+        username: ['', [Validators.required, Validators.maxLength(30)]],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        enabled: [true, Validators.required],
+      }));
   }
 
   aceptar(): void {
@@ -76,29 +75,43 @@ export class InsertareditarusersComponent implements OnInit {
           this.uS.list().subscribe((data) => {
             this.uS.setList(data);
           });
+          // Redirigir a la lista de usuarios después de actualizar
+          this.router.navigate(['users']);
         });
       } else {
-        //insertar
-        this.uS.insert(this.user).subscribe(() => {
-          this.uS.list().subscribe((data) => {
-            this.uS.setList(data);
-          });
-        });
+        //insertar - VERSIÓN SIMPLIFICADA
+        this.uS.existsByUsername(this.user.username).subscribe((exists) => {
+          if (exists) {
+            alert('El nombre de usuario ya está en uso. Por favor elige otro.');
+          } else {
+            this.uS.insert(this.user).subscribe({
+              next: (response) => {
+                console.log('Usuario creado exitosamente');
+                this.router.navigate(['all', this.user.username]);
+              },
+              error: (error) => {
+                console.error('Error al crear usuario:', error);
+                alert(
+                  'Error al crear el usuario. Por favor, inténtalo de nuevo.'
+                );
+              },
+            });
+          }
+        });        
       }
-      this.router.navigate(['roles/all']);
     }
   }
 
   init() {
     if (this.edicion) {
-      this.uS.listId(this.id).subscribe(data => {
+      this.uS.listId(this.id).subscribe((data) => {
         this.form = new FormGroup({
           codigo: new FormControl(data.id),
           username: new FormControl(data.username),
           password: new FormControl(''),
-          enabled: new FormControl(data.enabled)
-        })
-      })
+          enabled: new FormControl(data.enabled),
+        });
+      });
     }
   }
 }
