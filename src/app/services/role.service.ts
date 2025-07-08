@@ -4,44 +4,43 @@ import { Role } from '../models/role';
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Users } from '../models/users';
-import { reqHandler } from '../../server';
-const base_url=environment.base
+const base_url = environment.base;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RoleService {
-private url=`${base_url}/roles`
-  private listaCambio = new Subject<Role[]>()
-  
-  constructor(private http:HttpClient) { }
+  private url = `${base_url}/roles`;
+  private listaCambio = new Subject<Role[]>();
+
+  constructor(private http: HttpClient) {}
 
   list() {
-    return this.http.get<Role[]>(this.url)
+    return this.http.get<Role[]>(this.url);
   }
 
-    insert(r:Role) {
-    return this.http.post(this.url,r)
+  insert(r: Role) {
+    return this.http.post(`${base_url}/roles/registrar`, r);
   }
   getList() {
     return this.listaCambio.asObservable();
   }
-  setList(listaNueva:Role[]){
+  setList(listaNueva: Role[]) {
     this.listaCambio.next(listaNueva);
   }
 
   getUsers() {
-      return this.http.get<Users[]>(`${base_url}/users`);
-    }
-  
+    return this.http.get<Users[]>(`${base_url}/users`);
+  }
+
   listId(id: number) {
-        return this.http.get<Role>(`${this.url}/${id}`);
-    }
+    return this.http.get<Role>(`${this.url}/${id}`);
+  }
   update(a: Role) {
-      return this.http.put(this.url, a);
-    }
-      
+    return this.http.put(this.url, a);
+  }
+
   deleteA(id: number) {
-          return this.http.delete(`${this.url}/${id}`);
-    }
+    return this.http.delete(`${this.url}/${id}`);
+  }
 }

@@ -3,7 +3,6 @@ import { environment } from '../../environments/environment';
 import { AgriculturalProduct } from '../models/agriculturalproduct';
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Sensor } from '../models/sensor';
 import { Crop } from '../models/crop';
 const base_url = environment.base;
 

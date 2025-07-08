@@ -47,7 +47,8 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
-  path:'ia',component:IaComponent
+    path: 'ia',
+    component: IaComponent,
   },
   {
     path: 'login',
@@ -58,14 +59,17 @@ export const routes: Routes = [
     component: InicioComponent,
   },
   {
-    path: 'seleccionar-rol',
+    path: 'all/:username',
     component: InsertarnuevousuarioComponent,
-    canActivate: [seguridadGuard], // Solo usuarios autenticados
+  },
+  {
+    path: 'newuser',
+    component: InsertareditarusersComponent,
   },
   {
     path: 'home',
     component: HomeComponent,
-    canActivate: [seguridadGuard], // Solo usuarios autenticados
+    canActivate: [seguridadGuard],
   },
   {
     path: 'companies',
@@ -95,17 +99,17 @@ export const routes: Routes = [
         path: 'nuevo',
         component: InsertareditarlocalmarketComponent,
         canActivate: [roleGuard],
-        data: { expectedRoles: ['ADMIN', 'DUEÑO_DE_MERCADO'] }, // Solo ADMIN y DUEÑO_DE_MERCADO pueden crear
+        data: { expectedRoles: ['ADMIN', 'DUEÑO_DE_MERCADO'] },
       },
       {
         path: 'ediciones/:id',
         component: InsertareditarlocalmarketComponent,
         canActivate: [roleGuard],
-        data: { expectedRoles: ['ADMIN', 'DUEÑO_DE_MERCADO'] }, // Solo ADMIN y DUEÑO_DE_MERCADO pueden editar
+        data: { expectedRoles: ['ADMIN', 'DUEÑO_DE_MERCADO'] },
       },
     ],
     canActivate: [seguridadGuard, roleGuard],
-    data: { expectedRoles: ['ADMIN', 'AGRICULTOR', 'DUEÑO_DE_MERCADO'] }, // Todos pueden ver la lista
+    data: { expectedRoles: ['ADMIN', 'AGRICULTOR', 'DUEÑO_DE_MERCADO'] },
   },
   {
     path: 'inputs',
@@ -115,41 +119,37 @@ export const routes: Routes = [
         path: 'nuevo',
         component: InsertareditarinputComponent,
         canActivate: [roleGuard],
-        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // ADMIN y AGRICULTOR pueden crear
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
       },
       {
         path: 'ediciones/:id',
         component: InsertareditarinputComponent,
         canActivate: [roleGuard],
-        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // ADMIN y AGRICULTOR pueden editar
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
       },
     ],
     canActivate: [seguridadGuard, roleGuard],
-    data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // ADMIN y AGRICULTOR pueden ver la lista
+    data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
   },
   {
     path: 'roles',
     component: RoleComponent,
     children: [
       {
-        path: 'all',
-        component: InsertarnuevousuarioComponent,
-      },
-      {
         path: 'nuevo',
         component: InsertareditarroleComponent,
         canActivate: [roleGuard],
-        //data: { expectedRoles: ['ADMIN'] }, // Solo ADMIN puede crear roles
+        data: { expectedRoles: ['ADMIN'] },
       },
       {
         path: 'ediciones/:id',
         component: InsertareditarroleComponent,
         canActivate: [roleGuard],
-        //data: { expectedRoles: ['ADMIN'] }, // Solo ADMIN puede editar roles
+        data: { expectedRoles: ['ADMIN'] },
       },
     ],
-    //canActivate: [seguridadGuard, roleGuard],
-    //data: { expectedRoles: ['ADMIN'] }, // Solo ADMIN puede ver la gestión de roles
+    canActivate: [seguridadGuard, roleGuard],
+    data: { expectedRoles: ['ADMIN'] },
   },
   {
     path: 'users',
@@ -158,11 +158,11 @@ export const routes: Routes = [
       {
         path: 'ediciones/:id',
         component: InsertareditarusersComponent,
-        //data: { expectedRoles: ['ADMIN', 'AGRICULTOR', 'DUEÑO_DE_MERCADO'] },
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR', 'DUEÑO_DE_MERCADO'] },
       },
     ],
-    canActivate: [seguridadGuard, roleGuard], // Para verificar login o token
-    //data: { expectedRoles: ['ADMIN'] },
+    canActivate: [seguridadGuard, roleGuard],
+    data: { expectedRoles: ['ADMIN'] },
   },
   {
     path: 'parcels',
@@ -181,7 +181,7 @@ export const routes: Routes = [
       },
     ],
     canActivate: [seguridadGuard, roleGuard],
-    data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // ADMIN y AGRICULTOR pueden manejar parcelas
+    data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
   },
   {
     path: 'crops',
@@ -191,17 +191,17 @@ export const routes: Routes = [
         path: 'nuevo',
         component: InsertareditarcropComponent,
         canActivate: [roleGuard],
-        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // Solo ADMIN y AGRICULTOR pueden crear
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
       },
       {
         path: 'ediciones/:id',
         component: InsertareditarcropComponent,
         canActivate: [roleGuard],
-        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // Solo ADMIN y AGRICULTOR pueden editar
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
       },
     ],
     canActivate: [seguridadGuard, roleGuard],
-    data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // ADMIN y AGRICULTOR pueden manejar cultivos
+    data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
   },
   {
     path: 'recommendations',
@@ -211,17 +211,17 @@ export const routes: Routes = [
         path: 'nuevo',
         component: InsertareditarrecommendationComponent,
         canActivate: [roleGuard],
-        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // Solo ADMIN y AGRICULTOR pueden crear
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
       },
       {
         path: 'ediciones/:id',
         component: InsertareditarrecommendationComponent,
         canActivate: [roleGuard],
-        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // Solo ADMIN y AGRICULTOR pueden editar
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
       },
     ],
     canActivate: [seguridadGuard, roleGuard],
-    data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // ADMIN y AGRICULTOR pueden manejar cultivos
+    data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
   },
   {
     path: 'sensors',
@@ -231,17 +231,17 @@ export const routes: Routes = [
         path: 'nuevo',
         component: InsertareditarsensorComponent,
         canActivate: [roleGuard],
-        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // Solo ADMIN y AGRICULTOR pueden crear
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
       },
       {
         path: 'ediciones/:id',
         component: InsertareditarsensorComponent,
         canActivate: [roleGuard],
-        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // Solo ADMIN y AGRICULTOR pueden editar
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
       },
     ],
     canActivate: [seguridadGuard, roleGuard],
-    data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // ADMIN y AGRICULTOR pueden manejar cultivos
+    data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
   },
   {
     path: 'maintenances',
@@ -251,19 +251,18 @@ export const routes: Routes = [
         path: 'nuevo',
         component: InsertareditarmaintenanceComponent,
         canActivate: [roleGuard],
-        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // ADMIN y AGRICULTOR pueden crear
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
       },
       {
         path: 'ediciones/:id',
         component: InsertareditarmaintenanceComponent,
         canActivate: [roleGuard],
-        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // ADMIN y AGRICULTOR pueden editar
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
       },
     ],
     canActivate: [seguridadGuard, roleGuard],
-    data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // ADMIN y AGRICULTOR pueden ver la lista
+    data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
   },
-  //Report access
   {
     path: 'reportes',
     canActivate: [seguridadGuard, roleGuard],
@@ -272,49 +271,49 @@ export const routes: Routes = [
       {
         path: 'cultivos-peligro',
         component: CropsNeedingAttentionComponent,
-        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
       },
       {
         path: 'parcelas-activas',
         component: ParcelsActiveComponent,
-        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
       },
       {
         path: 'mantenimientos-por-tipo-sensor',
         component: CountmaintenancebysensortypeComponent,
-        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
       },
       {
         path: 'cultivos-por-estado-actual',
         component: CropsbystateComponent,
-        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
       },
       {
         path: 'cultivos-por-mantenimientos',
         component: TopcropsbymaintenanceComponent,
-        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
       },
       {
         path: 'sensores-activos-por-tipo-sensor',
         component: TypesensoraactiveComponent,
-        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
       },
       {
         path: 'cosechas-por-tipo-cultivo',
         component: HarvestbycroptypeComponent,
-        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
       },
       {
         path: 'parcelas-por-mes',
         component: ParcelsbymonthComponent,
-        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
       },
       {
         path: 'recomendaciones-por-mes',
         component: RecommendationsbymonthComponent,
-        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }
-      }
-    ]
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
+      },
+    ],
   },
   {
     path: 'agriculturalproducts',
@@ -324,20 +323,16 @@ export const routes: Routes = [
         path: 'nuevo',
         component: InsertareditaragriculturalproductComponent,
         canActivate: [roleGuard],
-        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // Solo ADMIN y AGRICULTOR pueden crear
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
       },
       {
         path: 'ediciones/:id',
         component: InsertareditaragriculturalproductComponent,
         canActivate: [roleGuard],
-        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // Solo ADMIN y AGRICULTOR pueden editar
+        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
       },
     ],
     canActivate: [seguridadGuard, roleGuard],
-    data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] }, // ADMIN y AGRICULTOR pueden manejar cultivos
-  },
-  {
-    path: 'newuser',
-    component: InsertareditarusersComponent, // libre
+    data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
   },
 ];

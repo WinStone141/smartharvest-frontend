@@ -13,9 +13,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, ActivatedRoute, Params } from '@angular/router';
 import { Role } from '../../../models/role';
 import { Users } from '../../../models/users';
+import { UsersService } from '../../../services/users.service';
 
 @Component({
   selector: 'app-insertarnuevousuario',
@@ -35,20 +36,36 @@ export class InsertarnuevousuarioComponent implements OnInit {
   roleForm: FormGroup;
   availableRoleTypes: any[] = [];
   isLoading = false;
+  username: string = '';
+  register: boolean = false;
+  userId: number = 0;
 
   constructor(
     private fb: FormBuilder,
     public router: Router,
+    private route: ActivatedRoute, // Añadido para leer parámetros
     private roleService: RoleService,
+    private userService: UsersService,
     private loginService: LoginService
   ) {
     this.roleForm = this.fb.group({
-      selectedRoleType: ['', Validators.required]
+      selectedRoleType: ['', Validators.required],
     });
   }
 
   ngOnInit(): void {
+    this.loadUserId();
     this.loadAvailableRoleTypes();
+  }
+
+  /**
+   * Obtiene el ID del usuario desde los parámetros de la ruta
+   */
+  loadUserId(): void {
+    this.route.params.subscribe((data: Params) => {
+      this.username = data['username'];
+      this.register = data['username'] != null;
+    });
   }
 
   /**
@@ -60,13 +77,13 @@ export class InsertarnuevousuarioComponent implements OnInit {
       {
         type: 'AGRICULTOR',
         description: 'Gestiona cultivos, parcelas e insumos agrícolas',
-        icon: 'agriculture'
+        icon: 'agriculture',
       },
       {
         type: 'DUEÑO_DE_MERCADO',
         description: 'Administra mercados locales y sus operaciones',
-        icon: 'store'
-      }
+        icon: 'store',
+      },
     ];
   }
 
@@ -74,34 +91,31 @@ export class InsertarnuevousuarioComponent implements OnInit {
    * Crea un nuevo rol del tipo seleccionado para el usuario actual
    */
   assignRole(): void {
-    if (this.roleForm.invalid) {
-      return;
-    }
-
     this.isLoading = true;
     const selectedRoleType = this.roleForm.get('selectedRoleType')?.value;
-    
-    // Crear el objeto Role según tu modelo
-    const newRole = new Role();
-    newRole.rol = selectedRoleType; // Usar "rol" no "authority"
-    newRole.user = new Users(); // El backend debería asignar el usuario actual
-    
-    // Crear el nuevo rol usando el endpoint POST /roles
-    this.roleService.insert(newRole).subscribe({
-      next: () => {
-        // Mostrar mensaje de éxito
-        alert('Rol asignado exitosamente. ¡Bienvenido a SmartHarvest!');
-        
-        // Redirigir al dashboard
-        this.router.navigate(['/inicio']);
-      },
-      error: (error) => {
-        console.error('Error al asignar rol:', error);
-        alert('Error al asignar el rol. Inténtalo nuevamente.');
-      },
-      complete: () => {
-        this.isLoading = false;
-      }
+
+    this.userService.getIdByUsername(this.username).subscribe((response) => {
+      this.userId = response;
+      console.log('El ID del usuario es:', this.userId);
+      console.log('Rol seleccionado:', selectedRoleType);
+
+      const newRole = new Role();
+      newRole.rol = selectedRoleType;
+      newRole.user.id = this.userId;
+
+      this.roleService.insert(newRole).subscribe({
+        next: (response) => {
+          alert('Rol asignado exitosamente. ¡Bienvenido a SmartHarvest!');
+          this.router.navigate(['/login']);
+        },
+        error: (error) => {
+          console.error('Error al asignar rol:', error);
+          alert('Error al asignar el rol. Inténtalo nuevamente.');
+        },
+        complete: () => {
+          this.isLoading = false;
+        },
+      });
     });
   }
 
@@ -116,7 +130,7 @@ export class InsertarnuevousuarioComponent implements OnInit {
    * Obtiene el icono correspondiente al tipo de rol
    */
   getRoleIcon(roleType: string): string {
-    const role = this.availableRoleTypes.find(r => r.type === roleType);
+    const role = this.availableRoleTypes.find((r) => r.type === roleType);
     return role ? role.icon : 'person';
   }
 
@@ -124,7 +138,7 @@ export class InsertarnuevousuarioComponent implements OnInit {
    * Obtiene la descripción del tipo de rol
    */
   getRoleDescription(roleType: string): string {
-    const role = this.availableRoleTypes.find(r => r.type === roleType);
+    const role = this.availableRoleTypes.find((r) => r.type === roleType);
     return role ? role.description : 'Usuario del sistema';
   }
 
