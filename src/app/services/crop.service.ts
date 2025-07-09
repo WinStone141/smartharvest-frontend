@@ -48,20 +48,23 @@ export class CropService {
   }
 
   //Query 1
-  getCropsNeedingAttention() {
-    return this.http.get<CropsNeedingAttention[]>(`${this.url}/cropsInDanger`);
+  getCropsNeedingAttention(idUser: number) {
+    return this.http.get<CropsNeedingAttention[]>(
+      `${this.url}/cropsInDanger/${idUser}`
+    );
   }
 
-  getCropsByState(): Observable<CropByState[]> {
-    return this.http.get<CropByState[]>(`${this.url}/by-state`);
+  getCropsByState(idUser: number): Observable<CropByState[]> {
+    return this.http.get<CropByState[]>(`${this.url}/by-state/${idUser}`);
   }
 
   getHarvestByCropTypeInRange(
     startdate: string,
-    enddate: string
+    enddate: string,
+    idUser: number
   ): Observable<HarvestByCropType[]> {
     return this.http.get<HarvestByCropType[]>(
-      `${this.url}/harvestbycroptypeinrange/${startdate}/${enddate}`
+      `${this.url}/harvestbycroptypeinrange/${startdate}/${enddate}/${idUser}`
     );
   }
 }
