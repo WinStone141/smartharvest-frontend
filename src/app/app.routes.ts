@@ -33,7 +33,7 @@ import { RecommendationComponent } from './components/recommendation/recommendat
 import { InsertareditarrecommendationComponent } from './components/recommendation/insertareditarrecommendation/insertareditarrecommendation.component';
 import { CountmaintenancebysensortypeComponent } from './components/reportes/countmaintenancebysensortype/countmaintenancebysensortype.component';
 import { CropsbystateComponent } from './components/reportes/cropsbystate/cropsbystate.component';
-import { TopcropsbymaintenanceComponent } from './components/reportes/topcropsbymaintenance/topcropsbymaintenance.component';
+import { TopparcelsbymaintenanceComponent } from './components/reportes/topparcelsbymaintenance/topparcelsbymaintenance.component';
 import { TypesensoraactiveComponent } from './components/reportes/typesensoraactive/typesensoraactive.component';
 import { HarvestbycroptypeComponent } from './components/reportes/harvestbycroptype/harvestbycroptype.component';
 import { ParcelsbymonthComponent } from './components/reportes/parcelsbymonth/parcelsbymonth.component';
@@ -264,56 +264,58 @@ export const routes: Routes = [
     data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
   },
   {
-    path: 'reportes',
+    path: 'cultivos-peligro',
+    component: CropsNeedingAttentionComponent,
     canActivate: [seguridadGuard, roleGuard],
-    data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
-    children: [
-      {
-        path: 'cultivos-peligro',
-        component: CropsNeedingAttentionComponent,
-        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
-      },
-      {
-        path: 'parcelas-activas',
-        component: ParcelsActiveComponent,
-        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
-      },
-      {
-        path: 'mantenimientos-por-tipo-sensor',
-        component: CountmaintenancebysensortypeComponent,
-        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
-      },
-      {
-        path: 'cultivos-por-estado-actual',
-        component: CropsbystateComponent,
-        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
-      },
-      {
-        path: 'cultivos-por-mantenimientos',
-        component: TopcropsbymaintenanceComponent,
-        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
-      },
-      {
-        path: 'sensores-activos-por-tipo-sensor',
-        component: TypesensoraactiveComponent,
-        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
-      },
-      {
-        path: 'cosechas-por-tipo-cultivo',
-        component: HarvestbycroptypeComponent,
-        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
-      },
-      {
-        path: 'parcelas-por-mes',
-        component: ParcelsbymonthComponent,
-        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
-      },
-      {
-        path: 'recomendaciones-por-mes',
-        component: RecommendationsbymonthComponent,
-        data: { expectedRoles: ['ADMIN', 'AGRICULTOR'] },
-      },
-    ],
+    data: { expectedRoles: ['AGRICULTOR'] },
+  },
+  {
+    path: 'parcelas-activas',
+    component: ParcelsActiveComponent,
+    canActivate: [seguridadGuard, roleGuard],
+    data: { expectedRoles: ['ADMIN'] },
+  },
+  {
+    path: 'mantenimientos-por-tipo-sensor',
+    component: CountmaintenancebysensortypeComponent,
+    canActivate: [seguridadGuard, roleGuard],
+    data: { expectedRoles: ['AGRICULTOR'] },
+  },
+  {
+    path: 'cultivos-por-estado-actual',
+    component: CropsbystateComponent,
+    canActivate: [seguridadGuard, roleGuard],
+    data: { expectedRoles: ['AGRICULTOR'] },
+  },
+  {
+    path: 'parcelas-por-mantenimientos',
+    component: TopparcelsbymaintenanceComponent,
+    canActivate: [seguridadGuard, roleGuard],
+    data: { expectedRoles: ['AGRICULTOR'] },
+  },
+  {
+    path: 'sensores-activos-por-tipo-sensor',
+    component: TypesensoraactiveComponent,
+    canActivate: [seguridadGuard, roleGuard],
+    data: { expectedRoles: ['AGRICULTOR'] },
+  },
+  {
+    path: 'cosechas-por-tipo-cultivo',
+    component: HarvestbycroptypeComponent,
+    canActivate: [seguridadGuard, roleGuard],
+    data: { expectedRoles: ['AGRICULTOR'] },
+  },
+  {
+    path: 'parcelas-por-mes',
+    component: ParcelsbymonthComponent,
+    canActivate: [seguridadGuard, roleGuard],
+    data: { expectedRoles: ['ADMIN'] },
+  },
+  {
+    path: 'recomendaciones-por-mes',
+    component: RecommendationsbymonthComponent,
+    canActivate: [seguridadGuard, roleGuard],
+    data: { expectedRoles: ['ADMIN'] },
   },
   {
     path: 'agriculturalproducts',

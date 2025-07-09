@@ -7,7 +7,6 @@
     
     <mat-nav-list>
       
-
       <ng-container *ngIf="isAdmin()">
         <mat-expansion-panel>
           <mat-expansion-panel-header>
@@ -18,7 +17,7 @@
         </mat-expansion-panel>
       </ng-container>
 
-      <ng-container *ngIf="isAdmin() || isOwner()">
+      <ng-container *ngIf="isOwner()">
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-icon>computer</mat-icon><span>Mercados Locales</span>
@@ -28,7 +27,7 @@
         </mat-expansion-panel>
       </ng-container>
 
-      <ng-container *ngIf="isAdmin() || isAgricultor()">
+      <ng-container *ngIf="isAgricultor()">
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-icon>eco</mat-icon><span>Cultivos</span>
@@ -89,31 +88,31 @@
           <mat-expansion-panel-header>
             <mat-icon>bar_chart</mat-icon><span>Reportes</span>
           </mat-expansion-panel-header>
-          <a mat-list-item routerLink="/reportes/cultivos-peligro">
+          <a mat-list-item *ngIf="isAgricultor()" routerLink="/cultivos-peligro">
             <mat-icon>warning</mat-icon> Cultivos en peligro
           </a>
-          <a mat-list-item routerLink="/reportes/parcelas-activas">
+          <a mat-list-item *ngIf="isAdmin()" routerLink="/parcelas-activas">
             <mat-icon>map</mat-icon> Parcelas activas
           </a>
-          <a mat-list-item routerLink="/reportes/mantenimientos-por-tipo-sensor">
+          <a mat-list-item *ngIf="isAgricultor()" routerLink="/mantenimientos-por-tipo-sensor">
             <mat-icon>area_chart</mat-icon> Mantenimientos por tipo de sensor
           </a>
-          <a mat-list-item routerLink="/reportes/cultivos-por-estado-actual">
+          <a mat-list-item *ngIf="isAgricultor()" routerLink="/cultivos-por-estado-actual">
             <mat-icon>area_chart</mat-icon> Cultivos por estado actual
           </a>
-          <a mat-list-item routerLink="/reportes/cultivos-por-mantenimientos">
-            <mat-icon>area_chart</mat-icon> Cultivos por mantenimientos
+          <a mat-list-item *ngIf="isAgricultor()" routerLink="/parcelas-por-mantenimientos">
+            <mat-icon>area_chart</mat-icon> Parcelas por mantenimientos
           </a>
-          <a mat-list-item routerLink="/reportes/sensores-activos-por-tipo-sensor">
+          <a mat-list-item *ngIf="isAgricultor()" routerLink="/sensores-activos-por-tipo-sensor">
             <mat-icon>area_chart</mat-icon> Sensores activos por tipo
           </a>
-          <a mat-list-item routerLink="/reportes/cosechas-por-tipo-cultivo">
+          <a mat-list-item *ngIf="isAgricultor()" routerLink="/cosechas-por-tipo-cultivo">
             <mat-icon>area_chart</mat-icon> Cosechas por tipo
           </a>
-          <a mat-list-item routerLink="/reportes/parcelas-por-mes">
+          <a mat-list-item *ngIf="isAdmin()" routerLink="/parcelas-por-mes">
             <mat-icon>area_chart</mat-icon> Parcelas por mes
           </a>
-          <a mat-list-item routerLink="/reportes/recomendaciones-por-mes">
+          <a mat-list-item *ngIf="isAdmin()" routerLink="/recomendaciones-por-mes">
             <mat-icon>area_chart</mat-icon> Recomendaciones por mes
           </a>
         </mat-expansion-panel>
@@ -125,7 +124,6 @@
             <mat-icon>groups</mat-icon><span>Usuarios</span>
           </mat-expansion-panel-header>
           <a mat-list-item routerLink="/users"><mat-icon> list_alt</mat-icon> Listar</a>
-          <a mat-list-item routerLink="/newuser"><mat-icon>playlist_add</mat-icon> Registrar</a>
         </mat-expansion-panel>
 
         <mat-expansion-panel>
@@ -133,11 +131,10 @@
             <mat-icon>assignment_ind</mat-icon><span>Roles</span>
           </mat-expansion-panel-header>
           <a mat-list-item routerLink="/roles"><mat-icon> list_alt</mat-icon> Listar</a>
-          <a mat-list-item routerLink="/roles/nuevo"><mat-icon>playlist_add</mat-icon> Registrar</a>
         </mat-expansion-panel>
       </ng-container>
 
-      <a mat-list-item routerLink="/ia">
+      <a mat-list-item *ngIf="isAgricultor()" routerLink="/ia">
         <mat-icon>smart_toy</mat-icon>
         <span>IA</span>
       </a>

@@ -39,15 +39,19 @@ export class SensorService {
   getCrops() {
     return this.http.get<Crop[]>(`${base_url}/crops`);
   }
-  getMaintenanceCountbySensorType(): Observable<CountMaintenanceSensor[]> {
+  getMaintenanceCountbySensorType(
+    idUsuario: number
+  ): Observable<CountMaintenanceSensor[]> {
     return this.http.get<CountMaintenanceSensor[]>(
-      `${this.url}/countmaintenancesensor`
+      `${this.url}/countmaintenancesensor/${idUsuario}`
     );
   }
 
-  getActiveSensorbySensorType(): Observable<Typesensoractive[]> {
+  getActiveSensorbySensorType(
+    idUsuario: number
+  ): Observable<Typesensoractive[]> {
     return this.http.get<Typesensoractive[]>(
-      `${this.url}/SensorsWithMaintenanceByType`
+      `${this.url}/SensorsTypeActiveByType/${idUsuario}`
     );
   }
 
