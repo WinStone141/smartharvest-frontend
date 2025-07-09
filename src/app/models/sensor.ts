@@ -9,6 +9,5 @@ export class Sensor {
     lastLecture: Date = new Date();
     batteryLevel: number = 0;
     parcel: Parcel = new Parcel();
-    crop: Crop = new Crop();
     humidity: number = 0;
 }

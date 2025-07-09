@@ -1,6 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -14,6 +20,8 @@ import { RecommendationService } from '../../../services/recommendation.service'
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
+import { Subscription, switchMap } from 'rxjs';
+import { LoginService } from '../../../services/login.service';
 
 @Component({
   selector: 'app-insertareditarrecommendation',
@@ -35,10 +43,13 @@ import { MatCardModule } from '@angular/material/card';
 export class InsertareditarrecommendationComponent implements OnInit {
   form: FormGroup = new FormGroup({});
   recommendation: Recommendation = new Recommendation();
+
   id: number = 0;
   edicion: boolean = false;
   crops: Crop[] = [];
-  users: Users[] = [];
+  currentUserId: number | null = null;
+
+  private subscriptions: Subscription[] = [];
 
   tipos: { value: string; viewValue: string }[] = [
     { value: 'Fertilización', viewValue: 'Fertilización' },
@@ -50,43 +61,50 @@ export class InsertareditarrecommendationComponent implements OnInit {
 
   constructor(
     private rS: RecommendationService,
+    private loginService: LoginService,
     private router: Router,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe((data: Params) => {
+    // Obtener el userId del usuario logueado
+    const userIdSub = this.loginService.getUserId().subscribe((userId) => {
+      this.currentUserId = userId;
+      this.initializeForm();
+    });
+
+    // Suscribirse a los parámetros de la ruta
+    const routeSub = this.route.params.subscribe((data: Params) => {
       this.id = data['id'];
       this.edicion = data['id'] != null;
-      //actualizar
       this.init();
-    }),
-      (this.form = this.formBuilder.group({
-        codigo: [''],
-        tipo: ['', Validators.required],
-        descripcion: ['', [Validators.required, Validators.maxLength(200)]],
-        fechaEmision: ['', Validators.required],
-        fuente: ['', Validators.required],
-        idUser: ['', Validators.required],
-        idCrop: ['', Validators.required],
-      }));
+    });
+
+    this.subscriptions.push(userIdSub, routeSub);
 
     this.loadCrops();
-    this.loadUsers();
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
+
+  private initializeForm(): void {
+    this.form = this.formBuilder.group({
+      codigo: [''],
+      tipo: ['', Validators.required],
+      descripcion: ['', [Validators.required, Validators.maxLength(200)]],
+      fechaEmision: ['', Validators.required],
+      fuente: ['', Validators.required],
+      idCrop: ['', Validators.required],
+    });
   }
 
   loadCrops(): void {
-    this.rS.getCrops().subscribe({
+    this.rS.getCrops(this.currentUserId!).subscribe({
       next: (data) => {
         this.crops = data;
-      },
-    });
-  }
-  loadUsers(): void {
-    this.rS.getUsers().subscribe({
-      next: (data) => {
-        this.users = data;
       },
     });
   }
@@ -98,41 +116,45 @@ export class InsertareditarrecommendationComponent implements OnInit {
       this.recommendation.description = this.form.value.descripcion;
       this.recommendation.issueDate = this.form.value.fechaEmision;
       this.recommendation.source = this.form.value.fuente;
-      this.recommendation.users.id = this.form.value.idUser;
       this.recommendation.crop.idCrop = this.form.value.idCrop;
 
       if (this.edicion) {
-        //actualizar
-        this.rS.update(this.recommendation).subscribe(() => {
-          this.rS.list().subscribe((data) => {
+        // Actualizar - Usar switchMap para encadenar las operaciones
+        const updateSub = this.rS
+          .update(this.recommendation)
+          .pipe(switchMap(() => this.rS.list(this.currentUserId!)))
+          .subscribe((data) => {
             this.rS.setList(data);
+            this.router.navigate(['recommendations']);
           });
-        });
+        this.subscriptions.push(updateSub);
       } else {
-        //insertar
-        this.rS.insert(this.recommendation).subscribe(() => {
-          this.rS.list().subscribe((data) => {
+        // Insertar - Usar switchMap para encadenar las operaciones
+        const insertSub = this.rS
+          .insert(this.recommendation)
+          .pipe(switchMap(() => this.rS.list(this.currentUserId!)))
+          .subscribe((data) => {
             this.rS.setList(data);
+            this.router.navigate(['recommendations']);
           });
-        });
+        this.subscriptions.push(insertSub);
       }
-      this.router.navigate(['recommendations']);
     }
   }
 
   init() {
     if (this.edicion) {
-      this.rS.listId(this.id).subscribe((data) => {
+      const initSub = this.rS.listId(this.id).subscribe((data) => {
         this.form = new FormGroup({
           codigo: new FormControl(data.idRecommendation),
           tipo: new FormControl(data.type),
           descripcion: new FormControl(data.description),
           fechaEmision: new FormControl(data.issueDate),
           fuente: new FormControl(data.source),
-          idUser: new FormControl(data.users.id),
           idCrop: new FormControl(data.crop.idCrop),
         });
       });
+      this.subscriptions.push(initSub);
     }
   }
 

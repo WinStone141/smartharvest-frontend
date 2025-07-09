@@ -1,4 +1,3 @@
-import { Users } from "./users";
 import { Crop } from "./crop";
 
 export class Recommendation {
@@ -8,5 +7,4 @@ export class Recommendation {
     issueDate: Date = new Date();
     source: string = "";
     crop: Crop = new Crop();
-    users: Users = new Users(); 
 }

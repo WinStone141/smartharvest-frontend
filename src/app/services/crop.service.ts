@@ -10,21 +10,20 @@ import { HarvestByCropType } from '../models/harvestbycroptype';
 const base_url = environment.base
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CropService {
+  private url = `${base_url}/crops`;
+  private listaCambio = new Subject<Crop[]>();
 
-  private url = `${base_url}/crops`
-  private listaCambio = new Subject<Crop[]>()
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-  list() {
-    return this.http.get<Crop[]>(this.url)
+  list(idUsuario: number): Observable<Crop[]> {
+    return this.http.get<Crop[]>(`${this.url}/listarporidusuario/${idUsuario}`);
   }
 
   insert(c: Crop) {
-    return this.http.post(this.url, c)
+    return this.http.post(this.url, c);
   }
   getList() {
     return this.listaCambio.asObservable();
@@ -42,8 +41,10 @@ export class CropService {
   deleteA(id: number) {
     return this.http.delete(`${this.url}/${id}`);
   }
-  getParcels() {
-    return this.http.get<Parcel[]>(`${base_url}/parcels`);
+  getParcels(idUsuario: number): Observable<Parcel[]> {
+    return this.http.get<Parcel[]>(
+      `${base_url}/parcels/listarporiduser/${idUsuario}`
+    );
   }
 
   //Query 1
@@ -51,13 +52,16 @@ export class CropService {
     return this.http.get<CropsNeedingAttention[]>(`${this.url}/cropsInDanger`);
   }
 
-  getCropsByState():Observable<CropByState[]> {
+  getCropsByState(): Observable<CropByState[]> {
     return this.http.get<CropByState[]>(`${this.url}/by-state`);
   }
 
-  getHarvestByCropTypeInRange(startdate: string, enddate: string):Observable<HarvestByCropType[]> {
-  return this.http.get<HarvestByCropType[]>(
-    `${this.url}/harvestbycroptypeinrange/${startdate}/${enddate}`
-  );
-} 
+  getHarvestByCropTypeInRange(
+    startdate: string,
+    enddate: string
+  ): Observable<HarvestByCropType[]> {
+    return this.http.get<HarvestByCropType[]>(
+      `${this.url}/harvestbycroptypeinrange/${startdate}/${enddate}`
+    );
+  }
 }

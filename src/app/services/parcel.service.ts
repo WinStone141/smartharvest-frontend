@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Parcel } from '../models/parcel';
 import { ParcelActive } from '../models/parcel-active.model';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Users } from '../models/users';
 import { ParcelsByMonth } from '../models/parcelsbymonth';
@@ -17,8 +17,8 @@ export class ParcelService {
 
   constructor(private http: HttpClient) {}
 
-  list() {
-    return this.http.get<Parcel[]>(this.url);
+  list(idUsuario: number): Observable<Parcel[]> {
+    return this.http.get<Parcel[]>(`${this.url}/listarporiduser/${idUsuario}`);
   }
 
   insert(p: Parcel) {

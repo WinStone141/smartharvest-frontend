@@ -18,8 +18,8 @@ export class SensorService {
 
   constructor(private http: HttpClient) {}
 
-  list() {
-    return this.http.get<Sensor[]>(this.url);
+  list(idUsuario: number): Observable<Sensor[]> {
+    return this.http.get<Sensor[]>(`${this.url}/listarporiduser/${idUsuario}`);
   }
 
   insert(s: Sensor) {
@@ -31,18 +31,24 @@ export class SensorService {
   setList(listaNueva: Sensor[]) {
     this.listaCambio.next(listaNueva);
   }
-  getParcels() {
-    return this.http.get<Parcel[]>(`${base_url}/parcels`);
+  getParcels(idUsuario: number): Observable<Parcel[]> {
+    return this.http.get<Parcel[]>(
+      `${base_url}/parcels/listarporiduser/${idUsuario}`
+    );
   }
   getCrops() {
     return this.http.get<Crop[]>(`${base_url}/crops`);
   }
   getMaintenanceCountbySensorType(): Observable<CountMaintenanceSensor[]> {
-    return this.http.get<CountMaintenanceSensor[]>(`${this.url}/countmaintenancesensor`);
+    return this.http.get<CountMaintenanceSensor[]>(
+      `${this.url}/countmaintenancesensor`
+    );
   }
 
   getActiveSensorbySensorType(): Observable<Typesensoractive[]> {
-    return this.http.get<Typesensoractive[]>(`${this.url}/SensorsWithMaintenanceByType`);
+    return this.http.get<Typesensoractive[]>(
+      `${this.url}/SensorsWithMaintenanceByType`
+    );
   }
 
   listId(id: number) {

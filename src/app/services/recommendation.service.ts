@@ -9,21 +9,22 @@ import { RecommendationsByMonthInYear } from '../models/recommendationsbymonth';
 
 const base_url = environment.base;
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RecommendationService {
-
   private url = `${base_url}/recommendations`;
   private listaCambio = new Subject<Recommendation[]>();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  list() {
-    return this.http.get<Recommendation[]>(this.url)
+  list(idUsuario: number): Observable<Recommendation[]> {
+    return this.http.get<Recommendation[]>(
+      `${this.url}/listarporiduser/${idUsuario}`
+    );
   }
 
   insert(r: Recommendation) {
-    return this.http.post(this.url, r)
+    return this.http.post(this.url, r);
   }
 
   getList() {
@@ -34,12 +35,10 @@ export class RecommendationService {
     this.listaCambio.next(listaNueva);
   }
 
-  getUsers() {
-    return this.http.get<Users[]>(`${base_url}/users`);
-  }
-
-  getCrops() {
-    return this.http.get<Crop[]>(`${base_url}/crops`);
+  getCrops(idUsuario: number): Observable<Crop[]> {
+    return this.http.get<Crop[]>(
+      `${base_url}/crops/listarporidusuario/${idUsuario}`
+    );
   }
 
   listId(id: number) {
@@ -54,7 +53,11 @@ export class RecommendationService {
     return this.http.delete(`${this.url}/${id}`);
   }
 
-  getRecommendationsByMonth(year: number): Observable<RecommendationsByMonthInYear[]> {
-    return this.http.get<RecommendationsByMonthInYear[]>(`${this.url}/recommendationsbymonth/${year}`);
+  getRecommendationsByMonth(
+    year: number
+  ): Observable<RecommendationsByMonthInYear[]> {
+    return this.http.get<RecommendationsByMonthInYear[]>(
+      `${this.url}/recommendationsbymonth/${year}`
+    );
   }
 }

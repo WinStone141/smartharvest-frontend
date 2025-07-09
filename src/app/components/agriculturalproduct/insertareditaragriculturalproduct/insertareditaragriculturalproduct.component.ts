@@ -1,5 +1,11 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { AgriculturalProduct } from '../../../models/agriculturalproduct';
 import { Sensor } from '../../../models/sensor';
 import { AgriculturalproductService } from '../../../services/agriculturalproduct.service';
@@ -14,6 +20,8 @@ import { MatInputModule } from '@angular/material/input';
 import { Crop } from '../../../models/crop';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
+import { Subscription, switchMap } from 'rxjs';
+import { LoginService } from '../../../services/login.service';
 
 @Component({
   selector: 'app-insertareditaragriculturalproduct',
@@ -38,8 +46,10 @@ export class InsertareditaragriculturalproductComponent {
 
   id: number = 0;
   edicion: boolean = false;
+  currentUserId: number | null = null;
 
   cultivos: Crop[] = [];
+  private subscriptions: Subscription[] = [];
 
   udemedida: { value: string; viewValue: string }[] = [
     { value: 'toneladas', viewValue: 'Toneladas' },
@@ -53,40 +63,51 @@ export class InsertareditaragriculturalproductComponent {
     private aS: AgriculturalproductService,
     private router: Router,
     private formBuilder: FormBuilder,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private loginService: LoginService
   ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe((data: Params) => {
+    // Obtener el userId del usuario logueado
+    const userIdSub = this.loginService.getUserId().subscribe((userId) => {
+      this.currentUserId = userId;
+      this.initializeForm();
+    });
+
+    // Suscribirse a los parámetros de la ruta
+    const routeSub = this.route.params.subscribe((data: Params) => {
       this.id = data['id'];
       this.edicion = data['id'] != null;
-      //actualizar
       this.init();
-    }),
-      (this.form = this.formBuilder.group({
-        codigo: [''],
-        nombre: [
-          '',
-          [
-            Validators.required,
-            Validators.maxLength(50),
-            Validators.minLength(3),
-          ],
-        ],
-        cantidad: [
-          '',
-          [Validators.required, Validators.max(1000), Validators.min(1)],
-        ],
-        unidaddemedida: ['', Validators.required],
-        fechadecosecha: ['', Validators.required],
-        idCultivo: ['', Validators.required],
-      }));
+    });
 
+    this.subscriptions.push(userIdSub, routeSub);
     this.loadCrops();
   }
 
+  private initializeForm(): void {
+    this.form = this.formBuilder.group({
+      codigo: [''],
+      nombre: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(50),
+          Validators.minLength(3),
+        ],
+      ],
+      cantidad: [
+        '',
+        [Validators.required, Validators.max(1000), Validators.min(1)],
+      ],
+      unidaddemedida: ['', Validators.required],
+      fechadecosecha: ['', Validators.required],
+      idCultivo: ['', Validators.required],
+    });
+  }
+
   loadCrops(): void {
-    this.aS.getCrops().subscribe({
+    this.aS.getCrops(this.currentUserId!).subscribe({
       next: (data) => {
         this.cultivos = data;
       },
@@ -106,19 +127,25 @@ export class InsertareditaragriculturalproductComponent {
       this.agriculturalproduct.crop.idCrop = this.form.value.idCultivo;
 
       if (this.edicion) {
-        //actualizar
-        this.aS.update(this.agriculturalproduct).subscribe(() => {
-          this.aS.list().subscribe((data) => {
+        // Actualizar - Usar switchMap para encadenar las operaciones
+        const updateSub = this.aS
+          .update(this.agriculturalproduct)
+          .pipe(switchMap(() => this.aS.list(this.currentUserId!)))
+          .subscribe((data) => {
             this.aS.setList(data);
+            this.router.navigate(['agriculturalproducts']);
           });
-        });
+        this.subscriptions.push(updateSub);
       } else {
-        //insertar
-        this.aS.insert(this.agriculturalproduct).subscribe(() => {
-          this.aS.list().subscribe((data) => {
+        // Insertar - Usar switchMap para encadenar las operaciones
+        const insertSub = this.aS
+          .insert(this.agriculturalproduct)
+          .pipe(switchMap(() => this.aS.list(this.currentUserId!)))
+          .subscribe((data) => {
             this.aS.setList(data);
+            this.router.navigate(['agriculturalproducts']);
           });
-        });
+        this.subscriptions.push(insertSub);
       }
       this.router.navigate(['agriculturalproducts']);
     }
@@ -126,7 +153,7 @@ export class InsertareditaragriculturalproductComponent {
 
   init() {
     if (this.edicion) {
-      this.aS.listId(this.id).subscribe((data) => {
+      const initSub = this.aS.listId(this.id).subscribe((data) => {
         this.form = new FormGroup({
           codigo: new FormControl(data.idProduct),
           nombre: new FormControl(data.name),
@@ -136,6 +163,7 @@ export class InsertareditaragriculturalproductComponent {
           idCultivo: new FormControl(data.crop.idCrop),
         });
       });
+      this.subscriptions.push(initSub);
     }
   }
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Sensor } from '../../../models/sensor';
 import { SensorService } from '../../../services/sensor.service';
@@ -15,6 +15,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
+import { Subscription, switchMap } from 'rxjs';
+import { LoginService } from '../../../services/login.service';
 
 @Component({
   selector: 'app-insertareditarsensor',
@@ -34,15 +36,17 @@ import { MatCardModule } from '@angular/material/card';
   templateUrl: './insertareditarsensor.component.html',
   styleUrl: './insertareditarsensor.component.css',
 })
-export class InsertareditarsensorComponent {
+export class InsertareditarsensorComponent implements OnInit {
   form: FormGroup = new FormGroup({});
   sensor: Sensor = new Sensor();
 
   id: number = 0;
   edicion: boolean = false;
+  currentUserId: number | null = null;
+
+  private subscriptions: Subscription[] = [];
 
   parcels: Parcel[] = [];
-  crops: Crop[] = [];
 
   tipos: { value: string; viewValue: string }[] = [
     { value: 'PH', viewValue: 'Potencial de Hidrogeno' },
@@ -56,42 +60,54 @@ export class InsertareditarsensorComponent {
     private sS: SensorService,
     private router: Router,
     private formBuilder: FormBuilder,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private loginService: LoginService
   ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe((data: Params) => {
+    // Obtener el userId del usuario logueado
+    const userIdSub = this.loginService.getUserId().subscribe((userId) => {
+      this.currentUserId = userId;
+      this.initializeForm();
+    });
+
+    // Suscribirse a los parámetros de la ruta
+    const routeSub = this.route.params.subscribe((data: Params) => {
       this.id = data['id'];
       this.edicion = data['id'] != null;
-      //actualizar
       this.init();
-    }),
-      (this.form = this.formBuilder.group({
-        codigo: [''],
-        tiposensor: ['', Validators.required],
-        fechainstalacion: ['', Validators.required],
-        estado: ['', Validators.required],
-        ultimalectura: ['', Validators.required],
-        niveldebateria: [
-          '',
-          [Validators.required,
-          Validators.max(100),
-          Validators.min(1),]
-        ],
-        parcela: ['', Validators.required],
-        cultivo: ['', Validators.required],
-        humedad: [
-          '',
-          [Validators.required, Validators.max(100), Validators.min(1)],
-        ],
-      }));
+    });
+
+    this.subscriptions.push(userIdSub, routeSub);
 
     this.loadParcels();
-    this.loadCrops();
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
+
+  private initializeForm(): void {
+    this.form = this.formBuilder.group({
+      codigo: [''],
+      tiposensor: ['', Validators.required],
+      fechainstalacion: ['', Validators.required],
+      estado: ['', Validators.required],
+      ultimalectura: ['', Validators.required],
+      niveldebateria: [
+        '',
+        [Validators.required, Validators.max(100), Validators.min(1)],
+      ],
+      parcela: ['', Validators.required],
+      humedad: [
+        '',
+        [Validators.required, Validators.max(100), Validators.min(1)],
+      ],
+    });
   }
 
   loadParcels(): void {
-    this.sS.getParcels().subscribe({
+    this.sS.getParcels(this.currentUserId!).subscribe({
       next: (data) => {
         this.parcels = data;
       },
@@ -101,16 +117,7 @@ export class InsertareditarsensorComponent {
     });
   }
 
-  loadCrops(): void {
-    this.sS.getCrops().subscribe({
-      next: (data) => {
-        this.crops = data;
-      },
-      error: (error) => {
-        console.error('Error al cargar cultivos:', error);
-      },
-    });
-  }
+  
 
   aceptar() {
     if (this.form.valid) {
@@ -121,31 +128,35 @@ export class InsertareditarsensorComponent {
       this.sensor.lastLecture = this.form.value.ultimalectura;
       this.sensor.batteryLevel = this.form.value.niveldebateria;
       this.sensor.parcel.idParcel = this.form.value.parcela;
-      this.sensor.crop.idCrop = this.form.value.cultivo;
       this.sensor.humidity = this.form.value.humedad;
 
       if (this.edicion) {
-        //actualizar
-        this.sS.update(this.sensor).subscribe(() => {
-          this.sS.list().subscribe((data) => {
+        // Actualizar - Usar switchMap para encadenar las operaciones
+        const updateSub = this.sS
+          .update(this.sensor)
+          .pipe(switchMap(() => this.sS.list(this.currentUserId!)))
+          .subscribe((data) => {
             this.sS.setList(data);
+            this.router.navigate(['sensors']);
           });
-        });
+        this.subscriptions.push(updateSub);
       } else {
-        //insertar
-        this.sS.insert(this.sensor).subscribe(() => {
-          this.sS.list().subscribe((data) => {
+        // Insertar - Usar switchMap para encadenar las operaciones
+        const insertSub = this.sS
+          .insert(this.sensor)
+          .pipe(switchMap(() => this.sS.list(this.currentUserId!)))
+          .subscribe((data) => {
             this.sS.setList(data);
+            this.router.navigate(['sensors']);
           });
-        });
+        this.subscriptions.push(insertSub);
       }
-      this.router.navigate(['sensors']);
     }
   }
 
   init() {
     if (this.edicion) {
-      this.sS.listId(this.id).subscribe((data) => {
+      const initSub = this.sS.listId(this.id).subscribe((data) => {
         this.form = new FormGroup({
           codigo: new FormControl(data.idSensor),
           tiposensor: new FormControl(data.sensorType),
@@ -154,10 +165,10 @@ export class InsertareditarsensorComponent {
           ultimalectura: new FormControl(data.lastLecture),
           niveldebateria: new FormControl(data.batteryLevel),
           parcela: new FormControl(data.parcel.idParcel),
-          cultivo: new FormControl(data.crop.idCrop),
           humedad: new FormControl(data.humidity),
         });
       });
+      this.subscriptions.push(initSub);
     }
   }
 

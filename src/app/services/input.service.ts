@@ -1,25 +1,27 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Users } from '../models/users';
 import { Inputs } from '../models/inputs';
 const base_url = environment.base
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class InputService {
-  private url = `${base_url}/inputs`
-  private listaCambio = new Subject<Inputs[]>()
+  private url = `${base_url}/inputs`;
+  private listaCambio = new Subject<Inputs[]>();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  list() {
-    return this.http.get<Inputs[]>(this.url)
+  list(idUsuario: number):Observable<Inputs[]> {
+    return this.http.get<Inputs[]>(
+      `${this.url}/listarporidusuario/${idUsuario}`
+    );
   }
 
   insert(i: Inputs) {
-    return this.http.post(this.url, i)
+    return this.http.post(this.url, i);
   }
   getList() {
     return this.listaCambio.asObservable();
@@ -40,5 +42,4 @@ export class InputService {
   deleteA(id: number) {
     return this.http.delete(`${this.url}/${id}`);
   }
-
 }

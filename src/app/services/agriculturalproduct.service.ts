@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { AgriculturalProduct } from '../models/agriculturalproduct';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Crop } from '../models/crop';
 const base_url = environment.base;
@@ -15,8 +15,10 @@ export class AgriculturalproductService {
 
   constructor(private http: HttpClient) {}
 
-  list() {
-    return this.http.get<AgriculturalProduct[]>(this.url);
+  list(idUsuario: number): Observable<AgriculturalProduct[]> {
+    return this.http.get<AgriculturalProduct[]>(
+      `${this.url}/listarporidusuario/${idUsuario}`
+    );
   }
 
   insert(i: AgriculturalProduct) {
@@ -28,8 +30,10 @@ export class AgriculturalproductService {
   setList(listaNueva: AgriculturalProduct[]) {
     this.listaCambio.next(listaNueva);
   }
-  getCrops() {
-    return this.http.get<Crop[]>(`${base_url}/crops`);
+  getCrops(idUsuario: number): Observable<Crop[]> {
+    return this.http.get<Crop[]>(
+      `${base_url}/crops/listarporidusuario/${idUsuario}`
+    );
   }
   listId(id: number) {
     return this.http.get<AgriculturalProduct>(`${this.url}/${id}`);
