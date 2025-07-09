@@ -8,22 +8,26 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-listarlocalmarket',
   imports: [
-    CommonModule, 
-    RouterLink, 
-    MatCardModule, 
-    MatButtonModule, 
+    CommonModule,
+    RouterLink,
+    MatCardModule,
+    MatButtonModule,
     MatIconModule,
-    MatGridListModule
+    MatGridListModule,
   ],
   templateUrl: './listarlocalmarket.component.html',
-  styleUrl: './listarlocalmarket.component.css'
+  styleUrl: './listarlocalmarket.component.css',
 })
 export class ListarlocalmarketComponent implements OnInit {
   localMarkets: LocalMarket[] = [];
+
+  private subscriptions: Subscription[] = [];
+  private currentUserId: number | null = null;
 
   constructor(
     private lS: LocalmarketService,
@@ -31,13 +35,29 @@ export class ListarlocalmarketComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.lS.list().subscribe(data => {
+    const userSub = this.loginService.getUserId().subscribe((userId) => {
+      this.currentUserId = userId;
+      if (userId) {
+        this.loadLocalMarkets(userId);
+      }
+    });
+
+    const listSub = this.lS.getList().subscribe((data) => {
       this.localMarkets = data;
     });
-    
-    this.lS.getList().subscribe(data => {
+
+    this.subscriptions.push(userSub, listSub);
+  }
+
+  private loadLocalMarkets(userId: number): void {
+    const loadSub = this.lS.list(userId).subscribe((data) => {
       this.localMarkets = data;
     });
+    this.subscriptions.push(loadSub);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
   /**
@@ -95,15 +115,17 @@ export class ListarlocalmarketComponent implements OnInit {
     if (confirm('¿Está seguro de que desea eliminar este mercado?')) {
       this.lS.deleteA(id).subscribe({
         next: () => {
-          this.lS.list().subscribe(data => {
-            this.localMarkets = data;
-            this.lS.setList(data);
-          });
+          if (this.currentUserId) {
+            this.lS.list(this.currentUserId).subscribe(data => {
+              this.localMarkets = data;
+              this.lS.setList(data);
+            });
+          }
         },
         error: (error) => {
           console.error('Error al eliminar:', error);
           alert('Error al eliminar el mercado. Inténtalo nuevamente.');
-        }
+        },
       });
     }
   }

@@ -157,22 +157,6 @@
                 </mat-form-field>
               </div>
 
-              <div class="form-row">
-                <mat-form-field appearance="outline" class="full-width">
-                  <mat-label>Cultivo</mat-label>
-                  <mat-select formControlName="cultivo">
-                    <mat-option *ngFor="let crop of crops" [value]="crop.idCrop">
-                      {{crop.typeCrop}} ID:{{crop.idCrop}}
-                    </mat-option>
-                  </mat-select>
-                  <mat-icon matSuffix>eco</mat-icon>
-                  <mat-hint>Cultivo asociado al sensor</mat-hint>
-                  <mat-error *ngIf="form.get('cultivo')?.hasError('required')">
-                    Debe seleccionar un cultivo
-                  </mat-error>
-                </mat-form-field>
-              </div>
-
               <div class="info-box">
                 <mat-icon class="info-icon">tips_and_updates</mat-icon>
                 <div class="info-content">

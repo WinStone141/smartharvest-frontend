@@ -67,18 +67,7 @@
               </mat-form-field>
 
               <!-- Usuario Field -->
-              <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Usuario Responsable</mat-label>
-                <mat-select formControlName="idUser">
-                  <mat-option *ngFor="let user of users" [value]="user.id">
-                    {{user.username}}
-                  </mat-option>
-                </mat-select>
-                <mat-icon matSuffix>person</mat-icon>
-                <mat-error *ngIf="form.get('idUser')?.hasError('required')">
-                  El usuario es obligatorio
-                </mat-error>
-              </mat-form-field>
+              
             </div>
           </div>
 

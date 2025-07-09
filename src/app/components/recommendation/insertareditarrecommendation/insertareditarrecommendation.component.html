@@ -126,26 +126,10 @@
 
               <div class="form-row">
                 <mat-form-field appearance="outline" class="full-width">
-                  <mat-label>Usuario</mat-label>
-                  <mat-select formControlName="idUser">
-                    <mat-option *ngFor="let user of users" [value]="user.id">
-                      {{user.username}}
-                    </mat-option>
-                  </mat-select>
-                  <mat-icon matSuffix>person</mat-icon>
-                  <mat-hint>Usuario destinatario de la recomendación</mat-hint>
-                  <mat-error *ngIf="form.get('idUser')?.hasError('required')">
-                    El usuario es obligatorio
-                  </mat-error>
-                </mat-form-field>
-              </div>
-
-              <div class="form-row">
-                <mat-form-field appearance="outline" class="full-width">
                   <mat-label>Cultivo</mat-label>
                   <mat-select formControlName="idCrop">
                     <mat-option *ngFor="let crop of crops" [value]="crop.idCrop">
-                      {{crop.idCrop}}
+                      {{crop.typeCrop}}
                     </mat-option>
                   </mat-select>
                   <mat-icon matSuffix>eco</mat-icon>
