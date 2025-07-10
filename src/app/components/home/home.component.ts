@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  mostrarVideo = false;
+  mostrarVideo = true;
   ngOnInit(): void {
     document.body.style.overflow = 'hidden';
     const currentUrl = this.router.url;

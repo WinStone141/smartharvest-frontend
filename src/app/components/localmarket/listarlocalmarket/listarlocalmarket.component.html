@@ -40,7 +40,7 @@
   <div class="cards-section" *ngIf="localMarkets.length > 0">
     <div class="cards-container">
       <mat-card
-        *ngFor="let market of localMarkets; let i = index"
+        *ngFor="let market of pagedMarkets; let i = index"
         class="market-card"
         [style.animation-delay.s]="i * 0.1"
       >
@@ -171,4 +171,10 @@
       </mat-card-content>
     </mat-card>
   </div>
+  <mat-paginator
+  [length]="localMarkets.length"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="[4, 8, 16]"
+  (page)="onPageChange($event)">
+</mat-paginator>
 </div>

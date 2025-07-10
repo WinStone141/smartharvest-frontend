@@ -582,5 +582,15 @@
     justify-content: center;
   }
 }
+::ng-deep mat-paginator {
+  border-radius: 16px;
+  box-shadow: 0 0 12px 2px #2ac30f; /* Verde fosforescente */
+  padding: 8px 16px;
+  background-color: white; /* Opcional: fondo blanco para contraste */
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+}
+
 
 /* Stagger animation delay is handled in HTML with [style.animation-delay.s] */
