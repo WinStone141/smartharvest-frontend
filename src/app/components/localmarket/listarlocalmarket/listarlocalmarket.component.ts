@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { Subscription } from 'rxjs';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-listarlocalmarket',
@@ -19,12 +20,16 @@ import { Subscription } from 'rxjs';
     MatButtonModule,
     MatIconModule,
     MatGridListModule,
+    MatPaginatorModule
   ],
   templateUrl: './listarlocalmarket.component.html',
   styleUrl: './listarlocalmarket.component.css',
 })
 export class ListarlocalmarketComponent implements OnInit {
   localMarkets: LocalMarket[] = [];
+  pagedMarkets: LocalMarket[] = []; // lista paginada que se mostrará
+  pageSize = 4;
+  currentPage = 0;
 
   private subscriptions: Subscription[] = [];
   private currentUserId: number | null = null;
@@ -44,6 +49,7 @@ export class ListarlocalmarketComponent implements OnInit {
 
     const listSub = this.lS.getList().subscribe((data) => {
       this.localMarkets = data;
+      this.updatePagedMarkets();
     });
 
     this.subscriptions.push(userSub, listSub);
@@ -52,9 +58,21 @@ export class ListarlocalmarketComponent implements OnInit {
   private loadLocalMarkets(userId: number): void {
     const loadSub = this.lS.list(userId).subscribe((data) => {
       this.localMarkets = data;
+      this.updatePagedMarkets();
     });
     this.subscriptions.push(loadSub);
   }
+  onPageChange(event: any): void {
+  this.pageSize = event.pageSize;
+  this.currentPage = event.pageIndex;
+  this.updatePagedMarkets();
+  }
+  
+  private updatePagedMarkets(): void {
+  const startIndex = this.currentPage * this.pageSize;
+  const endIndex = startIndex + this.pageSize;
+  this.pagedMarkets = this.localMarkets.slice(startIndex, endIndex);
+}
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
