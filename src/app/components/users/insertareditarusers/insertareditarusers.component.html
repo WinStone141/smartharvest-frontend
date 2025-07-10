@@ -1,7 +1,7 @@
 <div class="fondo">
   <div class="container">
     <img src="assets/images/favicon.svg" alt="Logo de la empresa" />
-    <h2>Registro de Usuarios</h2>
+    <h2>{{ edicion ? 'Editar Usuario' : 'Registro de Usuario' }}</h2>
 
     <form [formGroup]="form" (ngSubmit)="aceptar()">
       <mat-form-field class="example-full-width" *ngIf="edicion">
@@ -49,7 +49,7 @@
           class="custom-button ingresar"
           [disabled]="!form.valid"
         >
-          Registrar usuario
+        {{ edicion ? 'Actualizar Usuario' : 'Registrar Usuario' }}
         </button>
         <button
           type="button"

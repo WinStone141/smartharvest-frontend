@@ -6,7 +6,7 @@
         <mat-icon class="header-icon">landscape</mat-icon>
       </div>
       <div class="header-text">
-        <h1>Registrar Parcela</h1>
+        <h1>{{ edicion ? 'Editar Parcela' : 'Registro de Parcela' }}</h1>
         <p class="header-subtitle">Gestiona las parcelas de tu propiedad agrícola</p>
       </div>
     </div>
@@ -147,7 +147,7 @@
                     class="action-button submit-button"
                     [disabled]="!form.valid">
               <mat-icon>save</mat-icon>
-              Registrar Parcela
+              {{ edicion ? 'Actualizar Parcela' : 'Registrar Parcela' }}
             </button>
             <button type="button" 
                     mat-stroked-button 

@@ -1,19 +1,22 @@
 <mat-sidenav-container class="sidenav-container" *ngIf="estaLogueado">
   <mat-sidenav #drawer mode="side" class="app-sidenav">
     <a class="logo-container" [routerLink]="['/home']">
-      <img src="assets/images/favicon.svg" alt="Logo de la empresa">
+      <img src="assets/images/favicon.svg" alt="Logo de la empresa" />
       <h1>SmartHarvest</h1>
     </a>
-    
+
     <mat-nav-list>
-      
       <ng-container *ngIf="isAdmin()">
         <mat-expansion-panel>
           <mat-expansion-panel-header>
-            <mat-icon>domain</mat-icon><span>Compañías</span>
+            <mat-icon>domain</mat-icon><span>eM</span>
           </mat-expansion-panel-header>
-          <a mat-list-item routerLink="/companies"> <mat-icon> list_alt</mat-icon> Listar</a>
-          <a mat-list-item routerLink="/companies/nuevo"><mat-icon>playlist_add</mat-icon> Registrar</a>
+          <a mat-list-item routerLink="/companies">
+            <mat-icon> list_alt</mat-icon> Listar</a
+          >
+          <a mat-list-item routerLink="/companies/nuevo"
+            ><mat-icon>playlist_add</mat-icon> Registrar</a
+          >
         </mat-expansion-panel>
       </ng-container>
 
@@ -22,8 +25,12 @@
           <mat-expansion-panel-header>
             <mat-icon>computer</mat-icon><span>Mercados Locales</span>
           </mat-expansion-panel-header>
-          <a mat-list-item routerLink="/localmarkets"><mat-icon> list_alt</mat-icon> Listar</a>
-          <a mat-list-item routerLink="/localmarkets/nuevo"><mat-icon>playlist_add</mat-icon> Registrar</a>
+          <a mat-list-item routerLink="/localmarkets"
+            ><mat-icon> list_alt</mat-icon> Listar</a
+          >
+          <a mat-list-item routerLink="/localmarkets/nuevo"
+            ><mat-icon>playlist_add</mat-icon> Registrar</a
+          >
         </mat-expansion-panel>
       </ng-container>
 
@@ -32,87 +39,145 @@
           <mat-expansion-panel-header>
             <mat-icon>eco</mat-icon><span>Cultivos</span>
           </mat-expansion-panel-header>
-          <a mat-list-item routerLink="/crops"><mat-icon> list_alt</mat-icon> Listar</a>
-          <a mat-list-item routerLink="/crops/nuevo"><mat-icon>playlist_add</mat-icon> Registrar</a>
+          <a mat-list-item routerLink="/crops"
+            ><mat-icon> list_alt</mat-icon> Listar</a
+          >
+          <a mat-list-item routerLink="/crops/nuevo"
+            ><mat-icon>playlist_add</mat-icon> Registrar</a
+          >
         </mat-expansion-panel>
 
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-icon>rule</mat-icon><span>Recomendaciones</span>
           </mat-expansion-panel-header>
-          <a mat-list-item routerLink="/recommendations"><mat-icon> list_alt</mat-icon> Listar</a>
-          <a mat-list-item routerLink="/recommendations/nuevo"><mat-icon>playlist_add</mat-icon> Registrar</a>
+          <a mat-list-item routerLink="/recommendations"
+            ><mat-icon> list_alt</mat-icon> Listar</a
+          >
+          <a mat-list-item routerLink="/recommendations/nuevo"
+            ><mat-icon>playlist_add</mat-icon> Registrar</a
+          >
         </mat-expansion-panel>
 
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-icon>grain</mat-icon><span>Insumos</span>
           </mat-expansion-panel-header>
-          <a mat-list-item routerLink="/inputs"><mat-icon> list_alt</mat-icon> Listar</a>
-          <a mat-list-item routerLink="/inputs/nuevo"><mat-icon>playlist_add</mat-icon> Registrar</a>
+          <a mat-list-item routerLink="/inputs"
+            ><mat-icon> list_alt</mat-icon> Listar</a
+          >
+          <a mat-list-item routerLink="/inputs/nuevo"
+            ><mat-icon>playlist_add</mat-icon> Registrar</a
+          >
         </mat-expansion-panel>
 
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-icon>grass</mat-icon><span>Parcelas</span>
           </mat-expansion-panel-header>
-          <a mat-list-item routerLink="/parcels"><mat-icon> list_alt</mat-icon> Listar</a>
-          <a mat-list-item routerLink="/parcels/nuevo"><mat-icon>playlist_add</mat-icon> Registrar</a>
+          <a mat-list-item routerLink="/parcels"
+            ><mat-icon> list_alt</mat-icon> Listar</a
+          >
+          <a mat-list-item routerLink="/parcels/nuevo"
+            ><mat-icon>playlist_add</mat-icon> Registrar</a
+          >
         </mat-expansion-panel>
 
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-icon>barcode_reader</mat-icon><span>Sensores</span>
           </mat-expansion-panel-header>
-          <a mat-list-item routerLink="/sensors"><mat-icon> list_alt</mat-icon> Listar</a>
-          <a mat-list-item routerLink="/sensors/nuevo"><mat-icon>playlist_add</mat-icon> Registrar</a>
+          <a mat-list-item routerLink="/sensors"
+            ><mat-icon> list_alt</mat-icon> Listar</a
+          >
+          <a mat-list-item routerLink="/sensors/nuevo"
+            ><mat-icon>playlist_add</mat-icon> Registrar</a
+          >
         </mat-expansion-panel>
 
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-icon>spa</mat-icon><span>Producto Agrícola</span>
           </mat-expansion-panel-header>
-            <a mat-list-item routerLink="/agriculturalproducts"><mat-icon> list_alt</mat-icon> Listar</a>
-            <a mat-list-item routerLink="/agriculturalproducts/nuevo"><mat-icon>playlist_add</mat-icon> Registrar</a>
+          <a mat-list-item routerLink="/agriculturalproducts"
+            ><mat-icon> list_alt</mat-icon> Listar</a
+          >
+          <a mat-list-item routerLink="/agriculturalproducts/nuevo"
+            ><mat-icon>playlist_add</mat-icon> Registrar</a
+          >
         </mat-expansion-panel>
 
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-icon>build</mat-icon><span>Mantenimiento</span>
           </mat-expansion-panel-header>
-            <a mat-list-item routerLink="/maintenances"><mat-icon> list_alt</mat-icon> Listar</a>
-            <a mat-list-item routerLink="/maintenances/nuevo"><mat-icon>playlist_add</mat-icon> Registrar</a>
+          <a mat-list-item routerLink="/maintenances"
+            ><mat-icon> list_alt</mat-icon> Listar</a
+          >
+          <a mat-list-item routerLink="/maintenances/nuevo"
+            ><mat-icon>playlist_add</mat-icon> Registrar</a
+          >
         </mat-expansion-panel>
+      </ng-container>
 
+      <ng-container *ngIf="isAdmin() || isAgricultor()">
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-icon>bar_chart</mat-icon><span>Reportes</span>
           </mat-expansion-panel-header>
-          <a mat-list-item *ngIf="isAgricultor()" routerLink="/cultivos-peligro">
+          <a
+            mat-list-item
+            *ngIf="isAgricultor()"
+            routerLink="/cultivos-peligro"
+          >
             <mat-icon>warning</mat-icon> Cultivos en peligro
           </a>
           <a mat-list-item *ngIf="isAdmin()" routerLink="/parcelas-activas">
             <mat-icon>map</mat-icon> Parcelas activas
           </a>
-          <a mat-list-item *ngIf="isAgricultor()" routerLink="/mantenimientos-por-tipo-sensor">
+          <a
+            mat-list-item
+            *ngIf="isAgricultor()"
+            routerLink="/mantenimientos-por-tipo-sensor"
+          >
             <mat-icon>area_chart</mat-icon> Mantenimientos por tipo de sensor
           </a>
-          <a mat-list-item *ngIf="isAgricultor()" routerLink="/cultivos-por-estado-actual">
+          <a
+            mat-list-item
+            *ngIf="isAgricultor()"
+            routerLink="/cultivos-por-estado-actual"
+          >
             <mat-icon>area_chart</mat-icon> Cultivos por estado actual
           </a>
-          <a mat-list-item *ngIf="isAgricultor()" routerLink="/parcelas-por-mantenimientos">
+          <a
+            mat-list-item
+            *ngIf="isAgricultor()"
+            routerLink="/parcelas-por-mantenimientos"
+          >
             <mat-icon>area_chart</mat-icon> Parcelas por mantenimientos
           </a>
-          <a mat-list-item *ngIf="isAgricultor()" routerLink="/sensores-activos-por-tipo-sensor">
+          <a
+            mat-list-item
+            *ngIf="isAgricultor()"
+            routerLink="/sensores-activos-por-tipo-sensor"
+          >
             <mat-icon>area_chart</mat-icon> Sensores activos por tipo
           </a>
-          <a mat-list-item *ngIf="isAgricultor()" routerLink="/cosechas-por-tipo-cultivo">
+          <a
+            mat-list-item
+            *ngIf="isAgricultor()"
+            routerLink="/cosechas-por-tipo-cultivo"
+          >
             <mat-icon>area_chart</mat-icon> Cosechas por tipo
           </a>
           <a mat-list-item *ngIf="isAdmin()" routerLink="/parcelas-por-mes">
             <mat-icon>area_chart</mat-icon> Parcelas por mes
           </a>
-          <a mat-list-item *ngIf="isAdmin()" routerLink="/recomendaciones-por-mes">
+          <a
+            mat-list-item
+            *ngIf="isAdmin()"
+            routerLink="/recomendaciones-por-mes"
+          >
             <mat-icon>area_chart</mat-icon> Recomendaciones por mes
           </a>
         </mat-expansion-panel>
@@ -123,14 +188,18 @@
           <mat-expansion-panel-header>
             <mat-icon>groups</mat-icon><span>Usuarios</span>
           </mat-expansion-panel-header>
-          <a mat-list-item routerLink="/users"><mat-icon> list_alt</mat-icon> Listar</a>
+          <a mat-list-item routerLink="/users"
+            ><mat-icon> list_alt</mat-icon> Listar</a
+          >
         </mat-expansion-panel>
 
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-icon>assignment_ind</mat-icon><span>Roles</span>
           </mat-expansion-panel-header>
-          <a mat-list-item routerLink="/roles"><mat-icon> list_alt</mat-icon> Listar</a>
+          <a mat-list-item routerLink="/roles"
+            ><mat-icon> list_alt</mat-icon> Listar</a
+          >
         </mat-expansion-panel>
       </ng-container>
 
@@ -138,44 +207,44 @@
         <mat-icon>smart_toy</mat-icon>
         <span>IA</span>
       </a>
-
     </mat-nav-list>
   </mat-sidenav>
 
   <mat-sidenav-content>
-  <mat-toolbar>
-  <!-- Botón de menú -->
-  <button mat-icon-button (click)="drawer.toggle()" matTooltip="Menú">
-    <mat-icon>menu</mat-icon>
-  </button>
+    <mat-toolbar>
+      <!-- Botón de menú -->
+      <button mat-icon-button (click)="drawer.toggle()" matTooltip="Menú">
+        <mat-icon>menu</mat-icon>
+      </button>
 
-  <!-- Nombre de la empresa -->
-  
+      <!-- Nombre de la empresa -->
 
-  <!-- Espaciador flexible -->
-  <span class="toolbar-spacer"></span>
+      <!-- Espaciador flexible -->
+      <span class="toolbar-spacer"></span>
 
-  <!-- Botón de usuario con menú -->
-  <button mat-icon-button [matMenuTriggerFor]="userMenu" matTooltip="Usuario">
-    <mat-icon>account_circle</mat-icon>
-  </button>
+      <!-- Botón de usuario con menú -->
+      <button
+        mat-icon-button
+        [matMenuTriggerFor]="userMenu"
+        matTooltip="Usuario"
+      >
+        <mat-icon>account_circle</mat-icon>
+      </button>
 
-  <!-- Menú del usuario -->
-  <mat-menu #userMenu="matMenu">
-    <button mat-menu-item disabled>
-      <mat-icon>badge</mat-icon>
-      Rol: {{ role }}
-    </button>
-    <button mat-menu-item (click)="cerrar()" routerLink="/inicio">
-      <mat-icon>logout</mat-icon>
-      Cerrar sesión
-    </button>
-  </mat-menu>
-</mat-toolbar>
-
+      <!-- Menú del usuario -->
+      <mat-menu #userMenu="matMenu">
+        <button mat-menu-item disabled>
+          <mat-icon>badge</mat-icon>
+          Rol: {{ role }}
+        </button>
+        <button mat-menu-item (click)="cerrar()" routerLink="/inicio">
+          <mat-icon>logout</mat-icon>
+          Cerrar sesión
+        </button>
+      </mat-menu>
+    </mat-toolbar>
 
     <!-- Aquí va el contenido principal de tus rutas -->
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
-

@@ -6,7 +6,7 @@
         <mat-icon class="header-icon">inventory_2</mat-icon>
       </div>
       <div class="header-text">
-        <h1>Registrar Insumo</h1>
+        <h1>{{ edicion ? 'Editar Insumo' : 'Registro de Insumo' }}</h1>
         <p class="header-subtitle">Gestiona el inventario de insumos agrícolas</p>
       </div>
     </div>
@@ -149,7 +149,7 @@
                     class="action-button submit-button"
                     [disabled]="!form.valid">
               <mat-icon>save</mat-icon>
-              Registrar Insumo
+              {{ edicion ? 'Actualizar Insumo' : 'Registrar Insumo' }}
             </button>
             <button type="button" 
                     mat-stroked-button 
