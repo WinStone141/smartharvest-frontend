@@ -7,6 +7,7 @@ import { Parcel } from '../models/parcel';
 import { CropsNeedingAttention } from '../models/crops-needing-attention.model';
 import { CropByState } from '../models/cropbystate';
 import { HarvestByCropType } from '../models/harvestbycroptype';
+import { RiskPercentageByParcel } from '../models/riskpercentagebyparcel';
 const base_url = environment.base
 
 @Injectable({
@@ -47,11 +48,14 @@ export class CropService {
     );
   }
 
-  //Query 1
   getCropsNeedingAttention(idUser: number) {
     return this.http.get<CropsNeedingAttention[]>(
       `${this.url}/cropsInDanger/${idUser}`
     );
+  }
+
+  getCropRiskPercentageByParcel(idUser: number): Observable<RiskPercentageByParcel[]> {
+    return this.http.get<RiskPercentageByParcel[]>(`${this.url}/cropRiskPercentage/${idUser}`);
   }
 
   getCropsByState(idUser: number): Observable<CropByState[]> {

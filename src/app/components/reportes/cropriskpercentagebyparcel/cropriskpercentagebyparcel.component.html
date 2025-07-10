@@ -1,0 +1,68 @@
+<div class="table-container">
+  <div class="table-header">
+    <div class="header-content">
+      <div class="header-info">
+        <div class="page-title">
+          <mat-icon class="title-icon">bar_chart</mat-icon>
+          Porcentaje de Cultivos en Riesgo
+        </div>
+        <p class="page-subtitle">
+          Reporte de parcelas con cultivos que presentan estados críticos.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <mat-card class="table-card">
+    <mat-card-content>
+      <div class="table-wrapper">
+        <mat-table *ngIf="!loading && riskData.length > 0" [dataSource]="riskData" class="companies-table">
+
+          <ng-container matColumnDef="idParcel">
+            <mat-header-cell *matHeaderCellDef>ID Parcela</mat-header-cell>
+            <mat-cell *matCellDef="let item">{{ item.idParcel }}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="parcelName">
+            <mat-header-cell *matHeaderCellDef>Parcela</mat-header-cell>
+            <mat-cell *matCellDef="let item">{{ item.parcelName }}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="totalCrops">
+            <mat-header-cell *matHeaderCellDef>Total de Cultivos</mat-header-cell>
+            <mat-cell *matCellDef="let item">{{ item.totalCrops }}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="cropsAtRisk">
+            <mat-header-cell *matHeaderCellDef>Cultivos en Riesgo</mat-header-cell>
+            <mat-cell *matCellDef="let item">{{ item.cropsAtRisk }}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="riskPercentage">
+            <mat-header-cell *matHeaderCellDef>% de Riesgo</mat-header-cell>
+            <mat-cell *matCellDef="let item">{{ item.riskPercentage }}%</mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+
+        <div *ngIf="!loading && riskData.length === 0" class="empty-state">
+          <mat-icon class="empty-icon">check_circle</mat-icon>
+          <h3>No hay cultivos en riesgo</h3>
+          <p>¡Todas las parcelas están en condiciones óptimas!</p>
+        </div>
+
+        <div *ngIf="loading" class="empty-state">
+          <mat-icon class="empty-icon">hourglass_empty</mat-icon>
+          <h3>Cargando reporte...</h3>
+        </div>
+
+        <div *ngIf="error" class="empty-state">
+          <mat-icon class="empty-icon">error_outline</mat-icon>
+          <h3>{{ error }}</h3>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

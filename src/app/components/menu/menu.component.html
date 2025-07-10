@@ -132,6 +132,9 @@
           >
             <mat-icon>warning</mat-icon> Cultivos en peligro
           </a>
+          <a mat-list-item *ngIf="isAgricultor()" routerLink="/porcentaje-peligro-parcelas">
+            <mat-icon>bar_chart</mat-icon> Cultivos por parcela en peñigro
+          </a>
           <a mat-list-item *ngIf="isAdmin()" routerLink="/parcelas-activas">
             <mat-icon>map</mat-icon> Parcelas activas
           </a>
