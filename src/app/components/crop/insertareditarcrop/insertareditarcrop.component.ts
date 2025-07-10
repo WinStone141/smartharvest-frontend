@@ -55,7 +55,8 @@ export class InsertareditarcropComponent {
     { value: 'En preparación', viewValue: 'En preparación' },
     { value: 'Listo para cosecha', viewValue: 'Listo para cosecha' },
     { value: 'Creciendo', viewValue: 'Creciendo' },
-    { value: 'Seco', viewValue: 'Seco' },
+    { value: 'Enfermo', viewValue: 'Enfermo' },
+    { value: 'Plagas', viewValue: 'Plagas' },
   ];
 
   tipoC: { value: string; viewValue: string }[] = [
