@@ -39,6 +39,7 @@ import { HarvestbycroptypeComponent } from './components/reportes/harvestbycropt
 import { ParcelsbymonthComponent } from './components/reportes/parcelsbymonth/parcelsbymonth.component';
 import { RecommendationsByMonthInYear } from './models/recommendationsbymonth';
 import { RecommendationsbymonthComponent } from './components/reportes/recommendationsbymonth/recommendationsbymonth.component';
+import { CropriskpercentagebyparcelComponent } from './components/reportes/cropriskpercentagebyparcel/cropriskpercentagebyparcel.component';
 
 export const routes: Routes = [
   {
@@ -266,6 +267,12 @@ export const routes: Routes = [
   {
     path: 'cultivos-peligro',
     component: CropsNeedingAttentionComponent,
+    canActivate: [seguridadGuard, roleGuard],
+    data: { expectedRoles: ['AGRICULTOR'] },
+  },
+  {
+    path: 'porcentaje-peligro-parcelas',
+    component: CropriskpercentagebyparcelComponent,
     canActivate: [seguridadGuard, roleGuard],
     data: { expectedRoles: ['AGRICULTOR'] },
   },
